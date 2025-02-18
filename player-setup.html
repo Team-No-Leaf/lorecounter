@@ -20,7 +20,19 @@
 
         <div id="playerInputs"></div>
 
-        <button onclick="submitPlayers()">Continue</button>
+        <!-- Match Format Selection -->
+        <div id="matchFormatContainer" style="display: none;">
+            <label for="matchFormat">Match Format:</label>
+            <select id="matchFormat" onchange="checkAllInputs()">
+                <option value="">Select Format</option>
+                <option value="Single">Single</option>
+                <option value="Two Games">Two Games</option>
+                <option value="Best of Three">Best of Three</option>
+                <option value="Best of Five">Best of Five</option>
+            </select>
+        </div>
+
+        <button id="startGameButton" onclick="startGame()" style="display: none;">Start Game</button>
         <button onclick="goBack()">Back</button>
     </main>
 
@@ -34,58 +46,75 @@
                 container.innerHTML += `
                     <div class="player-section">
                         <label for="player${i}">Player ${i} Name:</label>
-                        <input type="text" id="player${i}" required>
+                        <input type="text" id="player${i}" oninput="checkAllInputs()" required>
 
                         <p>Select an Ink Color:</p>
                         <div class="ink-selection">
                             <label>
-                                <input type="radio" name="ink${i}" value="Steel">
+                                <input type="radio" name="ink${i}" value="Steel" onchange="checkAllInputs()">
                                 <img src="dlc_ink_steel.png" alt="Steel">
                             </label>
                             <label>
-                                <input type="radio" name="ink${i}" value="Ruby">
+                                <input type="radio" name="ink${i}" value="Ruby" onchange="checkAllInputs()">
                                 <img src="dlc_ink_ruby.png" alt="Ruby">
                             </label>
                             <label>
-                                <input type="radio" name="ink${i}" value="Amethyst">
+                                <input type="radio" name="ink${i}" value="Amethyst" onchange="checkAllInputs()">
                                 <img src="dlc_ink_amethyst.png" alt="Amethyst">
                             </label>
                             <label>
-                                <input type="radio" name="ink${i}" value="Sapphire">
+                                <input type="radio" name="ink${i}" value="Sapphire" onchange="checkAllInputs()">
                                 <img src="dlc_ink_sapphire.png" alt="Sapphire">
                             </label>
                             <label>
-                                <input type="radio" name="ink${i}" value="Amber">
+                                <input type="radio" name="ink${i}" value="Amber" onchange="checkAllInputs()">
                                 <img src="dlc_ink_amber.png" alt="Amber">
                             </label>
                             <label>
-                                <input type="radio" name="ink${i}" value="Emerald">
+                                <input type="radio" name="ink${i}" value="Emerald" onchange="checkAllInputs()">
                                 <img src="dlc_ink_emerald.png" alt="Emerald">
                             </label>
                         </div>
                     </div>
                 `;
             }
+
+            document.getElementById("matchFormatContainer").style.display = "block"; // Ensure match format appears
+            checkAllInputs(); // Update button visibility
         }
 
-        function submitPlayers() {
-            let players = [];
+        function checkAllInputs() {
             const count = document.getElementById("playerCount").value;
+            const format = document.getElementById("matchFormat").value;
+            let allFilled = format !== "";
 
             for (let i = 1; i <= count; i++) {
-                let name = document.getElementById(`player${i}`).value;
+                let name = document.getElementById(`player${i}`).value.trim();
                 let ink = document.querySelector(`input[name="ink${i}"]:checked`);
 
                 if (!name || !ink) {
-                    alert("Please enter all player names and select an ink color.");
-                    return;
+                    allFilled = false;
+                    break;
                 }
-
-                players.push({ name, ink: ink.value });
             }
 
-            alert(`Players registered:\n` + players.map(p => `${p.name} - ${p.ink}`).join("\n"));
-            // You can store this data in localStorage or send it to another page.
+            document.getElementById("startGameButton").style.display = allFilled ? "block" : "none";
+        }
+
+        function startGame() {
+            const count = document.getElementById("playerCount").value;
+            const format = document.getElementById("matchFormat").value;
+            let players = [];
+
+            for (let i = 1; i <= count; i++) {
+                let name = document.getElementById(`player${i}`).value.trim();
+                let ink = document.querySelector(`input[name="ink${i}"]:checked`).value;
+
+                players.push({ name, ink });
+            }
+
+            alert(`Game Started!\nFormat: ${format}\nPlayers:\n${players.map(p => `${p.name} - ${p.ink}`).join("\n")}`);
+            // Here you can store the data and redirect to the match page.
         }
 
         function goBack() {
