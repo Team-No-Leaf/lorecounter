@@ -75,10 +75,12 @@
             let toggle = document.getElementById(`donaldToggle${playerIndex}`);
 
             if (toggledPlayers.has(playerIndex)) {
+                // If already active, turn it off
                 toggle.classList.remove("active");
                 toggle.classList.add("disabled");
                 toggledPlayers.delete(playerIndex);
             } else {
+                // Activate the toggle
                 toggle.classList.remove("disabled");
                 toggle.classList.add("active");
                 toggledPlayers.add(playerIndex);
@@ -90,17 +92,10 @@
         function updateMaxLore() {
             let activePlayers = Array.from(toggledPlayers);
 
+            // If at least one player has toggled, all others get max lore 25
             players.forEach((_, i) => {
-                if (toggledPlayers.has(i)) {
-                    playerMaxLore[i] = 20;
-                } else if (activePlayers.length > 0) {
-                    playerMaxLore[i] = 25;
-                }
+                playerMaxLore[i] = activePlayers.length > 0 ? 25 : 20;
             });
-
-            if (activePlayers.length === players.length) {
-                playerMaxLore.fill(25);
-            }
         }
 
         createPlayerSections();
