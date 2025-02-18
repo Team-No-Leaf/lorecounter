@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Setup</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Setup Your Players</h1>
+        <label for="playerCount">Number of Players (1-4):</label>
+        <input type="number" id="playerCount" min="1" max="4" value="1" onchange="updatePlayerInputs()">
+        
+        <div id="playerInputs"></div>
+
+        <button onclick="submitPlayers()">Continue</button>
+        <button onclick="goBack()">Back</button>
+    </main>
+
+    <script>
+        function updatePlayerInputs() {
+            const count = document.getElementById("playerCount").value;
+            const container = document.getElementById("playerInputs");
+            container.innerHTML = "";
+
+            for (let i = 1; i <= count; i++) {
+                container.innerHTML += `
+                    <label for="player${i}">Player ${i} Name:</label>
+                    <input type="text" id="player${i}" required><br>
+                `;
+            }
+        }
+
+        function submitPlayers() {
+            let players = [];
+            const count = document.getElementById("playerCount").value;
+
+            for (let i = 1; i <= count; i++) {
+                let name = document.getElementById(`player${i}`).value;
+                if (!name) {
+                    alert("Please enter all player names.");
+                    return;
+                }
+                players.push(name);
+            }
+
+            alert(`Players registered: ${players.join(", ")}`);
+            // Here, you can store the data or redirect to another page.
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        updatePlayerInputs(); // Initialize on load
+    </script>
+</body>
+</html>
