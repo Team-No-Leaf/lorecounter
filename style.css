@@ -24,7 +24,7 @@ body {
 
 /* Top Section (For Players Sitting Opposite) */
 .top-section {
-    transform: rotate(180deg); /* Flips top player(s) for proper view */
+    transform: rotate(180deg);
 }
 
 /* Individual Player Section */
@@ -38,6 +38,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 /* Lore Counter */
@@ -66,28 +67,23 @@ body {
     font-weight: bold;
 }
 
-/* Donald Toggle - CENTERED & FIXED SIZE */
-#toggleContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#donaldToggle {
-    width: 80px; /* Fixed size */
-    height: 80px;
+/* Small Donald Toggle - Positioned Bottom Right */
+.donald-toggle {
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     filter: grayscale(100%);
     transition: 0.3s;
-    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
-#donaldToggle.active {
+.donald-toggle.active {
     filter: none;
 }
 
-#donaldToggle.disabled {
+.donald-toggle.disabled {
     filter: grayscale(100%);
 }
 
@@ -102,8 +98,8 @@ body {
         font-size: 24px;
     }
 
-    #donaldToggle {
-        width: 70px;
-        height: 70px;
+    .donald-toggle {
+        width: 35px;
+        height: 35px;
     }
 }

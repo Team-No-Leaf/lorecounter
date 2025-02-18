@@ -9,18 +9,14 @@
 <body>
     <main id="loreContainer"></main>
 
-    <!-- Toggle button for Donald effect -->
-    <div id="toggleContainer">
-        <img id="donaldToggle" src="donald_toggle.png" alt="Donald Toggle" onclick="toggleMaxLore()" class="disabled">
-    </div>
-
     <script>
         let players = JSON.parse(localStorage.getItem("players")) || [];
-        let maxLore = 20; // Default max lore value
+        let playerMaxLore = Array(players.length).fill(20); // Everyone starts with max 20
+        let toggledPlayers = new Set(); // Track who activated Donald
 
         function createPlayerSections() {
             const container = document.getElementById("loreContainer");
-            container.innerHTML = ""; // Clear any existing sections
+            container.innerHTML = "";
 
             let topSection = document.createElement("div");
             let bottomSection = document.createElement("div");
@@ -47,19 +43,20 @@
                         <span id="lore${index}" class="lore-value">0</span>
                         <button onclick="updateLore(${index}, 1)">+</button>
                     </div>
+                    <img id="donaldToggle${index}" class="donald-toggle" src="donald_toggle.png" alt="Donald Toggle" onclick="toggleDonald(${index})">
                 `;
             });
 
             container.appendChild(topSection);
             container.appendChild(bottomSection);
 
-            updateLoreColors(); // Initial color setup
+            updateLoreColors();
         }
 
         function updateLore(index, change) {
             let loreElement = document.getElementById(`lore${index}`);
             let currentValue = parseInt(loreElement.innerText);
-            let newValue = Math.max(0, Math.min(maxLore, currentValue + change));
+            let newValue = Math.max(0, Math.min(playerMaxLore[index], currentValue + change));
             loreElement.innerText = newValue;
             updateLoreColors();
         }
@@ -75,21 +72,39 @@
             });
         }
 
-        function toggleMaxLore() {
-            let toggle = document.getElementById("donaldToggle");
-            let isActive = toggle.classList.contains("active");
+        function toggleDonald(playerIndex) {
+            let toggle = document.getElementById(`donaldToggle${playerIndex}`);
 
-            if (isActive) {
+            if (toggledPlayers.has(playerIndex)) {
+                // If already active, turn it off
                 toggle.classList.remove("active");
                 toggle.classList.add("disabled");
-                maxLore = 20;
+                toggledPlayers.delete(playerIndex);
             } else {
+                // Activate the toggle
                 toggle.classList.remove("disabled");
                 toggle.classList.add("active");
-                maxLore = 25;
+                toggledPlayers.add(playerIndex);
             }
 
-            updateLoreColors();
+            updateMaxLore();
+        }
+
+        function updateMaxLore() {
+            let activePlayers = Array.from(toggledPlayers);
+
+            players.forEach((_, i) => {
+                if (toggledPlayers.has(i)) {
+                    playerMaxLore[i] = 20; // Players who pressed their toggle stay at 20
+                } else if (activePlayers.length > 0) {
+                    playerMaxLore[i] = 25; // Opponents get raised to 25
+                }
+            });
+
+            // If all players have activated their toggle, everyone should be at 25
+            if (activePlayers.length === players.length) {
+                playerMaxLore.fill(25);
+            }
         }
 
         createPlayerSections();
