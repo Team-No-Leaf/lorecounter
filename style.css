@@ -9,6 +9,8 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 /* Lore Tracker Layouts */
@@ -22,18 +24,22 @@ body {
 
 /* 2 Players (One on Top, One on Bottom) */
 .two-players {
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
 }
 .two-players .player-section:first-child {
     transform: rotate(180deg);
 }
 
-/* 3 Players (One Full-Width, Two Split) */
+/* 3 Players (One Full-Width on Top, Two Split on Bottom) */
 .three-players {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
+    height: 100%;
+    width: 100%;
     gap: 5px;
 }
 .three-players .player-section:first-child {
@@ -50,6 +56,8 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    height: 100%;
+    width: 100%;
     gap: 5px;
 }
 .four-players .player-section:first-child,
@@ -69,7 +77,6 @@ body {
     border-radius: 10px;
     position: relative;
     width: 100%;
-    height: 50%;
 }
 
 /* Games Won Display */
@@ -120,7 +127,7 @@ body {
     filter: grayscale(100%);
 }
 
-/* Game End Button */
+/* Game End Buttons */
 #gameEndContainer {
     position: fixed;
     top: 50%;
@@ -139,6 +146,20 @@ body {
 }
 #gameEndButton:hover {
     background-color: #0056b3;
+}
+
+#finalGameButton {
+    padding: 15px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    display: none;
+}
+#finalGameButton:hover {
+    background-color: darkred;
 }
 
 /* Responsive Adjustments */

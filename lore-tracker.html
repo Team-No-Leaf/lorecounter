@@ -11,6 +11,7 @@
     <div id="gameEndContainer" style="display: none;">
         <button id="gameEndButton" onclick="restartGame()"></button>
     </div>
+    <button id="finalGameButton" onclick="returnToLanding()">Return to Home</button>
 
     <script>
         let players = JSON.parse(localStorage.getItem("players")) || [];
@@ -23,13 +24,9 @@
             const container = document.getElementById("loreContainer");
             container.innerHTML = "";
 
-            if (players.length === 2) {
-                container.classList.add("two-players");
-            } else if (players.length === 3) {
-                container.classList.add("three-players");
-            } else if (players.length === 4) {
-                container.classList.add("four-players");
-            }
+            container.className = players.length === 2 ? "two-players" :
+                                  players.length === 3 ? "three-players" :
+                                  players.length === 4 ? "four-players" : "";
 
             players.forEach((player, index) => {
                 let section = document.createElement("div");
@@ -58,68 +55,33 @@
             updateLoreColors();
         }
 
-        function updateLore(index, change) {
-            let loreElement = document.getElementById(`lore${index}`);
-            let currentValue = parseInt(loreElement.innerText);
-            let newValue = Math.max(0, Math.min(playerMaxLore[index], currentValue + change));
-            loreElement.innerText = newValue;
-
-            if (newValue === playerMaxLore[index]) {
-                handleGameWin(index);
-            }
-
-            updateLoreColors();
-        }
-
-        function updateLoreColors() {
-            let values = Array.from(document.querySelectorAll(".lore-value")).map(el => parseInt(el.innerText));
-            let maxValue = Math.max(...values);
-            let minValue = Math.min(...values);
-
-            document.querySelectorAll(".lore-value").forEach((el, index) => {
-                let value = parseInt(el.innerText);
-                el.style.color = value === maxValue ? "green" : value === minValue ? "red" : "black";
-            });
-        }
-
-        function toggleDonald(playerIndex) {
-            let toggle = document.getElementById(`donaldToggle${playerIndex}`);
-
-            if (toggledPlayers.has(playerIndex)) {
-                toggle.classList.remove("active");
-                toggle.classList.add("disabled");
-                toggledPlayers.delete(playerIndex);
-            } else {
-                toggle.classList.remove("disabled");
-                toggle.classList.add("active");
-                toggledPlayers.add(playerIndex);
-            }
-
-            updateMaxLore();
-        }
-
-        function updateMaxLore() {
-            let activePlayers = Array.from(toggledPlayers);
-            players.forEach((_, i) => {
-                playerMaxLore[i] = activePlayers.length > 0 ? 25 : 20;
-            });
-        }
-
         function handleGameWin(winnerIndex) {
             gamesWon[winnerIndex]++;
             localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
             document.getElementById(`gamesWon${winnerIndex}`).innerText = gamesWon[winnerIndex];
 
-            let gameEndContainer = document.getElementById("gameEndContainer");
             let gameEndButton = document.getElementById("gameEndButton");
+            let finalGameButton = document.getElementById("finalGameButton");
 
-            gameEndButton.innerText = matchFormat === "Single" ? "Start New Game" : "Start Next Game";
-            gameEndContainer.style.display = "flex";
+            let requiredWins = matchFormat === "Two Games" ? 2 :
+                               matchFormat === "Best of 3" ? 2 :
+                               matchFormat === "Best of 5" ? 3 : 1;
+
+            if (gamesWon[winnerIndex] >= requiredWins) {
+                finalGameButton.style.display = "block";
+            } else {
+                gameEndButton.innerText = matchFormat === "Single" ? "Start New Game" : "Start Next Game";
+                document.getElementById("gameEndContainer").style.display = "flex";
+            }
         }
 
         function restartGame() {
             document.getElementById("gameEndContainer").style.display = "none";
             document.querySelectorAll(".lore-value").forEach(el => el.innerText = "0");
+        }
+
+        function returnToLanding() {
+            window.location.href = "index.html";
         }
 
         createPlayerSections();
