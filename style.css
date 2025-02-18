@@ -77,7 +77,7 @@ header img {
 .player-section[data-ink="Steel"] {
     background-color: #9FA9B3;
 }
-.player-section[data-ink="Emerald"] {
+player-section[data-ink="Emerald"] {
     background-color: #298A34;
 }
 .player-section[data-ink="Amber"] {
@@ -136,17 +136,19 @@ header img {
     font-weight: bold;
 }
 
-/* Player Name (Now Fully Spaced Below the Lore Counter) */
-.player-name {
-    font-size: 24px;
-    font-weight: bold;
+/* Games Won Counter */
+.games-won-container {
     position: absolute;
-    top: 70%;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: #FFD700;
     text-align: center;
-    width: auto;
-    white-space: nowrap;
 }
 
 /* Lore Count Color Changes */
@@ -184,10 +186,20 @@ header img {
     display: none;
     flex-direction: column;
     align-items: center;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     padding: 20px;
     border-radius: 10px;
     z-index: 100;
+    color: white;
+}
+
+/* Winner Text Styling */
+#winnerText {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFD700;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 /* Next Game Button */
@@ -257,10 +269,10 @@ header img {
         width: 60px;
         height: 60px;
     }
-    
-    .player-name {
-        font-size: 22px;
-        top: 73%;
+
+    .games-won-container {
+        font-size: 18px;
+        bottom: 8px;
     }
 
     .lore-value {
