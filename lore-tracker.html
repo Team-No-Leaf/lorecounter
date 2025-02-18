@@ -11,18 +11,20 @@
 
     <script>
         let players = JSON.parse(localStorage.getItem("players")) || [];
-        let playerMaxLore = Array(players.length).fill(20); // Everyone starts with max 20
-        let toggledPlayers = new Set(); // Track who activated Donald
+        let playerMaxLore = Array(players.length).fill(20);
+        let toggledPlayers = new Set();
 
         function createPlayerSections() {
             const container = document.getElementById("loreContainer");
             container.innerHTML = "";
 
-            let topSection = document.createElement("div");
-            let bottomSection = document.createElement("div");
-
-            topSection.classList.add("top-section");
-            bottomSection.classList.add("bottom-section");
+            if (players.length === 2) {
+                container.classList.add("two-players");
+            } else if (players.length === 3) {
+                container.classList.add("three-players");
+            } else if (players.length === 4) {
+                container.classList.add("four-players");
+            }
 
             players.forEach((player, index) => {
                 let section = document.createElement("div");
@@ -31,9 +33,7 @@
                 if ((players.length === 2 && index === 0) || 
                     (players.length === 3 && index === 0) ||
                     (players.length === 4 && index < 2)) {
-                    topSection.appendChild(section);
-                } else {
-                    bottomSection.appendChild(section);
+                    section.classList.add("rotate");
                 }
 
                 section.innerHTML = `
@@ -45,10 +45,9 @@
                     </div>
                     <img id="donaldToggle${index}" class="donald-toggle" src="donald_toggle.png" alt="Donald Toggle" onclick="toggleDonald(${index})">
                 `;
-            });
 
-            container.appendChild(topSection);
-            container.appendChild(bottomSection);
+                container.appendChild(section);
+            });
 
             updateLoreColors();
         }
@@ -76,12 +75,10 @@
             let toggle = document.getElementById(`donaldToggle${playerIndex}`);
 
             if (toggledPlayers.has(playerIndex)) {
-                // If already active, turn it off
                 toggle.classList.remove("active");
                 toggle.classList.add("disabled");
                 toggledPlayers.delete(playerIndex);
             } else {
-                // Activate the toggle
                 toggle.classList.remove("disabled");
                 toggle.classList.add("active");
                 toggledPlayers.add(playerIndex);
@@ -95,13 +92,12 @@
 
             players.forEach((_, i) => {
                 if (toggledPlayers.has(i)) {
-                    playerMaxLore[i] = 20; // Players who pressed their toggle stay at 20
+                    playerMaxLore[i] = 20;
                 } else if (activePlayers.length > 0) {
-                    playerMaxLore[i] = 25; // Opponents get raised to 25
+                    playerMaxLore[i] = 25;
                 }
             });
 
-            // If all players have activated their toggle, everyone should be at 25
             if (activePlayers.length === players.length) {
                 playerMaxLore.fill(25);
             }
