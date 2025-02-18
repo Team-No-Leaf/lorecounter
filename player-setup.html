@@ -24,18 +24,6 @@
 
         <div id="playerInputs"></div>
 
-        <!-- Match Format Selection -->
-        <div id="matchFormatContainer" style="display: none;">
-            <label for="matchFormat">Match Format:</label>
-            <select id="matchFormat" onchange="checkAllInputs()">
-                <option value="">Select Format</option>
-                <option value="Single">Single</option>
-                <option value="Two Games">Two Games</option>
-                <option value="Best of Three">Best of Three</option>
-                <option value="Best of Five">Best of Five</option>
-            </select>
-        </div>
-
         <button id="startGameButton" onclick="startGame()" style="display: none;">Start Game</button>
         <button onclick="goBack()">Back</button>
     </main>
@@ -83,14 +71,12 @@
                 `;
             }
 
-            document.getElementById("matchFormatContainer").style.display = "block";
             checkAllInputs();
         }
 
         function checkAllInputs() {
             const count = document.getElementById("playerCount").value;
-            const format = document.getElementById("matchFormat").value;
-            let allFilled = format !== "";
+            let allFilled = true;
 
             for (let i = 1; i <= count; i++) {
                 let name = document.getElementById(`player${i}`).value.trim();
@@ -107,7 +93,6 @@
 
         function startGame() {
             const count = document.getElementById("playerCount").value;
-            const format = document.getElementById("matchFormat").value;
             let players = [];
 
             for (let i = 1; i <= count; i++) {
@@ -118,7 +103,9 @@
             }
 
             localStorage.setItem("players", JSON.stringify(players));
-            localStorage.setItem("matchFormat", format);
+
+            // Reset Games Won Counter
+            localStorage.setItem("gamesWon", JSON.stringify(Array(players.length).fill(0)));
 
             window.location.href = "lore-tracker.html"; // Redirect to the lore tracker
         }

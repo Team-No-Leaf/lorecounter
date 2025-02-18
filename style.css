@@ -26,132 +26,34 @@ header img {
     object-fit: cover;
 }
 
-/* Main Content */
-main {
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
-    text-align: center;
-}
-
-/* Buttons */
-button {
-    width: 90%;
-    max-width: 300px;
-    padding: 15px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 20px auto;
-    display: block;
-    text-align: center;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Player Selection Page - Ink Selection Grid */
-.ink-selection {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    justify-items: center;
-    max-width: 300px;
-    margin: auto;
-}
-
-/* Ink Selection Labels */
-.ink-selection label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    width: 80px;
-}
-
-/* Hide Radio Buttons */
-.ink-selection input {
-    display: none;
-}
-
-/* Ink Selection Images */
-.ink-selection img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    transition: 0.3s;
-}
-
-/* Highlight Selected Image */
-.ink-selection input:checked + img {
-    border-color: #007bff;
-    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.7);
-}
-
-/* Disclaimer Styling */
-.disclaimer {
-    font-size: 14px;
-    color: gray;
-    text-align: center;
-    margin-top: 20px;
-    max-width: 600px;
-    padding: 10px;
-}
-
-/* Lore Tracker Layouts */
+/* Lore Tracker Layout */
 #loreContainer {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
 }
 
-/* 2 Players (One on Top, One on Bottom) */
-.two-players {
+/* Ensure Top and Bottom Sections are Split Evenly */
+.top-section, .bottom-section {
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: 50%;
     justify-content: space-between;
-    height: 100%;
-}
-.two-players .player-section:first-child {
-    transform: rotate(180deg);
+    align-items: center;
 }
 
-/* 3 Players (One Full-Width, Two Split) */
-.three-players {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+/* Ensure Players in Even Split */
+.top-section .player-section, .bottom-section .player-section {
+    flex: 1;
+    width: 50%;
     height: 100%;
-    width: 100%;
-    gap: 5px;
-}
-.three-players .player-section:first-child {
-    grid-column: span 2;
-    transform: rotate(180deg);
-}
-.three-players .player-section:nth-child(2),
-.three-players .player-section:nth-child(3) {
-    grid-column: auto;
+    position: relative;
 }
 
-/* 4 Players (Even 2x2 Grid) */
-.four-players {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    height: 100%;
-    width: 100%;
-    gap: 5px;
-}
-.four-players .player-section:first-child,
-.four-players .player-section:nth-child(2) {
+/* Rotate Top Players for Readability */
+.top-section .player-section {
     transform: rotate(180deg);
 }
 
@@ -159,50 +61,106 @@ button:hover {
 .player-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background: white;
+    justify-content: center;
     border: 2px solid black;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    position: relative;
     width: 100%;
+    height: 100%;
+    color: white;
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* Games Won Display */
-.games-won {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 5px 0;
+/* Ink-Based Background Colors */
+.player-section[data-ink="Steel"] {
+    background-color: #9FA9B3;
+}
+.player-section[data-ink="Emerald"] {
+    background-color: #298A34;
+}
+.player-section[data-ink="Amber"] {
+    background-color: #F4B300;
+}
+.player-section[data-ink="Amethyst"] {
+    background-color: #80387B;
+}
+.player-section[data-ink="Ruby"] {
+    background-color: #D2082F;
+}
+.player-section[data-ink="Sapphire"] {
+    background-color: #0089C3;
+}
+
+/* Ink Symbol (Top Left) */
+.ink-symbol-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.ink-symbol-container img {
+    width: 100%;
+    height: auto;
 }
 
 /* Lore Counter */
 .lore-counter {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .lore-counter button {
-    padding: 10px 15px;
-    font-size: 20px;
+    padding: 15px 20px;
+    font-size: 24px;
     cursor: pointer;
     border: none;
-    background: #007bff;
-    color: white;
+    background: white;
+    color: black;
     border-radius: 5px;
 }
 .lore-counter button:hover {
-    background: #0056b3;
+    background: #ddd;
 }
 .lore-value {
-    font-size: 30px;
+    font-size: 80px;
     font-weight: bold;
+}
+
+/* Player Name (Now Fully Spaced Below the Lore Counter) */
+.player-name {
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: auto;
+    white-space: nowrap;
+}
+
+/* Lore Count Color Changes */
+.lore-value.highest {
+    color: limegreen;
+}
+.lore-value.lowest {
+    color: red;
 }
 
 /* Small Donald Toggle */
 .donald-toggle {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     filter: grayscale(100%);
     transition: 0.3s;
@@ -217,30 +175,40 @@ button:hover {
     filter: grayscale(100%);
 }
 
-/* Game End Buttons */
+/* Game End Container */
 #gameEndContainer {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: none;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 100;
 }
+
+/* Next Game Button */
 #gameEndButton {
     padding: 15px 25px;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
+    display: none;
 }
 #gameEndButton:hover {
     background-color: #0056b3;
 }
 
+/* Final Game Button */
 #finalGameButton {
     padding: 15px 25px;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     background-color: red;
     color: white;
@@ -252,31 +220,55 @@ button:hover {
     background-color: darkred;
 }
 
-/* Responsive Adjustments */
+/* Ensure Buttons Are Not Hidden */
+#gameEndContainer.show {
+    display: flex !important;
+}
+#gameEndButton.show {
+    display: block !important;
+}
+
+/* Responsive Fix for 3 & 4 Player Layouts */
 @media (max-width: 600px) {
+    .top-section, .bottom-section {
+        display: flex;
+        width: 100%;
+        height: 50%;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .top-section .player-section, .bottom-section .player-section {
+        flex: 1;
+        width: 50%;
+        height: 100%;
+    }
+
+    .top-section .player-section {
+        transform: rotate(180deg);
+    }
+
     header img {
         max-height: 150px;
     }
-    .ink-selection {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+
+    .ink-symbol-container {
+        width: 60px;
+        height: 60px;
     }
-    .ink-selection label {
-        width: 70px;
+    
+    .player-name {
+        font-size: 22px;
+        top: 73%;
     }
-    .ink-selection img {
-        width: 45px;
-        height: 45px;
-    }
-    .lore-counter button {
-        font-size: 16px;
-        padding: 8px 12px;
-    }
+
     .lore-value {
-        font-size: 24px;
+        font-size: 70px;
     }
+    
     .donald-toggle {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
     }
 }

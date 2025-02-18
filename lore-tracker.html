@@ -8,51 +8,94 @@
 </head>
 <body>
     <main id="loreContainer"></main>
+
     <div id="gameEndContainer" style="display: none;">
-        <button id="gameEndButton" onclick="restartGame()"></button>
+        <button id="nextGameButton" onclick="startNextGame()">Next Game</button>
+        <button id="returnHomeButton" onclick="returnToLanding()">Back to Home</button>
     </div>
-    <button id="finalGameButton" onclick="returnToLanding()">Return to Home</button>
 
     <script>
         let players = JSON.parse(localStorage.getItem("players")) || [];
-        let matchFormat = localStorage.getItem("matchFormat") || "Single";
-        let playerMaxLore = Array(players.length).fill(20);
-        let toggledPlayers = new Set();
         let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || Array(players.length).fill(0);
+
+        const inkColors = {
+            "Steel": "#9FA9B3",
+            "Emerald": "#298A34",
+            "Amber": "#F4B300",
+            "Amethyst": "#80387B",
+            "Ruby": "#D2082F",
+            "Sapphire": "#0089C3"
+        };
 
         function createPlayerSections() {
             const container = document.getElementById("loreContainer");
             container.innerHTML = "";
 
-            container.className = players.length === 2 ? "two-players" :
-                                  players.length === 3 ? "three-players" :
-                                  players.length === 4 ? "four-players" : "";
+            let topSection = document.createElement("div");
+            topSection.classList.add("top-section");
+
+            let bottomSection = document.createElement("div");
+            bottomSection.classList.add("bottom-section");
 
             players.forEach((player, index) => {
                 let section = document.createElement("div");
                 section.classList.add("player-section");
-
-                if ((players.length === 2 && index === 0) || 
-                    (players.length === 3 && index === 0) ||
-                    (players.length === 4 && index < 2)) {
-                    section.classList.add("rotate");
-                }
-
+                section.style.backgroundColor = inkColors[player.ink] || "#FFFFFF"; // Default to white if missing
+                
                 section.innerHTML = `
-                    <h2>${player.name}</h2>
-                    <p class="games-won">Games Won: <span id="gamesWon${index}">${gamesWon[index]}</span></p>
-                    <div class="lore-counter">
-                        <button onclick="updateLore(${index}, -1)">-</button>
-                        <span id="lore${index}" class="lore-value">0</span>
-                        <button onclick="updateLore(${index}, 1)">+</button>
+                    <div class="ink-symbol-container">
+                        <img src="dlc_ink_${player.ink.toLowerCase()}.png" alt="${player.ink}">
+                    </div>
+                    <div class="player-info">
+                        <h2>${player.name}</h2>
+                        <p class="games-won">Games Won: <span id="gamesWon${index}">${gamesWon[index]}</span></p>
+                        <div class="lore-counter">
+                            <button onclick="updateLore(${index}, -1)">-</button>
+                            <span id="lore${index}" class="lore-value">0</span>
+                            <button onclick="updateLore(${index}, 1)">+</button>
+                        </div>
                     </div>
                     <img id="donaldToggle${index}" class="donald-toggle" src="donald_toggle.png" alt="Donald Toggle" onclick="toggleDonald(${index})">
                 `;
 
-                container.appendChild(section);
+                if (index < 2) {
+                    section.classList.add("rotate");
+                }
+
+                if (players.length === 2) {
+                    if (index === 0) {
+                        topSection.appendChild(section);
+                    } else {
+                        bottomSection.appendChild(section);
+                    }
+                } else if (players.length === 3) {
+                    if (index === 0) {
+                        topSection.appendChild(section);
+                    } else {
+                        bottomSection.appendChild(section);
+                    }
+                } else if (players.length === 4) {
+                    if (index < 2) {
+                        topSection.appendChild(section);
+                    } else {
+                        bottomSection.appendChild(section);
+                    }
+                }
             });
 
-            updateLoreColors();
+            container.appendChild(topSection);
+            container.appendChild(bottomSection);
+        }
+
+        function updateLore(index, change) {
+            let loreElement = document.getElementById(`lore${index}`);
+            let currentValue = parseInt(loreElement.innerText);
+            let newValue = Math.max(0, currentValue + change);
+            loreElement.innerText = newValue;
+
+            if (newValue >= 20) {
+                handleGameWin(index);
+            }
         }
 
         function handleGameWin(winnerIndex) {
@@ -60,22 +103,10 @@
             localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
             document.getElementById(`gamesWon${winnerIndex}`).innerText = gamesWon[winnerIndex];
 
-            let gameEndButton = document.getElementById("gameEndButton");
-            let finalGameButton = document.getElementById("finalGameButton");
-
-            let requiredWins = matchFormat === "Two Games" ? 2 :
-                               matchFormat === "Best of 3" ? 2 :
-                               matchFormat === "Best of 5" ? 3 : 1;
-
-            if (gamesWon[winnerIndex] >= requiredWins) {
-                finalGameButton.style.display = "block";
-            } else {
-                gameEndButton.innerText = matchFormat === "Single" ? "Start New Game" : "Start Next Game";
-                document.getElementById("gameEndContainer").style.display = "flex";
-            }
+            document.getElementById("gameEndContainer").style.display = "block";
         }
 
-        function restartGame() {
+        function startNextGame() {
             document.getElementById("gameEndContainer").style.display = "none";
             document.querySelectorAll(".lore-value").forEach(el => el.innerText = "0");
         }
