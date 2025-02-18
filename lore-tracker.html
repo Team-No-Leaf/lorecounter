@@ -8,11 +8,16 @@
 </head>
 <body>
     <main id="loreContainer"></main>
+    <div id="gameEndContainer" style="display: none;">
+        <button id="gameEndButton" onclick="restartGame()"></button>
+    </div>
 
     <script>
         let players = JSON.parse(localStorage.getItem("players")) || [];
+        let matchFormat = localStorage.getItem("matchFormat") || "Single";
         let playerMaxLore = Array(players.length).fill(20);
         let toggledPlayers = new Set();
+        let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || Array(players.length).fill(0);
 
         function createPlayerSections() {
             const container = document.getElementById("loreContainer");
@@ -38,6 +43,7 @@
 
                 section.innerHTML = `
                     <h2>${player.name}</h2>
+                    <p class="games-won">Games Won: <span id="gamesWon${index}">${gamesWon[index]}</span></p>
                     <div class="lore-counter">
                         <button onclick="updateLore(${index}, -1)">-</button>
                         <span id="lore${index}" class="lore-value">0</span>
@@ -57,6 +63,11 @@
             let currentValue = parseInt(loreElement.innerText);
             let newValue = Math.max(0, Math.min(playerMaxLore[index], currentValue + change));
             loreElement.innerText = newValue;
+
+            if (newValue === playerMaxLore[index]) {
+                handleGameWin(index);
+            }
+
             updateLoreColors();
         }
 
@@ -75,12 +86,10 @@
             let toggle = document.getElementById(`donaldToggle${playerIndex}`);
 
             if (toggledPlayers.has(playerIndex)) {
-                // If already active, turn it off
                 toggle.classList.remove("active");
                 toggle.classList.add("disabled");
                 toggledPlayers.delete(playerIndex);
             } else {
-                // Activate the toggle
                 toggle.classList.remove("disabled");
                 toggle.classList.add("active");
                 toggledPlayers.add(playerIndex);
@@ -91,11 +100,26 @@
 
         function updateMaxLore() {
             let activePlayers = Array.from(toggledPlayers);
-
-            // If at least one player has toggled, all others get max lore 25
             players.forEach((_, i) => {
                 playerMaxLore[i] = activePlayers.length > 0 ? 25 : 20;
             });
+        }
+
+        function handleGameWin(winnerIndex) {
+            gamesWon[winnerIndex]++;
+            localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
+            document.getElementById(`gamesWon${winnerIndex}`).innerText = gamesWon[winnerIndex];
+
+            let gameEndContainer = document.getElementById("gameEndContainer");
+            let gameEndButton = document.getElementById("gameEndButton");
+
+            gameEndButton.innerText = matchFormat === "Single" ? "Start New Game" : "Start Next Game";
+            gameEndContainer.style.display = "flex";
+        }
+
+        function restartGame() {
+            document.getElementById("gameEndContainer").style.display = "none";
+            document.querySelectorAll(".lore-value").forEach(el => el.innerText = "0");
         }
 
         createPlayerSections();
