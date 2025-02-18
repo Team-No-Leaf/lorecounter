@@ -32,6 +32,13 @@
                 let section = document.createElement("div");
                 section.classList.add("player-section");
 
+                // Rotate the top half
+                if ((players.length === 2 && index === 0) || 
+                    (players.length === 3 && index === 0) ||
+                    (players.length === 4 && index < 2)) {
+                    section.classList.add("rotate"); // Add rotation class
+                }
+
                 section.innerHTML = `
                     <h2>${player.name}</h2>
                     <div class="lore-counter">
