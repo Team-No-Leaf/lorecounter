@@ -44,7 +44,7 @@
         function updatePlayerInputs() {
             const count = document.getElementById("playerCount").value;
             const container = document.getElementById("playerInputs");
-            container.innerHTML = ""; // Clear previous content
+            container.innerHTML = "";
 
             for (let i = 1; i <= count; i++) {
                 container.innerHTML += `
@@ -83,51 +83,15 @@
                 `;
             }
 
-            document.getElementById("matchFormatContainer").style.display = "block"; // Ensure match format dropdown appears
-            checkAllInputs(); // Ensure "Start Game" button visibility updates correctly
-        }
-
-        function checkAllInputs() {
-            const count = document.getElementById("playerCount").value;
-            const format = document.getElementById("matchFormat").value;
-            let allFilled = format !== "";
-
-            for (let i = 1; i <= count; i++) {
-                let name = document.getElementById(`player${i}`).value.trim();
-                let ink = document.querySelector(`input[name="ink${i}"]:checked`);
-
-                if (!name || !ink) {
-                    allFilled = false;
-                    break;
-                }
-            }
-
-            document.getElementById("startGameButton").style.display = allFilled ? "block" : "none";
-        }
-
-        function startGame() {
-            const count = document.getElementById("playerCount").value;
-            const format = document.getElementById("matchFormat").value;
-            let players = [];
-
-            for (let i = 1; i <= count; i++) {
-                let name = document.getElementById(`player${i}`).value.trim();
-                let ink = document.querySelector(`input[name="ink${i}"]:checked`).value;
-
-                players.push({ name, ink });
-            }
-
-            localStorage.setItem("players", JSON.stringify(players));
-            localStorage.setItem("matchFormat", format);
-
-            window.location.href = "lore-tracker.html"; // Redirect to the lore tracker
+            document.getElementById("matchFormatContainer").style.display = "block";
+            checkAllInputs();
         }
 
         function goBack() {
             window.location.href = "index.html";
         }
 
-        updatePlayerInputs(); // Initialize on load
+        updatePlayerInputs();
     </script>
 </body>
 </html>
