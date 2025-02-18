@@ -22,21 +22,22 @@
             const container = document.getElementById("loreContainer");
             container.innerHTML = ""; // Clear any existing sections
 
-            let layoutClass = players.length === 2 ? "two-players" :
-                              players.length === 3 ? "three-players" :
-                              players.length === 4 ? "four-players" : "";
+            let topSection = document.createElement("div");
+            let bottomSection = document.createElement("div");
 
-            container.classList.add(layoutClass);
+            topSection.classList.add("top-section");
+            bottomSection.classList.add("bottom-section");
 
             players.forEach((player, index) => {
                 let section = document.createElement("div");
                 section.classList.add("player-section");
 
-                // Rotate the top half
                 if ((players.length === 2 && index === 0) || 
                     (players.length === 3 && index === 0) ||
                     (players.length === 4 && index < 2)) {
-                    section.classList.add("rotate"); // Add rotation class
+                    topSection.appendChild(section);
+                } else {
+                    bottomSection.appendChild(section);
                 }
 
                 section.innerHTML = `
@@ -47,9 +48,10 @@
                         <button onclick="updateLore(${index}, 1)">+</button>
                     </div>
                 `;
-
-                container.appendChild(section);
             });
+
+            container.appendChild(topSection);
+            container.appendChild(bottomSection);
 
             updateLoreColors(); // Initial color setup
         }
