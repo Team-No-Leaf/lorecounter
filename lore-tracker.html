@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lore Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main id="loreContainer"></main>
+
+    <!-- Toggle button for Donald effect -->
+    <div id="toggleContainer">
+        <img id="donaldToggle" src="donald_toggle.png" alt="Donald Toggle" onclick="toggleMaxLore()" class="disabled">
+    </div>
+
+    <script>
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        let maxLore = 20; // Default max lore value
+
+        function createPlayerSections() {
+            const container = document.getElementById("loreContainer");
+            container.innerHTML = ""; // Clear any existing sections
+
+            let layoutClass = players.length === 2 ? "two-players" :
+                              players.length === 3 ? "three-players" :
+                              players.length === 4 ? "four-players" : "";
+
+            container.classList.add(layoutClass);
+
+            players.forEach((player, index) => {
+                let section = document.createElement("div");
+                section.classList.add("player-section");
+
+                section.innerHTML = `
+                    <h2>${player.name}</h2>
+                    <div class="lore-counter">
+                        <button onclick="updateLore(${index}, -1)">-</button>
+                        <span id="lore${index}" class="lore-value">0</span>
+                        <button onclick="updateLore(${index}, 1)">+</button>
+                    </div>
+                `;
+
+                container.appendChild(section);
+            });
+
+            updateLoreColors(); // Initial color setup
+        }
+
+        function updateLore(index, change) {
+            let loreElement = document.getElementById(`lore${index}`);
+            let currentValue = parseInt(loreElement.innerText);
+            let newValue = Math.max(0, Math.min(maxLore, currentValue + change));
+            loreElement.innerText = newValue;
+            updateLoreColors();
+        }
+
+        function updateLoreColors() {
+            let values = Array.from(document.querySelectorAll(".lore-value")).map(el => parseInt(el.innerText));
+            let maxValue = Math.max(...values);
+            let minValue = Math.min(...values);
+
+            document.querySelectorAll(".lore-value").forEach((el, index) => {
+                let value = parseInt(el.innerText);
+                el.style.color = value === maxValue ? "green" : value === minValue ? "red" : "black";
+            });
+        }
+
+        function toggleMaxLore() {
+            let toggle = document.getElementById("donaldToggle");
+            let isActive = toggle.classList.contains("active");
+
+            if (isActive) {
+                toggle.classList.remove("active");
+                toggle.classList.add("disabled");
+                maxLore = 20;
+            } else {
+                toggle.classList.remove("disabled");
+                toggle.classList.add("active");
+                maxLore = 25;
+            }
+
+            updateLoreColors();
+        }
+
+        createPlayerSections();
+    </script>
+</body>
+</html>

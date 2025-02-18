@@ -1,139 +1,97 @@
-/* General Page Styling */
+/* General Styling */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
-}
-
-/* Header Image */
-header img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-}
-
-/* Main Content Styling */
-main {
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
-}
-
-/* Buttons */
-button {
-    width: 90%;
-    max-width: 300px;
-    padding: 15px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 20px auto; /* Centers button */
-    display: block; /* Ensures full width */
-    text-align: center;
-}
-
-/* Button Hover Effect */
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Start Game Button */
-#startGameButton {
-    display: none; /* Hidden until inputs are complete */
-    margin-top: 20px;
-    text-align: center;
-}
-
-/* Input Fields & Dropdown */
-input, select {
-    width: 90%;
-    max-width: 300px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: block;
-    margin: 10px auto;
-}
-
-/* Labels */
-label {
-    font-size: 18px;
-    display: block;
-    margin-top: 15px;
-}
-
-/* Player Sections */
-.player-section {
-    margin: 20px 0;
-    padding: 10px;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Ink Selection */
-.ink-selection {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 2 rows of 3 */
-    gap: 10px;
-    justify-items: center;
-    max-width: 300px;
-    margin: auto;
-}
-
-.ink-selection label {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* Main Container for Players */
+#loreContainer {
+    width: 100%;
+    display: grid;
+    gap: 10px;
+}
+
+/* Layout Adjustments for Different Player Counts */
+.two-players {
+    grid-template-rows: repeat(2, 1fr);
+    height: 100vh;
+}
+
+.three-players {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+
+.four-players {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+
+/* Individual Player Section */
+.player-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border: 2px solid black;
+    padding: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Lore Counter */
+.lore-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lore-counter button {
+    padding: 10px 15px;
+    font-size: 20px;
     cursor: pointer;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.lore-counter button:hover {
+    background: #0056b3;
+}
+
+.lore-value {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Toggle Button */
+#toggleContainer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#donaldToggle {
     width: 80px;
-}
-
-.ink-selection input {
-    display: none;
-}
-
-.ink-selection img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid transparent;
+    cursor: pointer;
+    filter: grayscale(100%);
     transition: 0.3s;
 }
 
-.ink-selection input:checked + img {
-    border-color: #007bff;
-    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.7);
+#donaldToggle.active {
+    filter: none;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 22px;
-    }
-
-    p {
-        font-size: 16px;
-    }
-
-    /* Adjust grid for smaller screens */
-    .ink-selection {
-        grid-template-columns: repeat(3, 1fr); /* Ensures 2 rows of 3 */
-        gap: 8px;
-    }
-
-    .ink-selection label {
-        width: 70px;
-    }
-
-    .ink-selection img {
-        width: 45px;
-        height: 45px;
-    }
+#donaldToggle.disabled {
+    filter: grayscale(100%);
 }
