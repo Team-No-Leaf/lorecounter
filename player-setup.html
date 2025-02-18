@@ -9,9 +9,15 @@
 <body>
     <main>
         <h1>Setup Your Players</h1>
-        <label for="playerCount">Number of Players (1-4):</label>
-        <input type="number" id="playerCount" min="1" max="4" value="1" onchange="updatePlayerInputs()">
-        
+
+        <label for="playerCount">Number of Players:</label>
+        <select id="playerCount" onchange="updatePlayerInputs()">
+            <option value="1">1 Player</option>
+            <option value="2">2 Players</option>
+            <option value="3">3 Players</option>
+            <option value="4">4 Players</option>
+        </select>
+
         <div id="playerInputs"></div>
 
         <button onclick="submitPlayers()">Continue</button>
@@ -26,8 +32,38 @@
 
             for (let i = 1; i <= count; i++) {
                 container.innerHTML += `
-                    <label for="player${i}">Player ${i} Name:</label>
-                    <input type="text" id="player${i}" required><br>
+                    <div class="player-section">
+                        <label for="player${i}">Player ${i} Name:</label>
+                        <input type="text" id="player${i}" required>
+
+                        <p>Select an Ink Color:</p>
+                        <div class="ink-selection">
+                            <label>
+                                <input type="radio" name="ink${i}" value="Steel">
+                                <img src="dlc_ink_steel.png" alt="Steel">
+                            </label>
+                            <label>
+                                <input type="radio" name="ink${i}" value="Ruby">
+                                <img src="dlc_ink_ruby.png" alt="Ruby">
+                            </label>
+                            <label>
+                                <input type="radio" name="ink${i}" value="Amethyst">
+                                <img src="dlc_ink_amethyst.png" alt="Amethyst">
+                            </label>
+                            <label>
+                                <input type="radio" name="ink${i}" value="Sapphire">
+                                <img src="dlc_ink_sapphire.png" alt="Sapphire">
+                            </label>
+                            <label>
+                                <input type="radio" name="ink${i}" value="Amber">
+                                <img src="dlc_ink_amber.png" alt="Amber">
+                            </label>
+                            <label>
+                                <input type="radio" name="ink${i}" value="Emerald">
+                                <img src="dlc_ink_emerald.png" alt="Emerald">
+                            </label>
+                        </div>
+                    </div>
                 `;
             }
         }
@@ -38,15 +74,18 @@
 
             for (let i = 1; i <= count; i++) {
                 let name = document.getElementById(`player${i}`).value;
-                if (!name) {
-                    alert("Please enter all player names.");
+                let ink = document.querySelector(`input[name="ink${i}"]:checked`);
+
+                if (!name || !ink) {
+                    alert("Please enter all player names and select an ink color.");
                     return;
                 }
-                players.push(name);
+
+                players.push({ name, ink: ink.value });
             }
 
-            alert(`Players registered: ${players.join(", ")}`);
-            // Here, you can store the data or redirect to another page.
+            alert(`Players registered:\n` + players.map(p => `${p.name} - ${p.ink}`).join("\n"));
+            // You can store this data in localStorage or send it to another page.
         }
 
         function goBack() {
