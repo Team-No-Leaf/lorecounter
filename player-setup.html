@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <img src="header.jpg" alt="Header Image">
+    </header>
+
     <main>
         <h1>Setup Your Players</h1>
 
@@ -40,7 +44,7 @@
         function updatePlayerInputs() {
             const count = document.getElementById("playerCount").value;
             const container = document.getElementById("playerInputs");
-            container.innerHTML = "";
+            container.innerHTML = ""; // Clear previous content
 
             for (let i = 1; i <= count; i++) {
                 container.innerHTML += `
@@ -79,8 +83,8 @@
                 `;
             }
 
-            document.getElementById("matchFormatContainer").style.display = "block"; // Ensure match format appears
-            checkAllInputs(); // Update button visibility
+            document.getElementById("matchFormatContainer").style.display = "block"; // Ensure match format dropdown appears
+            checkAllInputs(); // Ensure "Start Game" button visibility updates correctly
         }
 
         function checkAllInputs() {
@@ -113,8 +117,10 @@
                 players.push({ name, ink });
             }
 
-            alert(`Game Started!\nFormat: ${format}\nPlayers:\n${players.map(p => `${p.name} - ${p.ink}`).join("\n")}`);
-            // Here you can store the data and redirect to the match page.
+            localStorage.setItem("players", JSON.stringify(players));
+            localStorage.setItem("matchFormat", format);
+
+            window.location.href = "lore-tracker.html"; // Redirect to the lore tracker
         }
 
         function goBack() {
