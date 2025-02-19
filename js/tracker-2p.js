@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    // ✅ Create notification pop-up in HTML (Fix: Ensure it exists)
+    let notification = document.createElement("div");
+    notification.id = "winNotification";
+    notification.classList.add("win-notification");
+    document.body.appendChild(notification);
+
     // Apply settings for each player section
     for (let i = 0; i < 2; i++) {
         let playerSection = document.getElementById(`player${i + 1}`);
@@ -50,6 +56,9 @@ function updateLore(playerIndex, change) {
     let currentValue = parseInt(loreElement.innerText);
     let newValue = Math.max(0, Math.min(20, currentValue + change));
 
+    // ✅ Prevents further increases after reaching max lore
+    if (currentValue === 20 && newValue === 20) return;
+
     loreElement.innerText = newValue;
 
     if (newValue === 20) {
@@ -59,43 +68,53 @@ function updateLore(playerIndex, change) {
     updateLoreColors();
 }
 
-// ✅ Function to handle game win
+// ✅ Function to handle game win and show pop-up
 function handleGameWin(winningPlayer) {
     let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || [0, 0];
 
-    // ✅ Increase winner's game count
+    // ✅ Increase winner's game count only once
+    if (gamesWon[winningPlayer] === undefined) {
+        gamesWon[winningPlayer] = 0;
+    }
     gamesWon[winningPlayer]++;
     localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
 
     // ✅ Update UI
     document.getElementById(`gamesWon${winningPlayer + 1}`).innerText = `Games Won: ${gamesWon[winningPlayer]}`;
 
-    // ✅ Reset lore count for both players
-    document.getElementById("lore1").innerText = "0";
-    document.getElementById("lore2").innerText = "0";
+    // ✅ Show notification pop-up
+    showWinNotification(players[winningPlayer].name);
+}
 
-    updateLoreColors();
+// ✅ Function to show notification
+function showWinNotification(winnerName) {
+    let notification = document.getElementById("winNotification");
+    notification.innerText = `${winnerName} has won the game!`;
+    notification.classList.add("show");
+
+    // ✅ Remove after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 3000);
 }
 
 // ✅ Function to update lore colors (green for highest, red for lowest)
 function updateLoreColors() {
-    let loreValues = [
-        parseInt(document.getElementById("lore1").innerText),
-        parseInt(document.getElementById("lore2").innerText)
-    ];
+    let loreElements = [document.getElementById("lore1"), document.getElementById("lore2")];
+    let loreValues = loreElements.map(el => parseInt(el.innerText));
 
     let maxLore = Math.max(...loreValues);
     let minLore = Math.min(...loreValues);
 
-    for (let i = 0; i < 2; i++) {
-        let loreElement = document.getElementById(`lore${i + 1}`);
-        loreElement.classList.remove("highest", "lowest");
+    // ✅ Fix: Clear previous styles before updating
+    loreElements.forEach(el => el.classList.remove("highest", "lowest"));
 
+    for (let i = 0; i < 2; i++) {
         if (loreValues[i] === maxLore && maxLore !== minLore) {
-            loreElement.classList.add("highest");
+            loreElements[i].classList.add("highest");
         }
         if (loreValues[i] === minLore && maxLore !== minLore) {
-            loreElement.classList.add("lowest");
+            loreElements[i].classList.add("lowest");
         }
     }
 }
