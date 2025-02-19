@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let players = JSON.parse(localStorage.getItem("players")) || [];
+    let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || [0, 0];
 
     if (players.length !== 2) {
         window.location.href = "index.html";
@@ -10,17 +11,25 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < 2; i++) {
         let playerSection = document.getElementById(`player${i + 1}`);
         let inkSymbol = document.getElementById(`player${i + 1}Ink`);
+        let playerName = document.getElementById(`player${i + 1}Name`);
+        let gamesWonCounter = document.getElementById(`gamesWon${i + 1}`);
 
-        // ✅ Apply background color
+        // ✅ Restore background color
         let ink = players[i].ink;
         if (ink) {
-            playerSection.setAttribute("data-ink", ink);
             playerSection.style.backgroundColor = getInkColor(ink);
+            playerSection.setAttribute("data-ink", ink);
         }
 
-        // ✅ Assign ink icon
+        // ✅ Restore ink icon
         inkSymbol.src = `dlc_ink_${ink.toLowerCase()}.png`;
         inkSymbol.alt = ink;
+
+        // ✅ Assign player name
+        playerName.innerText = players[i].name;
+
+        // ✅ Assign games won counter
+        gamesWonCounter.innerText = `Games Won: ${gamesWon[i]}`;
 
         // ✅ Add event listeners for lore buttons
         document.getElementById(`increase${i + 1}`).addEventListener("click", function () {
@@ -42,6 +51,29 @@ function updateLore(playerIndex, change) {
     let newValue = Math.max(0, Math.min(20, currentValue + change));
 
     loreElement.innerText = newValue;
+
+    if (newValue === 20) {
+        handleGameWin(playerIndex);
+    }
+
+    updateLoreColors();
+}
+
+// ✅ Function to handle game win
+function handleGameWin(winningPlayer) {
+    let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || [0, 0];
+
+    // ✅ Increase winner's game count
+    gamesWon[winningPlayer]++;
+    localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
+
+    // ✅ Update UI
+    document.getElementById(`gamesWon${winningPlayer + 1}`).innerText = `Games Won: ${gamesWon[winningPlayer]}`;
+
+    // ✅ Reset lore count for both players
+    document.getElementById("lore1").innerText = "0";
+    document.getElementById("lore2").innerText = "0";
+
     updateLoreColors();
 }
 

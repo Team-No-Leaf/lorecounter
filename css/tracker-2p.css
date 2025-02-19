@@ -50,6 +50,19 @@
     height: 40px;
 }
 
+/* ✅ Player Name - Above the Lore Counter */
+.player-name {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+}
+
 /* ✅ Lore Counter */
 .lore-counter {
     display: flex;
@@ -91,4 +104,19 @@
 
 .lowest {
     color: red;
+}
+
+/* ✅ Games Won Counter - Below Lore Counter */
+.games-won-container {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #FFD700;
+    text-align: center;
 }
