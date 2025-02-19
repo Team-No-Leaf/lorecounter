@@ -1,0 +1,94 @@
+/* ✅ Reset Default Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ✅ Ensure Full-Screen Layout */
+#loreContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Prevents scrolling */
+}
+
+/* ✅ Player Sections */
+.player-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 50vh;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* ✅ Rotate Top Player */
+.top-section {
+    transform: rotate(180deg);
+}
+
+/* ✅ Background Colors */
+[data-ink="Steel"] { background-color: #9FA9B3 !important; }
+[data-ink="Emerald"] { background-color: #298A34 !important; }
+[data-ink="Amber"] { background-color: #F4B300 !important; }
+[data-ink="Amethyst"] { background-color: #80387B !important; }
+[data-ink="Ruby"] { background-color: #D2082F !important; }
+[data-ink="Sapphire"] { background-color: #0089C3 !important; }
+
+/* ✅ Ink Icon in Top Left */
+.ink-symbol {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+/* ✅ Lore Counter */
+.lore-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ✅ Lore Buttons */
+.lore-btn {
+    padding: 10px 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    border: none;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.lore-btn:hover {
+    background: #ddd;
+}
+
+/* ✅ Lore Value */
+.lore-value {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+/* ✅ Lore Value Colors */
+.highest {
+    color: green;
+}
+
+.lowest {
+    color: red;
+}

@@ -1,0 +1,147 @@
+/* ✅ Reset Default Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ✅ Body & Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+}
+
+/* ✅ Header Image */
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.header-img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+/* ✅ Main Content */
+main {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* ✅ Title */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* ✅ Dropdown for Player Count */
+label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    font-size: 1rem;
+    margin: 10px 0 20px;
+    border-radius: 5px;
+}
+
+/* ✅ Player Sections */
+.player-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #ddd; /* Default background */
+    transition: background-color 0.3s ease;
+}
+
+/* ✅ Ink Selection Grid */
+.ink-selection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Two rows of three icons */
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* ✅ Ink Icon */
+.ink-icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease, border 0.2s ease;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.ink-icon:hover {
+    transform: scale(1.1);
+}
+
+.ink-icon.selected {
+    border: 2px solid black;
+}
+
+/* ✅ Centering the "Start Game" Button */
+.start-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#startGame {
+    width: 100%;
+    max-width: 250px;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: none;
+    text-align: center;
+}
+
+#startGame:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ Mobile Optimization */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    select {
+        font-size: 0.9rem;
+    }
+
+    .ink-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    #startGame {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}

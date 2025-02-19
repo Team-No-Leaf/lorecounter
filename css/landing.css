@@ -1,0 +1,91 @@
+/* ✅ Reset Default Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ✅ Ensure Full-Screen Scaling */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+}
+
+/* ✅ Header Image (Now Fixed at the Top) */
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #fff; /* Optional: Background to make the header stand out */
+}
+
+.header-img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+/* ✅ Main Content (Now Centered Below the Header) */
+main {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin-top: 20px; /* Ensures spacing below header */
+}
+
+/* ✅ Title */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* ✅ Disclaimer Text */
+.disclaimer {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* ✅ Start Game Button */
+.start-btn {
+    width: 100%;
+    max-width: 250px;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.start-btn:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ Mobile Optimization */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .disclaimer {
+        font-size: 0.9rem;
+    }
+
+    .start-btn {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    main {
+        margin-top: 10px; /* Less spacing on smaller screens */
+    }
+}

@@ -3,28 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lorcana Lore Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
     <header>
-        <img src="header.jpg" alt="Header Image">
+        <img src="header.jpg" alt="Header" class="header-img">
     </header>
-
     <main>
-        <h1>Welcome to the Lorcana Lore Tracker</h1>
-        <p>This is a simple tool to help track lore during your Lorcana matches.</p>
-        <button onclick="goToPlayerSetup()">Start Setup</button>
+        <h1>Welcome to the Lore Tracker</h1>
+        <p class="disclaimer">
+            This is a personal project and is not affiliated with Ravensburger, Disney, or any other Lorcana-related parties.
+        </p>
+        <button onclick="location.href='setup.html'" class="start-btn">Start a New Game</button>
     </main>
-
-    <p class="disclaimer">
-        This is a personal project and is not affiliated with, endorsed by, or associated with Ravensburger, Disney, or any official Lorcana-related entities.
-    </p>
-
-    <script>
-        function goToPlayerSetup() {
-            window.location.href = "player-setup.html";
-        }
-    </script>
 </body>
 </html>
