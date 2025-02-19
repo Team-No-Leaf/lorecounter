@@ -121,26 +121,44 @@
     text-align: center;
 }
 
-/* ✅ Win Notification Pop-Up */
-.win-notification {
+/* ✅ Win Buttons - Hidden by Default */
+.win-buttons {
     display: none;
     position: fixed;
-    top: 10%;
+    bottom: 10%;
     left: 50%;
-    transform: translate(-50%, 0);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
+    transform: translateX(-50%);
     text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
 }
 
-/* ✅ Show Pop-Up */
-.win-notification.show {
+/* ✅ Win Buttons Styling */
+.win-buttons button {
     display: block;
-    opacity: 1;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+/* ✅ "Start Next Game" Button */
+#nextGame {
+    background-color: #28a745;
+    color: white;
+}
+
+#nextGame:hover {
+    background-color: #218838;
+}
+
+/* ✅ "Back to Player Setup" Button */
+#backToSetup {
+    background-color: #dc3545;
+    color: white;
+}
+
+#backToSetup:hover {
+    background-color: #c82333;
 }

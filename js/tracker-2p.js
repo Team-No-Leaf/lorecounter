@@ -7,11 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // ✅ Create notification pop-up in HTML (Fix: Ensure it exists)
-    let notification = document.createElement("div");
-    notification.id = "winNotification";
-    notification.classList.add("win-notification");
-    document.body.appendChild(notification);
+    // ✅ Hide win buttons initially
+    let winButtons = document.getElementById("winButtons");
+    winButtons.style.display = "none";
 
     // Apply settings for each player section
     for (let i = 0; i < 2; i++) {
@@ -47,6 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // ✅ Ensure win buttons work
+    document.getElementById("nextGame").addEventListener("click", resetLore);
+    document.getElementById("backToSetup").addEventListener("click", function () {
+        localStorage.removeItem("gamesWon"); // Reset games won when going back
+        window.location.href = "setup.html";
+    });
+
     updateLoreColors();
 });
 
@@ -56,7 +61,7 @@ function updateLore(playerIndex, change) {
     let currentValue = parseInt(loreElement.innerText);
     let newValue = Math.max(0, Math.min(20, currentValue + change));
 
-    // ✅ Prevents further increases after reaching max lore
+    // ✅ Prevent further increases after reaching 20 lore
     if (currentValue === 20 && newValue === 20) return;
 
     loreElement.innerText = newValue;
@@ -68,7 +73,7 @@ function updateLore(playerIndex, change) {
     updateLoreColors();
 }
 
-// ✅ Function to handle game win and show pop-up
+// ✅ Function to handle game win and show buttons
 function handleGameWin(winningPlayer) {
     let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || [0, 0];
 
@@ -82,20 +87,21 @@ function handleGameWin(winningPlayer) {
     // ✅ Update UI
     document.getElementById(`gamesWon${winningPlayer + 1}`).innerText = `Games Won: ${gamesWon[winningPlayer]}`;
 
-    // ✅ Show notification pop-up
-    showWinNotification(players[winningPlayer].name);
+    // ✅ Show win buttons
+    let winButtons = document.getElementById("winButtons");
+    winButtons.style.display = "block";
 }
 
-// ✅ Function to show notification
-function showWinNotification(winnerName) {
-    let notification = document.getElementById("winNotification");
-    notification.innerText = `${winnerName} has won the game!`;
-    notification.classList.add("show");
+// ✅ Function to reset lore for next game
+function resetLore() {
+    document.getElementById("lore1").innerText = "0";
+    document.getElementById("lore2").innerText = "0";
 
-    // ✅ Remove after 3 seconds
-    setTimeout(() => {
-        notification.classList.remove("show");
-    }, 3000);
+    // ✅ Hide win buttons again
+    let winButtons = document.getElementById("winButtons");
+    winButtons.style.display = "none";
+
+    updateLoreColors();
 }
 
 // ✅ Function to update lore colors (green for highest, red for lowest)
