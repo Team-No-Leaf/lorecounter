@@ -7,11 +7,35 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    // ✅ Wake Lock (Prevent Screen from Sleeping)
+    let wakeLock = null;
+    
+    async function enableWakeLock() {
+        if ('wakeLock' in navigator) {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log("✅ Screen Wake Lock Enabled");
+            } catch (err) {
+                console.error("⚠️ Wake Lock Error:", err);
+            }
+        }
+    }
+
+    // ✅ Enable Wake Lock when page loads
+    enableWakeLock();
+
+    // ✅ Re-enable Wake Lock when visibility changes
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+            enableWakeLock();
+        }
+    });
+
     // ✅ Hide win buttons initially
     let winButtons = document.getElementById("winButtons");
     winButtons.style.display = "none";
 
-    // Apply settings for each player section
+    // ✅ Apply settings for each player section
     for (let i = 0; i < 2; i++) {
         let playerSection = document.getElementById(`player${i + 1}`);
         let inkSymbol = document.getElementById(`player${i + 1}Ink`);
