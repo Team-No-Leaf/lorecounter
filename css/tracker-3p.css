@@ -1,0 +1,147 @@
+/* ✅ Reset Default Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ✅ Ensure Full-Screen Layout */
+#loreContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Prevents scrolling */
+}
+
+/* ✅ Top Section (Two Players Side by Side, Rotated) */
+.top-section {
+    display: flex;
+    width: 100vw;
+    height: 50vh;
+}
+
+/* ✅ Rotate Top Players */
+.rotate {
+    transform: rotate(180deg);
+}
+
+/* ✅ Bottom Section (One Player, Normal) */
+.bottom-section {
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* ✅ Player Sections */
+.player-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* ✅ Split Top Players */
+.split {
+    width: 50%;
+    height: 100%;
+}
+
+/* ✅ Background Colors */
+.player-section[data-ink="Steel"] { background-color: #9FA9B3 !important; }
+.player-section[data-ink="Emerald"] { background-color: #298A34 !important; }
+.player-section[data-ink="Amber"] { background-color: #F4B300 !important; }
+.player-section[data-ink="Amethyst"] { background-color: #80387B !important; }
+.player-section[data-ink="Ruby"] { background-color: #D2082F !important; }
+.player-section[data-ink="Sapphire"] { background-color: #0089C3 !important; }
+
+/* ✅ Ink Icon in Top Left */
+.ink-symbol {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+}
+
+/* ✅ Player Name - Above the Lore Counter */
+.player-name {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+}
+
+/* ✅ Lore Counter */
+.lore-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ✅ Lore Buttons */
+.lore-btn {
+    padding: 12px 22px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    border: none;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.lore-btn:hover {
+    background: #ddd;
+}
+
+/* ✅ Lore Value */
+.lore-value {
+    font-size: 4rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.4); /* ✅ Semi-Transparent Background */
+    color: white;
+}
+
+/* ✅ Lore Value Colors */
+.highest {
+    color: green;
+}
+
+.lowest {
+    color: red;
+}
+
+/* ✅ Games Won Counter */
+.games-won-container {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 6px 12px;
+    border-radius: 5px;
+    color: #FFD700;
+    text-align: center;
+}
