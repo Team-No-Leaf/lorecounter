@@ -90,19 +90,24 @@
     background: #ddd;
 }
 
-/* ✅ Lore Value */
+/* ✅ Lore Value - With Readability Fix */
 .lore-value {
     font-size: 4rem;
     font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.4); /* ✅ Semi-Transparent Background */
+    color: white;
 }
 
-/* ✅ Lore Value Colors */
+/* ✅ Lore Value Colors - Adjust for Readability */
 .highest {
-    color: green;
+    color: #00FF00; /* Brighter green */
 }
 
+/* ✅ Adjusted Red for Better Visibility */
 .lowest {
-    color: red;
+    color: #FF6666; /* More visible red */
 }
 
 /* ✅ Games Won Counter - Below Lore Counter */
