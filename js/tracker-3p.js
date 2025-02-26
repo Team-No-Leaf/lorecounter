@@ -7,13 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    let loreValues = [0, 0, 0];
-
     // ✅ Apply settings for each player section
     for (let i = 0; i < 3; i++) {
         let playerSection = document.getElementById(`player${i + 1}`);
         let inkSymbol = document.getElementById(`player${i + 1}Ink`);
         let playerName = document.getElementById(`player${i + 1}Name`);
+        let gamesWonCounter = document.getElementById(`gamesWon${i + 1}`);
 
         if (players[i] && players[i].ink) {
             let ink = players[i].ink.toLowerCase();
@@ -26,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         playerName.innerText = players[i].name;
+        gamesWonCounter.innerText = `Games Won: ${gamesWon[i]}`;
 
         document.getElementById(`increase${i + 1}`).addEventListener("click", () => updateLore(i, 1));
         document.getElementById(`decrease${i + 1}`).addEventListener("click", () => updateLore(i, -1));
@@ -41,10 +41,11 @@ function updateLore(playerIndex, change) {
     let newValue = Math.max(0, Math.min(20, currentValue + change));
 
     loreElement.innerText = newValue;
+
     updateLoreColors();
 }
 
-// ✅ Function to update lore colors (Refined Logic)
+// ✅ Function to update lore colors (green for highest, red for lowest)
 function updateLoreColors() {
     let loreElements = [
         document.getElementById("lore1"),
@@ -55,11 +56,8 @@ function updateLoreColors() {
     let loreValues = loreElements.map(el => parseInt(el.innerText));
     let maxLore = Math.max(...loreValues);
     let minLore = Math.min(...loreValues);
-
-    // ✅ Count how many players have the highest lore value
     let maxCount = loreValues.filter(value => value === maxLore).length;
 
-    // ✅ Reset previous styles
     loreElements.forEach(el => el.classList.remove("highest", "lowest"));
 
     for (let i = 0; i < 3; i++) {
@@ -69,7 +67,6 @@ function updateLoreColors() {
             loreElements[i].classList.add("lowest"); // ✅ Others turn red
         }
 
-        // ✅ If there's a tie for highest, reset to default color
         if (maxCount > 1) {
             loreElements[i].classList.remove("highest", "lowest");
         }

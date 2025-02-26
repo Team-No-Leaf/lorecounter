@@ -145,3 +145,58 @@
     color: #FFD700;
     text-align: center;
 }
+
+/* ✅ Win Screen - Centered Pop-Up */
+.win-screen {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 300px;
+}
+
+/* ✅ Win Message */
+.win-screen h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* ✅ Win Buttons */
+.win-screen button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+/* ✅ "Start Next Game" Button */
+#nextGame {
+    background-color: #28a745;
+    color: white;
+}
+
+#nextGame:hover {
+    background-color: #218838;
+}
+
+/* ✅ "Back to Player Setup" Button */
+#backToSetup {
+    background-color: #dc3545;
+    color: white;
+}
+
+#backToSetup:hover {
+    background-color: #c82333;
+}
