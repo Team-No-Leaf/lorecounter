@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <link rel="stylesheet" href="css/landing.css">
+
+    <!-- ✅ Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9HDY9TPM0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q9HDY9TPM0');
+    </script>
 </head>
 <body>
     <header>
-        <img src="header.jpg" alt="Header" class="header-img">
+        <img src="header.jpg" alt="Header">
     </header>
-    <main>
-        <h1>Welcome to the Lore Tracker</h1>
-        <p class="disclaimer">
-            This is a personal project and is not affiliated with Ravensburger, Disney, or any other Lorcana-related parties.
-        </p>
-        <button onclick="location.href='setup.html'" class="start-btn">Start a New Game</button>
-    </main>
+    <h1>Welcome to the Lore Tracker</h1>
+    <p>This is a personal project and is not affiliated with Ravensburger, Disney, or any other Lorcana-related parties.</p>
+    <button onclick="location.href='setup.html'">Start a New Game</button>
 </body>
 </html>
