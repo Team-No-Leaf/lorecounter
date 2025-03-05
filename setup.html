@@ -20,13 +20,22 @@
         <img src="header.jpg" alt="Header">
     </header>
     <h1>Player Setup</h1>
+
     <form id="setupForm">
         <label for="numPlayers">Number of Players:</label>
         <select id="numPlayers">
             <option value="2">2 Players</option>
             <option value="3">3 Players</option>
+            <option value="4">4 Players</option>
         </select>
-        <button type="submit">Start Game</button>
+
+        <div id="playerInputs">
+            <!-- ✅ Player Inputs Will Be Inserted Here -->
+        </div>
+
+        <button id="startGame" type="submit">Start Game</button>
     </form>
+
+    <script src="js/setup.js"></script>
 </body>
 </html>

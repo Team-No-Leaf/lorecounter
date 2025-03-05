@@ -1,113 +1,100 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const playerCountSelect = document.getElementById("playerCount");
-    const playerInputsDiv = document.getElementById("playerInputs");
+    const numPlayersSelect = document.getElementById("numPlayers");
+    const playerInputsContainer = document.getElementById("playerInputs");
     const startGameButton = document.getElementById("startGame");
 
-    const inks = [
-        { name: "amber", color: "#F4B300" },
-        { name: "amethyst", color: "#80387B" },
-        { name: "emerald", color: "#298A34" },
-        { name: "ruby", color: "#D2082F" },
-        { name: "sapphire", color: "#0089C3" },
-        { name: "steel", color: "#9FA9B3" }
-    ];
+    const inks = ["Steel", "Emerald", "Amber", "Amethyst", "Ruby", "Sapphire"];
+    const inkColors = {
+        "Steel": "#9FA9B3",
+        "Emerald": "#298A34",
+        "Amber": "#F4B300",
+        "Amethyst": "#80387B",
+        "Ruby": "#D2082F",
+        "Sapphire": "#0089C3"
+    };
 
-    function updatePlayerInputs() {
-        const playerCount = parseInt(playerCountSelect.value);
-        playerInputsDiv.innerHTML = "";
+    function generatePlayerInputs() {
+        playerInputsContainer.innerHTML = "";
+        let numPlayers = parseInt(numPlayersSelect.value);
 
-        for (let i = 1; i <= playerCount; i++) {
-            const playerDiv = document.createElement("div");
+        for (let i = 1; i <= numPlayers; i++) {
+            let playerDiv = document.createElement("div");
             playerDiv.classList.add("player-input");
 
-            // Player Name Input
-            const nameInput = document.createElement("input");
+            let nameLabel = document.createElement("label");
+            nameLabel.innerText = `Player ${i} Name:`;
+            let nameInput = document.createElement("input");
             nameInput.type = "text";
-            nameInput.placeholder = `Player ${i} Name`;
-            nameInput.required = true;
-
-            // Ink Selection
-            const inkSelectionDiv = document.createElement("div");
-            inkSelectionDiv.classList.add("ink-selection");
+            nameInput.id = `player${i}Name`;
+            nameInput.placeholder = `Enter Player ${i} Name`;
+            
+            let inkLabel = document.createElement("label");
+            inkLabel.innerText = `Choose Ink:`;
+            
+            let inkContainer = document.createElement("div");
+            inkContainer.classList.add("ink-container");
 
             inks.forEach(ink => {
-                const img = document.createElement("img");
-                img.src = `dlc_ink_${ink.name}.png`;
-                img.alt = ink.name;
-                img.classList.add("ink-icon");
-                img.dataset.ink = ink.name;
+                let inkOption = document.createElement("div");
+                inkOption.classList.add("ink-option");
+                inkOption.setAttribute("data-ink", ink);
+                inkOption.style.backgroundColor = inkColors[ink];
 
-                img.addEventListener("click", function () {
-                    inkSelectionDiv.querySelectorAll(".ink-icon").forEach(icon => {
-                        icon.classList.remove("selected");
-                    });
-                    img.classList.add("selected");
+                let inkImg = document.createElement("img");
+                inkImg.src = `dlc_ink_${ink.toLowerCase()}.png`;
+                inkImg.alt = ink;
+                inkImg.classList.add("ink-icon");
 
-                    // ✅ Change player section background color based on selected ink
-                    playerDiv.style.backgroundColor = ink.color;
+                inkOption.appendChild(inkImg);
+                inkContainer.appendChild(inkOption);
 
-                    // ✅ Check if all fields are filled after selection
-                    validateForm();
+                // Change background color when ink is selected
+                inkOption.addEventListener("click", function () {
+                    playerDiv.style.backgroundColor = inkColors[ink];
+                    playerDiv.setAttribute("data-selected-ink", ink);
                 });
-
-                inkSelectionDiv.appendChild(img);
             });
 
-            nameInput.addEventListener("input", validateForm);
-
+            playerDiv.appendChild(nameLabel);
             playerDiv.appendChild(nameInput);
-            playerDiv.appendChild(inkSelectionDiv);
-            playerInputsDiv.appendChild(playerDiv);
-        }
-
-        startGameButton.style.display = "block";
-        validateForm(); // Ensure the button is disabled until fields are filled
-    }
-
-    // ✅ Listen for changes in player count
-    playerCountSelect.addEventListener("change", updatePlayerInputs);
-
-    // ✅ Validate Form: Enable Button Only When All Fields Are Set
-    function validateForm() {
-        const playerInputs = document.querySelectorAll(".player-input input");
-        const allNamesFilled = [...playerInputs].every(input => input.value.trim() !== "");
-        const allInksSelected = [...document.querySelectorAll(".player-input .ink-selection")].every(
-            selection => selection.querySelector(".ink-icon.selected")
-        );
-
-        if (allNamesFilled && allInksSelected) {
-            startGameButton.removeAttribute("disabled");
-        } else {
-            startGameButton.setAttribute("disabled", "true");
+            playerDiv.appendChild(inkLabel);
+            playerDiv.appendChild(inkContainer);
+            playerInputsContainer.appendChild(playerDiv);
         }
     }
 
-    // ✅ Ensure Start Game button redirects when all players are set up
-    startGameButton.addEventListener("click", function () {
-        const playerInputs = document.querySelectorAll(".player-input input");
-        let playerData = [];
+    numPlayersSelect.addEventListener("change", generatePlayerInputs);
+    generatePlayerInputs(); // Initial call to generate inputs
 
-        playerInputs.forEach((input, index) => {
-            const selectedInk = input.parentElement.querySelector(".ink-icon.selected");
-            playerData.push({
-                name: input.value.trim(),
-                ink: selectedInk ? selectedInk.dataset.ink : null
-            });
-        });
+    document.getElementById("setupForm").addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        localStorage.setItem("players", JSON.stringify(playerData));
+        let players = [];
+        for (let i = 1; i <= parseInt(numPlayersSelect.value); i++) {
+            let name = document.getElementById(`player${i}Name`).value.trim();
+            let ink = document.querySelector(`.player-input:nth-child(${i})`).getAttribute("data-selected-ink");
 
-        // ✅ Redirect to the correct tracker page
-        const playerCount = parseInt(playerCountSelect.value);
-        if (playerCount === 2) {
-            location.href = "tracker-2p.html";
-        } else if (playerCount === 3) {
-            location.href = "tracker-3p.html"; // To be created later
-        } else if (playerCount === 4) {
-            location.href = "tracker-4p.html"; // To be created later
+            if (!name) {
+                alert(`Player ${i} must have a name!`);
+                return;
+            }
+
+            if (!ink) {
+                alert(`Player ${i} must select an ink color!`);
+                return;
+            }
+
+            players.push({ name, ink });
+        }
+
+        localStorage.setItem("players", JSON.stringify(players));
+
+        if (players.length === 2) {
+            window.location.href = "tracker-2p.html";
+        } else if (players.length === 3) {
+            window.location.href = "tracker-3p.html";
+        } else if (players.length === 4) {
+            window.location.href = "tracker-4p.html";
         }
     });
-
-    // ✅ Initialize Inputs on Page Load
-    updatePlayerInputs();
 });

@@ -6,142 +6,153 @@
     font-family: Arial, sans-serif;
 }
 
-/* ✅ Body & Layout */
+/* ✅ Page Layout */
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     min-height: 100vh;
-    background-color: #f8f8f8;
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 10px;
 }
 
-/* ✅ Header Image */
+/* ✅ Header */
 header {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.header-img {
-    width: 100%;
-    max-width: 600px;
+header img {
+    max-width: 100%;
     height: auto;
-}
-
-/* ✅ Main Content */
-main {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-}
-
-/* ✅ Title */
-h1 {
-    font-size: 2rem;
     margin-bottom: 10px;
 }
 
-/* ✅ Dropdown for Player Count */
-label {
-    font-size: 1rem;
+/* ✅ Player Count Selector (Modern Styled Dropdown) */
+#playerCount {
+    width: 85%;
+    max-width: 300px;
+    padding: 12px;
+    font-size: 1.2rem;
     font-weight: bold;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    background: white;
+    text-align: center;
+    appearance: none; /* ✅ Removes default dropdown arrow (for custom styling) */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
-select {
+/* ✅ Add custom dropdown icon */
+#playerCount::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* ✅ Hover & Focus Effects */
+#playerCount:hover,
+#playerCount:focus {
+    border-color: #218838;
+    outline: none;
+    background: #e9f7ec;
+}
+
+/* ✅ Player Sections (Wider & More Styled) */
+.player-input {
     width: 100%;
-    max-width: 200px;
+    max-width: 450px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+/* ✅ Input Fields Styling */
+.player-input input {
+    width: 90%;
     padding: 10px;
     font-size: 1rem;
-    margin: 10px 0 20px;
+    border: 2px solid #ccc;
     border-radius: 5px;
+    text-align: center;
+    margin-top: 5px;
+    transition: border-color 0.3s ease-in-out;
 }
 
-/* ✅ Player Sections */
-.player-input {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background-color: #ddd; /* Default background */
-    transition: background-color 0.3s ease;
+.player-input input:focus {
+    border-color: #28a745;
+    outline: none;
 }
 
-/* ✅ Ink Selection Grid */
-.ink-selection {
+/* ✅ Ink Selection Container */
+.ink-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Two rows of three icons */
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    justify-content: center;
+    justify-items: center;
     margin-top: 10px;
 }
 
-/* ✅ Ink Icon */
-.ink-icon {
-    width: 50px;
-    height: 50px;
+/* ✅ Ink Icon Buttons */
+.ink-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: transform 0.2s ease, border 0.2s ease;
-    border: 2px solid transparent;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
 }
 
-.ink-icon:hover {
+/* ✅ Ink Icons */
+.ink-option img {
+    width: 55px;
+    max-width: 100%;
+    background: none;
+}
+
+/* ✅ Ink Option Hover Effect */
+.ink-option:hover {
     transform: scale(1.1);
 }
 
-.ink-icon.selected {
-    border: 2px solid black;
+/* ✅ Labels & Text Styling */
+label {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    color: #333;
 }
 
-/* ✅ Centering the "Start Game" Button */
-.start-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
+/* ✅ Start Game Button */
 #startGame {
+    display: block;
     width: 100%;
-    max-width: 250px;
-    padding: 15px;
+    max-width: 300px;
+    padding: 12px;
     font-size: 1.2rem;
     font-weight: bold;
     color: white;
-    background-color: #007bff;
+    background-color: #28a745;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease;
-    display: none;
-    text-align: center;
+    margin-top: 15px;
+    transition: background 0.3s ease-in-out;
 }
 
 #startGame:hover {
-    background-color: #0056b3;
-}
-
-/* ✅ Mobile Optimization */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    select {
-        font-size: 0.9rem;
-    }
-
-    .ink-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    #startGame {
-        font-size: 1rem;
-        padding: 12px;
-    }
+    background-color: #218838;
 }
