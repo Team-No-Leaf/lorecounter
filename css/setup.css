@@ -4,155 +4,158 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
-}
-
-/* ✅ Page Layout */
-body {
+  }
+  
+  /* ✅ Page Layout */
+  body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    background-color: #222;
+    color: white;
     min-height: 100vh;
     text-align: center;
-    background-color: #f4f4f4;
-    padding: 10px;
-}
-
-/* ✅ Header */
-header {
+    padding-bottom: 40px;
+  }
+  
+  /* ✅ Header Banner */
+  header {
     width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-header img {
-    max-width: 100%;
+  }
+  
+  header img {
+    width: 100%;
     height: auto;
-    margin-bottom: 10px;
-}
-
-/* ✅ Player Count Selector (Modern Styled Dropdown) */
-#playerCount {
-    width: 85%;
-    max-width: 300px;
-    padding: 12px;
-    font-size: 1.2rem;
+  }
+  
+  /* ✅ Title */
+  h1 {
+    font-size: 2.2rem;
+    margin: 20px 0;
+    color: #FFD700;
+  }
+  
+  /* ✅ Dropdown Label & Selector */
+  label {
+    font-size: 1.1rem;
     font-weight: bold;
-    border: 2px solid #28a745;
-    border-radius: 8px;
-    background: white;
-    text-align: center;
-    appearance: none; /* ✅ Removes default dropdown arrow (for custom styling) */
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-/* ✅ Add custom dropdown icon */
-#playerCount::after {
-    content: "▼";
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-/* ✅ Hover & Focus Effects */
-#playerCount:hover,
-#playerCount:focus {
-    border-color: #218838;
-    outline: none;
-    background: #e9f7ec;
-}
-
-/* ✅ Player Sections (Wider & More Styled) */
-.player-input {
-    width: 100%;
-    max-width: 450px;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    background: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    transition: background 0.3s ease-in-out;
-}
-
-/* ✅ Input Fields Styling */
-.player-input input {
-    width: 90%;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  #playerCount {
     padding: 10px;
     font-size: 1rem;
-    border: 2px solid #ccc;
     border-radius: 5px;
+    border: none;
+    background-color: #444;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  /* ✅ Player Input Container */
+  #playerInputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* ✅ Player Sections */
+  .player-input {
+    background-color: #333;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    max-width: 320px;
+    width: 90%;
+    transition: background-color 0.3s ease;
+    border: 2px solid #555;
+  }
+  
+  /* ✅ Player Name Input */
+  .player-input input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
     text-align: center;
-    margin-top: 5px;
-    transition: border-color 0.3s ease-in-out;
-}
-
-.player-input input:focus {
-    border-color: #28a745;
-    outline: none;
-}
-
-/* ✅ Ink Selection Container */
-.ink-container {
+    background-color: #444;
+    color: white;
+  }
+  
+  /* ✅ Ink Selection Grid */
+  .ink-selection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     justify-items: center;
-    margin-top: 10px;
-}
-
-/* ✅ Ink Icon Buttons */
-.ink-option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+  
+  /* ✅ Ink Icons */
+  .ink-icon {
+    width: 50px;
     cursor: pointer;
-    border-radius: 10px;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* ✅ Ink Icons */
-.ink-option img {
-    width: 55px;
-    max-width: 100%;
-    background: none;
-}
-
-/* ✅ Ink Option Hover Effect */
-.ink-option:hover {
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: transform 0.2s ease, border 0.2s ease;
+  }
+  
+  .ink-icon:hover {
     transform: scale(1.1);
-}
-
-/* ✅ Labels & Text Styling */
-label {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 10px;
-    text-align: center;
-    color: #333;
-}
-
-/* ✅ Start Game Button */
-#startGame {
-    display: block;
+  }
+  
+  .ink-icon.selected {
+    border: 2px solid #FFD700;
+  }
+  
+  /* ✅ Start Game Button */
+  .start-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
     width: 100%;
-    max-width: 300px;
-    padding: 12px;
+  }
+  
+  #startGame {
+    max-width: 250px;
+    width: 100%;
+    padding: 15px;
     font-size: 1.2rem;
     font-weight: bold;
-    color: white;
-    background-color: #28a745;
+    color: #222;
+    background-color: #FFD700;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 15px;
-    transition: background 0.3s ease-in-out;
-}
-
-#startGame:hover {
-    background-color: #218838;
-}
+    display: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  #startGame:hover {
+    background-color: #e6c200;
+  }
+  
+  /* ✅ Mobile Optimization */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.8rem;
+    }
+  
+    #playerCount {
+      font-size: 0.9rem;
+    }
+  
+    .ink-icon {
+      width: 40px;
+    }
+  
+    #startGame {
+      font-size: 1rem;
+      padding: 12px;
+    }
+  }
+  

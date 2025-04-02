@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Setup</title>
-    <link rel="stylesheet" href="css/setup.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Player Setup</title>
+  <link rel="stylesheet" href="css/setup.css" />
 
-    <!-- ✅ Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9HDY9TPM0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Q9HDY9TPM0');
-    </script>
+  <!-- ✅ Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9HDY9TPM0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Q9HDY9TPM0');
+  </script>
 </head>
 <body>
-    <header>
-        <img src="header.jpg" alt="Header">
-    </header>
+  <header>
+    <img src="header.png" alt="Header" class="header-img" />
+  </header>
+
+  <main>
     <h1>Player Setup</h1>
+    <label for="playerCount">Number of Players:</label>
+    <select id="playerCount">
+      <option value="2">2 Players</option>
+      <option value="3">3 Players</option>
+      <option value="4">4 Players</option>
+    </select>
 
-    <form id="setupForm">
-        <label for="numPlayers">Number of Players:</label>
-        <select id="numPlayers">
-            <option value="2">2 Players</option>
-            <option value="3">3 Players</option>
-            <option value="4">4 Players</option>
-        </select>
+    <div id="playerInputs"></div>
 
-        <div id="playerInputs">
-            <!-- ✅ Player Inputs Will Be Inserted Here -->
-        </div>
+    <div class="start-container">
+      <button id="startGame" disabled>Start Game</button>
+    </div>
+  </main>
 
-        <button id="startGame" type="submit">Start Game</button>
-    </form>
-
-    <script src="js/setup.js"></script>
+  <script src="js/setup.js"></script>
 </body>
 </html>

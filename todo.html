@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project To-Do List</title>
-    <link rel="stylesheet" href="css/todo.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="css/todo.css" />
+
+  <!-- ✅ Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9HDY9TPM0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Q9HDY9TPM0');
+  </script>
 </head>
 <body>
-    <header>
-        <h1>To-Do List</h1>
-        <a href="index.html">🔙 Back to Home</a>
-    </header>
+  <header>
+    <img src="header.png" alt="Header" />
+  </header>
 
-    <main>
-        <ul id="todoList">
-            <li>✔ 2-Player Mode ✅ (Completed)</li>
-            <li>🛠 3 & 4 Player Mode (In Progress)</li>
-            <li>🔄 Donald Toggle (Planned)</li>
-            <li>🛑 Prevent Zooming (Planned)</li>
-            <li>💡 Keep Screen Awake (Planned)</li>\
-            <li>Ensure readability with lore counter colors on similar backgrounds (Planned)</li>
-        </ul>
-    </main>
-
+  <main>
+    <h1>🛠️ To-Do List</h1>
+    <ul id="todoList">
+      <li>✅ 2-player mode complete</li>
+      <li>🔄 Fix pop-up in 3-player mode</li>
+      <li>🛠 Add 4-player tracker</li>
+      <li>🎛 Add Donald Duck toggle</li>
+      <li>📱 Force screen to stay awake</li>
+      <li>🔒 Disable zooming</li>
+      <li>📊 Add more analytics/stat tracking</li>
+    </ul>
+  </main>
 </body>
 </html>

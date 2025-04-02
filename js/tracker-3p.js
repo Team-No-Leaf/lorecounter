@@ -7,23 +7,36 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // ✅ Apply settings for each player section
-    for (let i = 0; i < 3; i++) {
-        let playerSection = document.getElementById(`player${i + 1}`);
-        let inkSymbol = document.getElementById(`player${i + 1}Ink`);
-        let playerName = document.getElementById(`player${i + 1}Name`);
-        let gamesWonCounter = document.getElementById(`gamesWon${i + 1}`);
-
-        if (players[i] && players[i].ink) {
-            let ink = players[i].ink.toLowerCase();
-            let inkColor = getInkColor(ink);
-
-            playerSection.style.backgroundColor = inkColor;
-            playerSection.setAttribute("data-ink", players[i].ink.toLowerCase());
-            inkSymbol.src = `dlc_ink_${ink}.png`;
-            inkSymbol.alt = players[i].ink;
+    // ✅ Wake Lock
+    let wakeLock = null;
+    async function enableWakeLock() {
+        if ('wakeLock' in navigator) {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+            } catch (err) {
+                console.error("Wake Lock Error:", err);
+            }
         }
+    }
+    enableWakeLock();
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") enableWakeLock();
+    });
 
+    // ✅ Hide win buttons initially
+    document.getElementById("winButtons").style.display = "none";
+
+    for (let i = 0; i < 3; i++) {
+        const section = document.getElementById(`player${i + 1}`);
+        const inkSymbol = document.getElementById(`player${i + 1}Ink`);
+        const playerName = document.getElementById(`player${i + 1}Name`);
+        const gamesWonCounter = document.getElementById(`gamesWon${i + 1}`);
+
+        const ink = players[i].ink.toLowerCase();
+        section.style.backgroundColor = getInkColor(ink);
+        section.setAttribute("data-ink", ink);
+        inkSymbol.src = `dlc_ink_${ink}.png`;
+        inkSymbol.alt = ink;
         playerName.innerText = players[i].name;
         gamesWonCounter.innerText = `Games Won: ${gamesWon[i]}`;
 
@@ -31,57 +44,81 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(`decrease${i + 1}`).addEventListener("click", () => updateLore(i, -1));
     }
 
+    // ✅ Win buttons functionality
+    document.getElementById("nextGame").addEventListener("click", resetLore);
+    document.getElementById("backToSetup").addEventListener("click", () => {
+        localStorage.removeItem("gamesWon");
+        window.location.href = "setup.html";
+    });
+
     updateLoreColors();
 });
 
-// ✅ Function to update lore count
+// ✅ Update Lore
 function updateLore(playerIndex, change) {
-    let loreElement = document.getElementById(`lore${playerIndex + 1}`);
-    let currentValue = parseInt(loreElement.innerText);
-    let newValue = Math.max(0, Math.min(20, currentValue + change));
+    const loreEl = document.getElementById(`lore${playerIndex + 1}`);
+    let currentValue = parseInt(loreEl.innerText);
+    const newValue = Math.max(0, Math.min(20, currentValue + change));
 
-    loreElement.innerText = newValue;
+    // Stop incrementing past 20
+    if (currentValue === 20 && newValue === 20) return;
+
+    loreEl.innerText = newValue;
+
+    if (newValue === 20) {
+        handleWin(playerIndex);
+    }
 
     updateLoreColors();
 }
 
-// ✅ Function to update lore colors (green for highest, red for lowest)
+// ✅ Handle Game Win
+function handleWin(playerIndex) {
+    let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || [0, 0, 0];
+    gamesWon[playerIndex]++;
+    localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
+
+    document.getElementById(`gamesWon${playerIndex + 1}`).innerText = `Games Won: ${gamesWon[playerIndex]}`;
+    document.getElementById("winButtons").style.display = "block";
+}
+
+// ✅ Reset Lore for Next Game
+function resetLore() {
+    for (let i = 0; i < 3; i++) {
+        document.getElementById(`lore${i + 1}`).innerText = "0";
+    }
+    document.getElementById("winButtons").style.display = "none";
+    updateLoreColors();
+}
+
+// ✅ Lore Color Logic
 function updateLoreColors() {
-    let loreElements = [
-        document.getElementById("lore1"),
-        document.getElementById("lore2"),
-        document.getElementById("lore3")
-    ];
+    const loreEls = [1, 2, 3].map(i => document.getElementById(`lore${i}`));
+    const values = loreEls.map(el => parseInt(el.innerText));
 
-    let loreValues = loreElements.map(el => parseInt(el.innerText));
-    let maxLore = Math.max(...loreValues);
-    let minLore = Math.min(...loreValues);
-    let maxCount = loreValues.filter(value => value === maxLore).length;
+    const max = Math.max(...values);
+    const maxCount = values.filter(v => v === max).length;
 
-    loreElements.forEach(el => el.classList.remove("highest", "lowest"));
+    loreEls.forEach(el => el.classList.remove("highest", "lowest"));
 
     for (let i = 0; i < 3; i++) {
-        if (loreValues[i] === maxLore && maxCount === 1) {
-            loreElements[i].classList.add("highest"); // ✅ Highest gets green
-        } else {
-            loreElements[i].classList.add("lowest"); // ✅ Others turn red
-        }
-
-        if (maxCount > 1) {
-            loreElements[i].classList.remove("highest", "lowest");
+        if (values[i] === max && maxCount === 1) {
+            loreEls[i].classList.add("highest");
+        } else if (values[i] !== max) {
+            loreEls[i].classList.add("lowest");
         }
     }
 }
 
-// ✅ Function to get ink color
+// ✅ Get Ink Color
 function getInkColor(ink) {
     const colors = {
-        "steel": "#9FA9B3",
-        "emerald": "#298A34",
-        "amber": "#F4B300",
-        "amethyst": "#80387B",
-        "ruby": "#D2082F",
-        "sapphire": "#0089C3"
+        steel: "#9FA9B3",
+        emerald: "#298A34",
+        amber: "#F4B300",
+        amethyst: "#80387B",
+        ruby: "#D2082F",
+        sapphire: "#0089C3"
     };
-    return colors[ink] || "white"; // Default to white if ink is unknown
+    return colors[ink] || "white";
 }

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
     <title>3-Player Lore Tracker</title>
     <link rel="stylesheet" href="css/tracker-3p.css">
-
     <!-- ✅ Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9HDY9TPM0"></script>
     <script>
@@ -22,20 +21,22 @@
                 <img id="player1Ink" class="ink-symbol" src="" alt="Ink">
                 <div id="player1Name" class="player-name"></div>
                 <div class="lore-counter">
-                    <button id="decrease1">-</button>
+                    <button id="decrease1" class="lore-btn">-</button>
                     <span id="lore1" class="lore-value">0</span>
-                    <button id="increase1">+</button>
+                    <button id="increase1" class="lore-btn">+</button>
                 </div>
+                <div id="gamesWon1" class="games-won-container">Games Won: 0</div>
             </div>
 
             <div id="player2" class="player-section split rotate">
                 <img id="player2Ink" class="ink-symbol" src="" alt="Ink">
                 <div id="player2Name" class="player-name"></div>
                 <div class="lore-counter">
-                    <button id="decrease2">-</button>
+                    <button id="decrease2" class="lore-btn">-</button>
                     <span id="lore2" class="lore-value">0</span>
-                    <button id="increase2">+</button>
+                    <button id="increase2" class="lore-btn">+</button>
                 </div>
+                <div id="gamesWon2" class="games-won-container">Games Won: 0</div>
             </div>
         </div>
 
@@ -43,11 +44,19 @@
             <img id="player3Ink" class="ink-symbol" src="" alt="Ink">
             <div id="player3Name" class="player-name"></div>
             <div class="lore-counter">
-                <button id="decrease3">-</button>
+                <button id="decrease3" class="lore-btn">-</button>
                 <span id="lore3" class="lore-value">0</span>
-                <button id="increase3">+</button>
+                <button id="increase3" class="lore-btn">+</button>
             </div>
+            <div id="gamesWon3" class="games-won-container">Games Won: 0</div>
         </div>
     </div>
+
+    <div id="winButtons" class="win-buttons">
+        <button id="nextGame">Start Next Game</button>
+        <button id="backToSetup">Back to Player Setup</button>
+    </div>
+
+    <script src="js/tracker-3p.js"></script>
 </body>
 </html>

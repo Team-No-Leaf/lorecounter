@@ -1,91 +1,79 @@
-/* ✅ Reset Default Styles */
+/* ✅ Reset Defaults */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
-}
-
-/* ✅ Ensure Full-Screen Scaling */
-body {
+  }
+  
+  /* ✅ Layout */
+  body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    background-color: #222;
+    color: white;
     min-height: 100vh;
-    background-color: #f8f8f8;
-}
-
-/* ✅ Header Image (Now Fixed at the Top) */
-header {
+    text-align: center;
+    padding: 0;
+  }
+  
+  /* ✅ Full-Width Banner */
+  header {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff; /* Optional: Background to make the header stand out */
-}
-
-.header-img {
+  }
+  
+  header img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* ✅ Main Content */
+  main {
+    padding: 20px;
     width: 100%;
     max-width: 600px;
-    height: auto;
-}
-
-/* ✅ Main Content (Now Centered Below the Header) */
-main {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    margin-top: 20px; /* Ensures spacing below header */
-}
-
-/* ✅ Title */
-h1 {
+    margin: 0 auto;
+  }
+  
+  main h1 {
     font-size: 2rem;
     margin-bottom: 10px;
-}
-
-/* ✅ Disclaimer Text */
-.disclaimer {
+  }
+  
+  main p {
     font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* ✅ Start Game Button */
-.start-btn {
+    margin-bottom: 30px;
+  }
+  
+  /* ✅ Buttons */
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  button {
     padding: 15px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    color: white;
-    background-color: #007bff;
+    background-color: #FFD700;
+    color: #222;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
-}
-
-.start-btn:hover {
-    background-color: #0056b3;
-}
-
-/* ✅ Mobile Optimization */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    .disclaimer {
-        font-size: 0.9rem;
-    }
-
-    .start-btn {
-        font-size: 1rem;
-        padding: 12px;
-    }
-
-    main {
-        margin-top: 10px; /* Less spacing on smaller screens */
-    }
-}
+  }
+  
+  button:hover {
+    background-color: #e6c200;
+  }
+  
+  button:active {
+    background-color: #c9a800;
+  }
+  
