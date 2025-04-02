@@ -4,144 +4,158 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
-}
-
-/* ✅ Body & Layout */
-body {
+  }
+  
+  /* ✅ Page Layout */
+  body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    background-color: #222;
+    color: white;
     min-height: 100vh;
-    background-color: #f8f8f8;
-}
-
-/* ✅ Header Image */
-header {
+    text-align: center;
+    padding-bottom: 40px;
+  }
+  
+  /* ✅ Header Banner */
+  header {
     width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.header-img {
+  }
+  
+  header img {
     width: 100%;
-    max-width: 600px;
     height: auto;
-}
-
-/* ✅ Main Content */
-main {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-}
-
-/* ✅ Title */
-h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-/* ✅ Dropdown for Player Count */
-label {
-    font-size: 1rem;
+  }
+  
+  /* ✅ Title */
+  h1 {
+    font-size: 2.2rem;
+    margin: 20px 0;
+    color: #FFD700;
+  }
+  
+  /* ✅ Dropdown Label & Selector */
+  label {
+    font-size: 1.1rem;
     font-weight: bold;
-}
-
-select {
-    width: 100%;
-    max-width: 200px;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  #playerCount {
     padding: 10px;
     font-size: 1rem;
-    margin: 10px 0 20px;
     border-radius: 5px;
-}
-
-/* ✅ Player Sections */
-.player-input {
+    border: none;
+    background-color: #444;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  /* ✅ Player Input Container */
+  #playerInputs {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 400px;
+  }
+  
+  /* ✅ Player Sections */
+  .player-input {
+    background-color: #333;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 8px;
-    background-color: #ddd; /* Default background */
+    max-width: 320px;
+    width: 90%;
     transition: background-color 0.3s ease;
-}
-
-/* ✅ Ink Selection Grid */
-.ink-selection {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Two rows of three icons */
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-/* ✅ Ink Icon */
-.ink-icon {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: transform 0.2s ease, border 0.2s ease;
-    border: 2px solid transparent;
+    border: 2px solid #555;
+  }
+  
+  /* ✅ Player Name Input */
+  .player-input input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
     border-radius: 5px;
-}
-
-.ink-icon:hover {
+    border: none;
+    text-align: center;
+    background-color: #444;
+    color: white;
+  }
+  
+  /* ✅ Ink Selection Grid */
+  .ink-selection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+  }
+  
+  /* ✅ Ink Icons */
+  .ink-icon {
+    width: 50px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: transform 0.2s ease, border 0.2s ease;
+  }
+  
+  .ink-icon:hover {
     transform: scale(1.1);
-}
-
-.ink-icon.selected {
-    border: 2px solid black;
-}
-
-/* ✅ Centering the "Start Game" Button */
-.start-container {
+  }
+  
+  .ink-icon.selected {
+    border: 2px solid #FFD700;
+  }
+  
+  /* ✅ Start Game Button */
+  .start-container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-}
-
-#startGame {
     width: 100%;
+  }
+  
+  #startGame {
     max-width: 250px;
+    width: 100%;
     padding: 15px;
     font-size: 1.2rem;
     font-weight: bold;
-    color: white;
-    background-color: #007bff;
+    color: #222;
+    background-color: #FFD700;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
     display: none;
-    text-align: center;
-}
-
-#startGame:hover {
-    background-color: #0056b3;
-}
-
-/* ✅ Mobile Optimization */
-@media (max-width: 600px) {
+    transition: background-color 0.3s ease;
+  }
+  
+  #startGame:hover {
+    background-color: #e6c200;
+  }
+  
+  /* ✅ Mobile Optimization */
+  @media (max-width: 600px) {
     h1 {
-        font-size: 1.8rem;
+      font-size: 1.8rem;
     }
-
-    select {
-        font-size: 0.9rem;
+  
+    #playerCount {
+      font-size: 0.9rem;
     }
-
+  
     .ink-icon {
-        width: 40px;
-        height: 40px;
+      width: 40px;
     }
-
+  
     #startGame {
-        font-size: 1rem;
-        padding: 12px;
+      font-size: 1rem;
+      padding: 12px;
     }
-}
+  }
+  
