@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
     background-color: #222;
     color: white;
@@ -21,29 +21,31 @@ body {
 /* ✅ Header Styling */
 header {
     width: 100%;
-    padding: 20px;
-    background: #333;
-    font-size: 1.5rem;
 }
 
-header a {
-    color: #FFD700;
-    text-decoration: none;
-    font-size: 1rem;
+header img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* ✅ To-Do List */
 #todoList {
     list-style: none;
-    margin-top: 20px;
+    margin-top: 30px;
+    padding: 0 20px;
+    max-width: 600px;
+    width: 100%;
 }
 
 #todoList li {
     padding: 10px;
     font-size: 1.3rem;
+    text-align: left;
 }
 
 /* ✅ Icons */
 #todoList li::before {
     content: "🔹 ";
+    margin-right: 5px;
 }
