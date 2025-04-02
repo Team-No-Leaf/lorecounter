@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // ✅ Apply settings for each player section
+    // Hide win buttons initially
+    document.getElementById("winButtons").style.display = "none";
+
     for (let i = 0; i < 3; i++) {
         let playerSection = document.getElementById(`player${i + 1}`);
         let inkSymbol = document.getElementById(`player${i + 1}Ink`);
@@ -16,36 +18,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (players[i] && players[i].ink) {
             let ink = players[i].ink.toLowerCase();
-            let inkColor = getInkColor(ink);
-
-            playerSection.style.backgroundColor = inkColor;
-            playerSection.setAttribute("data-ink", players[i].ink.toLowerCase());
+            playerSection.style.backgroundColor = getInkColor(ink);
+            playerSection.setAttribute("data-ink", ink);
             inkSymbol.src = `dlc_ink_${ink}.png`;
-            inkSymbol.alt = players[i].ink;
+            inkSymbol.alt = ink;
         }
 
         playerName.innerText = players[i].name;
+        gamesWon[i] = gamesWon[i] || 0;
         gamesWonCounter.innerText = `Games Won: ${gamesWon[i]}`;
 
         document.getElementById(`increase${i + 1}`).addEventListener("click", () => updateLore(i, 1));
         document.getElementById(`decrease${i + 1}`).addEventListener("click", () => updateLore(i, -1));
     }
 
+    document.getElementById("nextGame").addEventListener("click", resetLore);
+    document.getElementById("backToSetup").addEventListener("click", function () {
+        localStorage.removeItem("gamesWon");
+        window.location.href = "setup.html";
+    });
+
     updateLoreColors();
 });
 
-// ✅ Function to update lore count
 function updateLore(playerIndex, change) {
     let loreElement = document.getElementById(`lore${playerIndex + 1}`);
     let currentValue = parseInt(loreElement.innerText);
     let newValue = Math.max(0, Math.min(20, currentValue + change));
 
+    // Block if already at max
+    if (currentValue === 20 && newValue === 20) return;
+
     loreElement.innerText = newValue;
+
+    if (newValue === 20) {
+        handleGameWin(playerIndex);
+    }
 
     updateLoreColors();
 }
 
-// ✅ Function to update lore colors (green for highest, red for lowest)
+function handleGameWin(winningPlayer) {
+    let gamesWon = JSON.parse(localStorage.getItem("gamesWon")) || [0, 0, 0];
+    gamesWon[winningPlayer] = (gamesWon[winningPlayer] || 0) + 1;
+    localStorage.setItem("gamesWon", JSON.stringify(gamesWon));
+    document.getElementById(`gamesWon${winningPlayer + 1}`).innerText = `Games Won: ${gamesWon[winningPlayer]}`;
+    document.getElementById("winButtons").style.display = "block";
+}
+
+function resetLore() {
+    for (let i = 1; i <= 3; i++) {
+        document.getElementById(`lore${i}`).innerText = "0";
+    }
+    document.getElementById("winButtons").style.display = "none";
+    updateLoreColors();
+}
+
 function updateLoreColors() {
     let loreElements = [
         document.getElementById("lore1"),
@@ -56,24 +84,19 @@ function updateLoreColors() {
     let loreValues = loreElements.map(el => parseInt(el.innerText));
     let maxLore = Math.max(...loreValues);
     let minLore = Math.min(...loreValues);
-    let maxCount = loreValues.filter(value => value === maxLore).length;
+    let maxCount = loreValues.filter(val => val === maxLore).length;
 
     loreElements.forEach(el => el.classList.remove("highest", "lowest"));
 
     for (let i = 0; i < 3; i++) {
         if (loreValues[i] === maxLore && maxCount === 1) {
-            loreElements[i].classList.add("highest"); // ✅ Highest gets green
-        } else {
-            loreElements[i].classList.add("lowest"); // ✅ Others turn red
-        }
-
-        if (maxCount > 1) {
-            loreElements[i].classList.remove("highest", "lowest");
+            loreElements[i].classList.add("highest");
+        } else if (loreValues[i] !== maxLore) {
+            loreElements[i].classList.add("lowest");
         }
     }
 }
 
-// ✅ Function to get ink color
 function getInkColor(ink) {
     const colors = {
         "steel": "#9FA9B3",
@@ -83,5 +106,5 @@ function getInkColor(ink) {
         "ruby": "#D2082F",
         "sapphire": "#0089C3"
     };
-    return colors[ink] || "white"; // Default to white if ink is unknown
+    return colors[ink] || "white";
 }
