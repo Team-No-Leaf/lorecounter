@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#101820">
+    <title>Sorgen's Inkwell DEV</title>
+    <link rel="manifest" href="./manifest.webmanifest?v=27-dev">
+    <link rel="icon" href="./icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css?v=27">
+  </head>
+  <body class="dev-build">
+    <section class="landing-shell" id="landing-screen" aria-label="Welkom">
+      <div class="landing-bg" id="landing-bg" aria-hidden="true"></div>
+      <div class="landing-shade" aria-hidden="true"></div>
+      <main class="landing-content">
+        <h1>Sorgen's Inkwell DEV</h1>
+        <div class="landing-actions">
+          <div class="landing-inks" aria-hidden="true">
+            <img src="./assets/ink/dlc_ink_amber.png" alt="">
+            <img src="./assets/ink/dlc_ink_amethyst.png" alt="">
+            <img src="./assets/ink/dlc_ink_emerald.png" alt="">
+            <img src="./assets/ink/dlc_ink_ruby.png" alt="">
+            <img src="./assets/ink/dlc_ink_sapphire.png" alt="">
+            <img src="./assets/ink/dlc_ink_steel.png" alt="">
+          </div>
+          <button class="landing-start" id="landing-start" type="button">Start match</button>
+        </div>
+      </main>
+      <p class="landing-credit">Made by Sorgen</p>
+    </section>
+
+    <section class="setup-shell" id="setup-screen" aria-label="Naam selectie">
+      <form class="setup-card panel" id="setup-form">
+        <div class="setup-heading">
+          <p class="label">Lorcana</p>
+          <h1>Match setup</h1>
+        </div>
+
+        <fieldset class="player-count">
+          <legend>Spelers</legend>
+          <label><input type="radio" name="player-count" value="2" checked><span>2</span></label>
+          <label><input type="radio" name="player-count" value="3"><span>3</span></label>
+          <label><input type="radio" name="player-count" value="4"><span>4</span></label>
+        </fieldset>
+
+        <div class="setup-players">
+          <fieldset class="setup-player" data-setup-player="0">
+            <legend>Speler 1</legend>
+            <label class="setup-name">
+              <span>Naam</span>
+              <input id="setup-name-0" type="text" value="" autocomplete="off" maxlength="18">
+            </label>
+            <div class="ink-grid" aria-label="Inktkleur speler 1">
+              <label class="ink-option amber"><input type="radio" name="ink-0" value="amber" checked><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
+              <label class="ink-option amethyst"><input type="radio" name="ink-0" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
+              <label class="ink-option emerald"><input type="radio" name="ink-0" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
+              <label class="ink-option ruby"><input type="radio" name="ink-0" value="ruby"><span><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span><b>Ruby</b></label>
+              <label class="ink-option sapphire"><input type="radio" name="ink-0" value="sapphire"><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
+              <label class="ink-option steel"><input type="radio" name="ink-0" value="steel"><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="setup-player" data-setup-player="1">
+            <legend>Speler 2</legend>
+            <label class="setup-name">
+              <span>Naam</span>
+              <input id="setup-name-1" type="text" value="" autocomplete="off" maxlength="18">
+            </label>
+            <div class="ink-grid" aria-label="Inktkleur speler 2">
+              <label class="ink-option amber"><input type="radio" name="ink-1" value="amber"><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
+              <label class="ink-option amethyst"><input type="radio" name="ink-1" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
+              <label class="ink-option emerald"><input type="radio" name="ink-1" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
+              <label class="ink-option ruby"><input type="radio" name="ink-1" value="ruby"><span><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span><b>Ruby</b></label>
+              <label class="ink-option sapphire"><input type="radio" name="ink-1" value="sapphire"><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
+              <label class="ink-option steel"><input type="radio" name="ink-1" value="steel" checked><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="setup-player" data-setup-player="2">
+            <legend>Speler 3</legend>
+            <label class="setup-name">
+              <span>Naam</span>
+              <input id="setup-name-2" type="text" value="" autocomplete="off" maxlength="18">
+            </label>
+            <div class="ink-grid" aria-label="Inktkleur speler 3">
+              <label class="ink-option amber"><input type="radio" name="ink-2" value="amber"><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
+              <label class="ink-option amethyst"><input type="radio" name="ink-2" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
+              <label class="ink-option emerald"><input type="radio" name="ink-2" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
+              <label class="ink-option ruby"><input type="radio" name="ink-2" value="ruby" checked><span><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span><b>Ruby</b></label>
+              <label class="ink-option sapphire"><input type="radio" name="ink-2" value="sapphire"><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
+              <label class="ink-option steel"><input type="radio" name="ink-2" value="steel"><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="setup-player" data-setup-player="3">
+            <legend>Speler 4</legend>
+            <label class="setup-name">
+              <span>Naam</span>
+              <input id="setup-name-3" type="text" value="" autocomplete="off" maxlength="18">
+            </label>
+            <div class="ink-grid" aria-label="Inktkleur speler 4">
+              <label class="ink-option amber"><input type="radio" name="ink-3" value="amber"><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
+              <label class="ink-option amethyst"><input type="radio" name="ink-3" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
+              <label class="ink-option emerald"><input type="radio" name="ink-3" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
+              <label class="ink-option ruby"><input type="radio" name="ink-3" value="ruby"><span><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span><b>Ruby</b></label>
+              <label class="ink-option sapphire"><input type="radio" name="ink-3" value="sapphire" checked><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
+              <label class="ink-option steel"><input type="radio" name="ink-3" value="steel"><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <fieldset class="match-type">
+          <legend>Match</legend>
+          <label><input type="radio" name="match-type" value="1" checked><span>BO1</span></label>
+          <label><input type="radio" name="match-type" value="3"><span>BO3</span></label>
+          <label><input type="radio" name="match-type" value="5"><span>BO5</span></label>
+        </fieldset>
+
+        <button class="start-button" type="submit">Start match</button>
+      </form>
+    </section>
+
+    <main class="table-shell hidden player-count-2" id="score-screen" aria-label="Lorcana scorekeeper">
+      <section class="players-table" aria-label="Spelers">
+        <article class="player player-seat-0 panel" data-player="0">
+          <div class="player-inner">
+            <div class="player-heading">
+              <span class="player-ink" id="player-ink-0"><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span>
+              <strong id="name-0">Amethyst</strong>
+            </div>
+            <div class="score-row">
+              <button class="score-button" data-action="change" data-player="0" data-delta="-1" aria-label="Min 1 voor speler 1">−</button>
+              <output class="score" id="score-0" aria-live="polite">0</output>
+              <button class="score-button primary" data-action="change" data-player="0" data-delta="1" aria-label="Plus 1 voor speler 1">+</button>
+            </div>
+            <div class="quick-row" aria-label="Snelle score speler 1">
+              <button data-action="change" data-player="0" data-delta="2">+2</button>
+              <button data-action="change" data-player="0" data-delta="3">+3</button>
+              <button data-action="change" data-player="0" data-delta="5">+5</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="player player-seat-1 panel" data-player="1">
+          <div class="player-inner">
+            <div class="player-heading">
+              <span class="player-ink" id="player-ink-1"><img src="./assets/ink/dlc_ink_steel.png" alt=""></span>
+              <strong id="name-1">Steel</strong>
+            </div>
+            <div class="score-row">
+              <button class="score-button" data-action="change" data-player="1" data-delta="-1" aria-label="Min 1 voor speler 2">−</button>
+              <output class="score" id="score-1" aria-live="polite">0</output>
+              <button class="score-button primary" data-action="change" data-player="1" data-delta="1" aria-label="Plus 1 voor speler 2">+</button>
+            </div>
+            <div class="quick-row" aria-label="Snelle score speler 2">
+              <button data-action="change" data-player="1" data-delta="2">+2</button>
+              <button data-action="change" data-player="1" data-delta="3">+3</button>
+              <button data-action="change" data-player="1" data-delta="5">+5</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="player player-seat-2 panel" data-player="2">
+          <div class="player-inner">
+            <div class="player-heading">
+              <span class="player-ink" id="player-ink-2"><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span>
+              <strong id="name-2">Ruby</strong>
+            </div>
+            <div class="score-row">
+              <button class="score-button" data-action="change" data-player="2" data-delta="-1" aria-label="Min 1 voor speler 3">−</button>
+              <output class="score" id="score-2" aria-live="polite">0</output>
+              <button class="score-button primary" data-action="change" data-player="2" data-delta="1" aria-label="Plus 1 voor speler 3">+</button>
+            </div>
+            <div class="quick-row" aria-label="Snelle score speler 3">
+              <button data-action="change" data-player="2" data-delta="2">+2</button>
+              <button data-action="change" data-player="2" data-delta="3">+3</button>
+              <button data-action="change" data-player="2" data-delta="5">+5</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="player player-seat-3 panel" data-player="3">
+          <div class="player-inner">
+            <div class="player-heading">
+              <span class="player-ink" id="player-ink-3"><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span>
+              <strong id="name-3">Sapphire</strong>
+            </div>
+            <div class="score-row">
+              <button class="score-button" data-action="change" data-player="3" data-delta="-1" aria-label="Min 1 voor speler 4">−</button>
+              <output class="score" id="score-3" aria-live="polite">0</output>
+              <button class="score-button primary" data-action="change" data-player="3" data-delta="1" aria-label="Plus 1 voor speler 4">+</button>
+            </div>
+            <div class="quick-row" aria-label="Snelle score speler 4">
+              <button data-action="change" data-player="3" data-delta="2">+2</button>
+              <button data-action="change" data-player="3" data-delta="3">+3</button>
+              <button data-action="change" data-player="3" data-delta="5">+5</button>
+            </div>
+          </div>
+        </article>
+
+        <section class="table-center" aria-label="Spelstatus">
+          <section class="status panel" aria-live="polite">
+            <div class="status-readout status-readout-away">
+              <p class="label">Status</p>
+              <p id="status-text-away">Klaar voor de eerste quest.</p>
+            </div>
+            <div class="race-strip" aria-label="Lore race naar 20">
+              <div class="race-lane" data-player="0">
+                <span class="race-name" id="race-name-0"><img src="./assets/ink/dlc_ink_amethyst.png" alt=""> Amethyst</span>
+                <div class="race-track">
+                  <span class="race-progress" id="race-progress-0"></span>
+                  <span class="race-marker" id="race-marker-0">0</span>
+                </div>
+              </div>
+              <div class="race-lane" data-player="1">
+                <span class="race-name" id="race-name-1"><img src="./assets/ink/dlc_ink_steel.png" alt=""> Steel</span>
+                <div class="race-track">
+                  <span class="race-progress" id="race-progress-1"></span>
+                  <span class="race-marker" id="race-marker-1">0</span>
+                </div>
+              </div>
+              <div class="race-lane" data-player="2">
+                <span class="race-name" id="race-name-2"><img src="./assets/ink/dlc_ink_ruby.png" alt=""> Ruby</span>
+                <div class="race-track">
+                  <span class="race-progress" id="race-progress-2"></span>
+                  <span class="race-marker" id="race-marker-2">0</span>
+                </div>
+              </div>
+              <div class="race-lane" data-player="3">
+                <span class="race-name" id="race-name-3"><img src="./assets/ink/dlc_ink_sapphire.png" alt=""> Sapphire</span>
+                <div class="race-track">
+                  <span class="race-progress" id="race-progress-3"></span>
+                  <span class="race-marker" id="race-marker-3">0</span>
+                </div>
+              </div>
+            </div>
+            <div class="match-score hidden" id="match-score" aria-label="Gewonnen potjes">
+              <div data-player="0"><span id="match-name-0">Amethyst</span><b id="game-wins-0">0</b></div>
+              <div data-player="1"><span id="match-name-1">Steel</span><b id="game-wins-1">0</b></div>
+              <div data-player="2"><span id="match-name-2">Ruby</span><b id="game-wins-2">0</b></div>
+              <div data-player="3"><span id="match-name-3">Sapphire</span><b id="game-wins-3">0</b></div>
+            </div>
+            <div class="status-readout status-readout-home">
+              <p class="label">Status</p>
+              <p id="status-text-home">Klaar voor de eerste quest.</p>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <details class="history panel">
+        <summary>
+          <span>Laatste acties</span>
+          <button data-action="clearHistory" aria-label="Historie wissen">Wissen</button>
+        </summary>
+        <ol id="history-list" class="history-list"></ol>
+      </details>
+    </main>
+
+    <dialog class="match-dialog" id="match-winner-dialog">
+      <form method="dialog">
+        <p class="label">Match gewonnen</p>
+        <h2 id="match-winner-title">Match klaar</h2>
+        <div class="dialog-actions">
+          <button value="new-match">Nieuwe match</button>
+          <button value="setup">Terug naar naam selectie</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="match-dialog" id="match-type-dialog">
+      <form method="dialog">
+        <p class="label">Nieuwe match</p>
+        <h2>Kies matchvorm</h2>
+        <div class="dialog-actions compact">
+          <button value="1">BO1</button>
+          <button value="3">BO3</button>
+          <button value="5">BO5</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js?v=27"></script>
+  </body>
+</html>

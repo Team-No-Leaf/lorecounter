@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lorcana scorekeeper icon">
+  <rect width="512" height="512" rx="96" fill="#101820"/>
+  <path fill="#2fc4b2" d="M126 104h120v304H126z"/>
+  <path fill="#ef6f6c" d="M266 104h120v304H266z"/>
+  <path fill="#f5c84b" d="M256 76l42 92 100 12-74 68 20 98-88-50-88 50 20-98-74-68 100-12z"/>
+  <circle cx="256" cy="256" r="74" fill="#101820"/>
+  <text x="256" y="286" text-anchor="middle" font-family="Arial, sans-serif" font-size="92" font-weight="900" fill="#f5c84b">20</text>
+</svg>
