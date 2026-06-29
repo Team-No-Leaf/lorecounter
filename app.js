@@ -68,6 +68,7 @@ const defaultState = {
 
 let state = loadState();
 let landingComplete = URL_PARAMS.has("skipLanding");
+let wakeLock = null;
 
 const landingScreen = document.querySelector("#landing-screen");
 const landingBg = document.querySelector("#landing-bg");
@@ -105,12 +106,20 @@ landingScreen.dataset.backgroundFile = selectedBackground.split("/").pop();
 
 landingStart.addEventListener("click", () => {
   landingComplete = true;
+  requestImmersiveMode();
   render();
 });
 
 setupForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  requestImmersiveMode();
   startMatchFromSetup();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && state.setupComplete) {
+    requestWakeLock();
+  }
 });
 
 document.addEventListener("change", (event) => {
@@ -410,6 +419,30 @@ function openDialog(dialog) {
   } else {
     dialog.setAttribute("open", "");
   }
+}
+
+function requestImmersiveMode() {
+  requestFullscreenMode();
+  requestWakeLock();
+}
+
+function requestFullscreenMode() {
+  const root = document.documentElement;
+  const request = root.requestFullscreen || root.webkitRequestFullscreen || root.msRequestFullscreen;
+  if (!request || document.fullscreenElement || document.webkitFullscreenElement) return;
+  Promise.resolve(request.call(root)).catch(() => {});
+}
+
+function requestWakeLock() {
+  if (wakeLock || !navigator.wakeLock?.request) return;
+  navigator.wakeLock.request("screen")
+    .then((lock) => {
+      wakeLock = lock;
+      wakeLock.addEventListener?.("release", () => {
+        wakeLock = null;
+      });
+    })
+    .catch(() => {});
 }
 
 function saveAndRender() {
