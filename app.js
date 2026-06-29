@@ -55,7 +55,7 @@ const BACKGROUND_IMAGES = [
 const defaultState = {
   setupComplete: false,
   playerCount: 2,
-  names: ["Amethyst", "Steel", "Ruby", "Sapphire"],
+  names: ["", "", "", ""],
   inks: ["amethyst", "steel", "ruby", "sapphire"],
   matchType: 1,
   scores: [0, 0, 0, 0],
