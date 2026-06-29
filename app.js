@@ -55,7 +55,7 @@ const BACKGROUND_IMAGES = [
 const defaultState = {
   setupComplete: false,
   playerCount: 2,
-  names: ["Amethyst", "Steel", "Ruby", "Sapphire"],
+  names: ["", "", "", ""],
   inks: ["amethyst", "steel", "ruby", "sapphire"],
   matchType: 1,
   scores: [0, 0, 0, 0],
@@ -103,6 +103,10 @@ const selectedBackground = BACKGROUND_IMAGES[Math.floor(Math.random() * BACKGROU
 landingBg.style.backgroundImage = `url("${selectedBackground}")`;
 landingScreen.dataset.backgroundCount = String(BACKGROUND_IMAGES.length);
 landingScreen.dataset.backgroundFile = selectedBackground.split("/").pop();
+
+setResponsiveViewport();
+window.addEventListener("resize", setResponsiveViewport);
+window.visualViewport?.addEventListener("resize", setResponsiveViewport);
 
 landingStart.addEventListener("click", () => {
   landingComplete = true;
@@ -419,6 +423,21 @@ function openDialog(dialog) {
   } else {
     dialog.setAttribute("open", "");
   }
+}
+
+function setResponsiveViewport() {
+  const viewport = window.visualViewport || window;
+  const width = viewport.width || window.innerWidth || document.documentElement.clientWidth;
+  const height = viewport.height || window.innerHeight || document.documentElement.clientHeight;
+  const scale = clamp(Math.min(width / 390, height / 760), 0.72, 1);
+  const compactScale = clamp(Math.min(width / 375, height / 680), 0.66, 1);
+  const root = document.documentElement;
+
+  root.style.setProperty("--app-width", `${width}px`);
+  root.style.setProperty("--app-height", `${height}px`);
+  root.style.setProperty("--device-scale", scale.toFixed(3));
+  root.style.setProperty("--compact-scale", compactScale.toFixed(3));
+  root.dataset.viewportHeight = height < 680 ? "tight" : height < 760 ? "compact" : "roomy";
 }
 
 function requestImmersiveMode() {
