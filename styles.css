@@ -1385,41 +1385,6 @@ body[data-player-count="3"] [data-setup-player="3"] {
   }
 }
 
-@media (min-width: 760px) {
-  .table-shell {
-    width: min(100%, 900px);
-    grid-template-columns: minmax(260px, 1fr) 280px minmax(260px, 1fr);
-    grid-template-rows: minmax(420px, 1fr) auto;
-    align-items: stretch;
-  }
-
-  .player-away {
-    grid-column: 1;
-    grid-row: 1;
-    border-top: 4px solid var(--teal);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .player-away .player-inner {
-    transform: rotate(180deg);
-  }
-
-  .table-center {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  .player-home {
-    grid-column: 3;
-    grid-row: 1;
-  }
-
-  .history {
-    grid-column: 1 / -1;
-  }
-}
-
 .table-shell {
   min-height: var(--app-height, 100svh);
   padding: max(calc(10px * var(--device-scale, 1)), env(safe-area-inset-top)) calc(10px * var(--device-scale, 1)) max(calc(10px * var(--device-scale, 1)), env(safe-area-inset-bottom));
