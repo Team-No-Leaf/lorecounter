@@ -480,17 +480,12 @@ button:active {
 .status {
   position: relative;
   min-width: 0;
-  padding: 10px 78px 10px 10px;
+  padding: 10px;
   display: grid;
   gap: 10px;
 }
 
 .setup-return {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  right: 8px;
-  transform: translateY(-50%);
   min-height: 30px;
   padding: 0 10px;
   border: 1px solid rgba(245, 200, 75, 0.52);
@@ -644,7 +639,7 @@ button:active {
 .round-timer {
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 8px;
   padding: 7px 8px;
@@ -1168,7 +1163,7 @@ body[data-player-count="3"] [data-setup-player="3"] {
 
   .player-count-2 .status {
     gap: 5px;
-    padding: 7px 68px 7px 7px;
+    padding: 7px;
   }
 
   .player-count-2 #status-text-away,
@@ -1321,7 +1316,7 @@ body[data-player-count="3"] [data-setup-player="3"] {
 
   .status {
     gap: 6px;
-    padding: 8px 70px 8px 8px;
+    padding: 8px;
   }
 
   #status-text-away,
@@ -1484,11 +1479,7 @@ body[data-player-count="3"] [data-setup-player="3"] {
 
 .status {
   gap: calc(10px * var(--device-scale, 1));
-  padding:
-    calc(10px * var(--device-scale, 1))
-    max(68px, calc(78px * var(--device-scale, 1)))
-    calc(10px * var(--device-scale, 1))
-    calc(10px * var(--device-scale, 1));
+  padding: calc(10px * var(--device-scale, 1));
 }
 
 #status-text-away,
