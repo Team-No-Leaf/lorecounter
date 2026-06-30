@@ -641,6 +641,60 @@ button:active {
   font-variant-numeric: tabular-nums;
 }
 
+.round-timer {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.round-timer span {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.round-timer small {
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.round-timer b {
+  color: var(--text);
+  font-size: 1.18rem;
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+}
+
+.round-timer button {
+  min-height: 32px;
+  padding: 0 12px;
+  color: #101820;
+  border-color: transparent;
+  background: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.round-timer button.running {
+  color: var(--gold);
+  border-color: rgba(245, 200, 75, 0.52);
+  background: rgba(16, 24, 32, 0.78);
+}
+
+.round-timer button.expired {
+  color: var(--text);
+  border-color: rgba(219, 63, 78, 0.6);
+  background: rgba(219, 63, 78, 0.24);
+}
+
 .history {
   padding: 0 12px;
 }
@@ -710,6 +764,38 @@ button:active {
 .match-dialog h2 {
   margin: 0;
   font-size: 1.35rem;
+}
+
+.match-overview {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  list-style: none;
+}
+
+.match-overview li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.match-overview span {
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 950;
+}
+
+.match-overview strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dialog-actions {

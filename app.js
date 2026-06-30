@@ -1,4 +1,5 @@
 const TARGET_LORE = 20;
+const ROUND_TIME_SECONDS = 50 * 60;
 const STORAGE_KEY = "lorcana-scorekeeper-v2";
 const URL_PARAMS = new URLSearchParams(location.search);
 
@@ -60,6 +61,13 @@ const defaultState = {
   matchType: 1,
   scores: [0, 0, 0, 0],
   gameWins: [0, 0, 0, 0],
+  gameResults: [],
+  timer: {
+    remaining: ROUND_TIME_SECONDS,
+    running: false,
+    startedAt: null,
+    timeCalled: false
+  },
   history: [],
   notice: "",
   matchLocked: false,
@@ -91,10 +99,15 @@ const statusTextEls = [document.querySelector("#status-text-away"), document.que
 const matchScore = document.querySelector("#match-score");
 const matchNameEls = [0, 1, 2, 3].map((index) => document.querySelector(`#match-name-${index}`));
 const gameWinEls = [0, 1, 2, 3].map((index) => document.querySelector(`#game-wins-${index}`));
+const timerLabel = document.querySelector("#timer-label");
+const timerDisplay = document.querySelector("#timer-display");
+const timerToggle = document.querySelector("#timer-toggle");
 const historyList = document.querySelector("#history-list");
 const matchWinnerDialog = document.querySelector("#match-winner-dialog");
 const matchWinnerTitle = document.querySelector("#match-winner-title");
+const matchOverview = document.querySelector("#match-overview");
 const matchTypeDialog = document.querySelector("#match-type-dialog");
+let timerInterval = null;
 
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
@@ -161,9 +174,13 @@ document.addEventListener("click", (event) => {
   }
   if (action === "clearHistory") clearHistory();
   if (action === "showSetup") showSetup();
+  if (action === "toggleTimer") toggleTimer();
 });
 
 matchWinnerDialog.addEventListener("close", () => {
+  if (matchWinnerDialog.returnValue === "back") {
+    backToGameAfterMatchWin();
+  }
   if (matchWinnerDialog.returnValue === "setup") {
     showSetup();
   }
@@ -203,12 +220,15 @@ function showSetupFromLanding() {
   state.matchLocked = false;
   state.matchWinner = null;
   state.notice = "";
+  pauseTimer();
   saveAndRender();
 }
 
 function resetMatchState() {
   state.scores = [0, 0, 0, 0];
   state.gameWins = [0, 0, 0, 0];
+  state.gameResults = [];
+  resetTimer();
   state.history = [];
   state.notice = "";
   state.matchLocked = false;
@@ -220,6 +240,7 @@ function showSetup() {
   state.matchLocked = false;
   state.matchWinner = null;
   state.notice = "";
+  pauseTimer();
   saveAndRender();
 }
 
@@ -254,13 +275,16 @@ function changeScore(player, delta) {
 
 function finishGame(player) {
   state.gameWins[player] += 1;
+  state.gameResults.push(player);
   const needed = winsNeeded();
   const gameWins = [...state.gameWins];
+  const gameNumber = state.gameResults.length;
 
   state.history.unshift({
     type: "game",
     player,
     playerName: state.names[player],
+    gameNumber,
     gameWins,
     matchType: state.matchType,
     at: new Date().toISOString()
@@ -270,15 +294,34 @@ function finishGame(player) {
     state.matchLocked = true;
     state.matchWinner = player;
     state.notice = `${state.names[player]} wins the match.`;
+    pauseTimer();
     window.setTimeout(() => {
       matchWinnerTitle.textContent = `${state.names[player]} wins the match`;
+      renderMatchOverview();
       openDialog(matchWinnerDialog);
     }, 120);
     return;
   }
 
   state.notice = `${state.names[player]} wins this game. Next game started.`;
-  state.scores = [0, 0];
+  state.scores = [0, 0, 0, 0];
+}
+
+function backToGameAfterMatchWin() {
+  const winner = state.matchWinner;
+  if (Number.isInteger(winner)) {
+    state.gameWins[winner] = Math.max(0, state.gameWins[winner] - 1);
+    if (state.gameResults[state.gameResults.length - 1] === winner) {
+      state.gameResults.pop();
+    }
+    if (state.history[0]?.type === "game" && state.history[0].player === winner) {
+      state.history.shift();
+    }
+  }
+  state.matchLocked = false;
+  state.matchWinner = null;
+  state.notice = "Back to game. Adjust the lore if needed.";
+  saveAndRender();
 }
 
 function clearHistory() {
@@ -331,8 +374,10 @@ function render() {
   });
 
   matchScore.classList.toggle("hidden", state.matchType === 1);
+  renderTimer();
   renderStatus();
   renderHistory();
+  renderMatchWinnerDialog();
 }
 
 function renderStatus() {
@@ -343,6 +388,8 @@ function renderStatus() {
 
   if (state.notice) {
     setStatusText(state.notice);
+  } else if (getTimerRemaining() <= 0) {
+    setStatusText("Time called. Finish the current turn, then play five additional turns.");
   } else if (highest >= TARGET_LORE) {
     setStatusText(leaderIndex === -1
       ? `All tied players reached ${TARGET_LORE} lore.`
@@ -368,6 +415,124 @@ function setStatusText(text) {
   statusTextEls.forEach((element) => {
     element.textContent = text;
   });
+}
+
+function toggleTimer() {
+  if (state.timer.running) pauseTimer();
+  else startTimer();
+  saveAndRender();
+}
+
+function startTimer() {
+  const remaining = getTimerRemaining();
+  state.timer = {
+    remaining: remaining > 0 ? remaining : ROUND_TIME_SECONDS,
+    running: true,
+    startedAt: Date.now(),
+    timeCalled: false
+  };
+  ensureTimerInterval();
+}
+
+function pauseTimer() {
+  state.timer = {
+    ...normalizeTimer(state.timer),
+    remaining: getTimerRemaining(),
+    running: false,
+    startedAt: null
+  };
+  stopTimerInterval();
+}
+
+function resetTimer() {
+  state.timer = {
+    remaining: ROUND_TIME_SECONDS,
+    running: false,
+    startedAt: null,
+    timeCalled: false
+  };
+  stopTimerInterval();
+}
+
+function getTimerRemaining() {
+  const timer = normalizeTimer(state.timer);
+  if (!timer.running || !timer.startedAt) return timer.remaining;
+  const elapsed = Math.floor((Date.now() - Number(timer.startedAt)) / 1000);
+  return clamp(timer.remaining - elapsed, 0, ROUND_TIME_SECONDS);
+}
+
+function renderTimer() {
+  const remaining = getTimerRemaining();
+  timerLabel.textContent = `${matchLabel().toUpperCase()} round`;
+  timerDisplay.textContent = formatTime(remaining);
+  timerToggle.textContent = state.timer.running ? "Pause" : remaining <= 0 ? "Restart" : "Start";
+  timerToggle.classList.toggle("running", state.timer.running);
+  timerToggle.classList.toggle("expired", remaining <= 0);
+
+  if (state.timer.running && remaining <= 0) {
+    state.timer = {
+      ...normalizeTimer(state.timer),
+      remaining: 0,
+      running: false,
+      startedAt: null,
+      timeCalled: true
+    };
+    state.notice = "Time called. Finish the current turn, then play five additional turns.";
+    stopTimerInterval();
+    saveAndRender();
+    return;
+  }
+
+  if (state.timer.running) ensureTimerInterval();
+  else stopTimerInterval();
+}
+
+function ensureTimerInterval() {
+  if (timerInterval) return;
+  timerInterval = window.setInterval(() => {
+    render();
+    if (getTimerRemaining() <= 0) saveAndRender();
+  }, 1000);
+}
+
+function stopTimerInterval() {
+  if (!timerInterval) return;
+  window.clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+  return `${minutes}:${String(rest).padStart(2, "0")}`;
+}
+
+function normalizeTimer(timer) {
+  return {
+    ...defaultState.timer,
+    ...(timer || {}),
+    remaining: Number.isFinite(Number(timer?.remaining))
+      ? clamp(Number(timer.remaining), 0, ROUND_TIME_SECONDS)
+      : ROUND_TIME_SECONDS
+  };
+}
+
+function renderMatchWinnerDialog() {
+  if (!state.matchLocked || !Number.isInteger(state.matchWinner) || matchWinnerDialog.open) return;
+  window.setTimeout(() => {
+    if (!state.matchLocked || matchWinnerDialog.open) return;
+    matchWinnerTitle.textContent = `${state.names[state.matchWinner]} wins the match`;
+    renderMatchOverview();
+    openDialog(matchWinnerDialog);
+  }, 120);
+}
+
+function renderMatchOverview() {
+  const results = Array.isArray(state.gameResults) ? state.gameResults : [];
+  matchOverview.classList.toggle("hidden", results.length === 0 || state.matchType === 1);
+  matchOverview.innerHTML = results.map((player, index) =>
+    `<li><span>G${index + 1}</span><strong>${escapeHtml(state.names[player] || `Player ${player + 1}`)}</strong></li>`
+  ).join("");
 }
 
 function renderHistory() {
@@ -505,6 +670,8 @@ function loadState() {
       inks: [0, 1, 2, 3].map((index) => saved.inks?.[index] || defaultState.inks[index]),
       scores: [0, 1, 2, 3].map((index) => Number(saved.scores?.[index]) || 0),
       gameWins: [0, 1, 2, 3].map((index) => Number(saved.gameWins?.[index]) || 0),
+      gameResults: Array.isArray(saved.gameResults) ? saved.gameResults.filter((player) => Number.isInteger(player)) : [],
+      timer: normalizeTimer(saved.timer),
       matchType: [1, 3, 5].includes(Number(saved.matchType)) ? Number(saved.matchType) : 1,
       history: Array.isArray(saved.history) ? saved.history : []
     };

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#101820">
     <title>Sorgen's Inkwell</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=34">
+    <link rel="manifest" href="./manifest.webmanifest?v=35">
     <link rel="icon" href="./assets/icons/illuminary-favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="./assets/icons/illuminary-180.png">
-    <link rel="stylesheet" href="./styles.css?v=34">
+    <link rel="stylesheet" href="./styles.css?v=35">
   </head>
   <body>
     <section class="landing-shell" id="landing-screen" aria-label="Welcome">
@@ -240,6 +240,13 @@
                 </div>
               </div>
             </div>
+            <div class="round-timer" id="round-timer" aria-label="Tournament round timer">
+              <span>
+                <small id="timer-label">BO1 round</small>
+                <b id="timer-display">50:00</b>
+              </span>
+              <button id="timer-toggle" type="button" data-action="toggleTimer">Start</button>
+            </div>
             <div class="match-score hidden" id="match-score" aria-label="Games won">
               <div data-player="0"><span id="match-name-0">Amethyst</span><b id="game-wins-0">0</b></div>
               <div data-player="1"><span id="match-name-1">Steel</span><b id="game-wins-1">0</b></div>
@@ -267,7 +274,9 @@
       <form method="dialog">
         <p class="label">Match won</p>
         <h2 id="match-winner-title">Match klaar</h2>
+        <ol class="match-overview hidden" id="match-overview" aria-label="Game winners"></ol>
         <div class="dialog-actions">
+          <button value="back">Back to game</button>
           <button value="new-match">New match</button>
           <button value="setup">Back to name selection</button>
         </div>
@@ -286,6 +295,6 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=34"></script>
+    <script src="./app.js?v=35"></script>
   </body>
 </html>
