@@ -111,7 +111,7 @@ window.visualViewport?.addEventListener("resize", setResponsiveViewport);
 landingStart.addEventListener("click", () => {
   landingComplete = true;
   requestImmersiveMode();
-  render();
+  showSetupFromLanding();
 });
 
 setupForm.addEventListener("submit", (event) => {
@@ -186,6 +186,15 @@ function startNewMatch(matchType) {
   state.matchType = matchType;
   state.setupComplete = true;
   resetMatchState();
+  saveAndRender();
+}
+
+function showSetupFromLanding() {
+  state.setupComplete = false;
+  state.names = ["", "", "", ""];
+  state.matchLocked = false;
+  state.matchWinner = null;
+  state.notice = "";
   saveAndRender();
 }
 
