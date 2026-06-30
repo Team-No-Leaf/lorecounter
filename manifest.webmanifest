@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#101820",
   "theme_color": "#101820",
-  "description": "Mobiele scorekeeper voor Lorcana games.",
+  "description": "Mobile scorekeeper for Lorcana games.",
   "icons": [
     {
       "src": "./assets/icons/illuminary-192.png",

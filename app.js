@@ -174,7 +174,7 @@ render();
 
 function startMatchFromSetup() {
   state.playerCount = Number(getCheckedValue("player-count")) || 2;
-  state.names = setupNameEls.map((input, index) => input.value.trim() || `Speler ${index + 1}`);
+  state.names = setupNameEls.map((input, index) => input.value.trim() || `Player ${index + 1}`);
   state.inks = [0, 1, 2, 3].map((index) => getCheckedValue(`ink-${index}`));
   state.matchType = Number(getCheckedValue("match-type"));
   state.setupComplete = true;
@@ -252,15 +252,15 @@ function finishGame(player) {
   if (state.gameWins[player] >= needed) {
     state.matchLocked = true;
     state.matchWinner = player;
-    state.notice = `${state.names[player]} wint de match.`;
+    state.notice = `${state.names[player]} wins the match.`;
     window.setTimeout(() => {
-      matchWinnerTitle.textContent = `${state.names[player]} wint de match`;
+      matchWinnerTitle.textContent = `${state.names[player]} wins the match`;
       openDialog(matchWinnerDialog);
     }, 120);
     return;
   }
 
-  state.notice = `${state.names[player]} wint dit potje. Volgende pot gestart.`;
+  state.notice = `${state.names[player]} wins this game. Next game started.`;
   state.scores = [0, 0];
 }
 
@@ -327,14 +327,14 @@ function renderStatus() {
     setStatusText(state.notice);
   } else if (highest >= TARGET_LORE) {
     setStatusText(leaderIndex === -1
-      ? `Beide spelers hebben ${TARGET_LORE} lore bereikt.`
-      : `${state.names[leaderIndex]} heeft ${TARGET_LORE} lore bereikt.`);
+      ? `All tied players reached ${TARGET_LORE} lore.`
+      : `${state.names[leaderIndex]} reached ${TARGET_LORE} lore.`);
   } else if (leaderIndex === -1) {
-    setStatusText(highest === 0 ? `Klaar voor ${matchLabel()}.` : `Gelijkspel op ${highest}.`);
+    setStatusText(highest === 0 ? `Ready for ${matchLabel()}.` : `Tied at ${highest}.`);
   } else {
     const needed = TARGET_LORE - state.scores[leaderIndex];
     const runnerUp = Math.max(...active.filter((index) => index !== leaderIndex).map((index) => state.scores[index]));
-    setStatusText(`${state.names[leaderIndex]} leidt met ${state.scores[leaderIndex] - runnerUp}. Nog ${needed} lore nodig.`);
+    setStatusText(`${state.names[leaderIndex]} leads by ${state.scores[leaderIndex] - runnerUp}. ${needed} lore to go.`);
   }
 
   state.scores.forEach((score, index) => {
@@ -354,22 +354,22 @@ function setStatusText(text) {
 
 function renderHistory() {
   if (state.history.length === 0) {
-    historyList.innerHTML = "<li><span>Nog geen acties.</span><span></span></li>";
+    historyList.innerHTML = "<li><span>No actions yet.</span><span></span></li>";
     return;
   }
 
   historyList.innerHTML = state.history.slice(0, 8).map((item) => {
     if (item.type === "score") {
-      const playerName = item.playerName || state.names[item.player] || "Speler";
+      const playerName = item.playerName || state.names[item.player] || "Player";
       const from = Number.isFinite(item.from) ? item.from : item.previous?.[item.player] ?? "?";
       const to = Number.isFinite(item.to) ? item.to : item.scores?.[item.player] ?? "?";
-      return `<li><span><strong>${escapeHtml(playerName)}</strong> van ${from} naar ${to} lore</span><span> Stand ${formatScores(item.scores)}</span></li>`;
+      return `<li><span><strong>${escapeHtml(playerName)}</strong> from ${from} to ${to} lore</span><span> Score ${formatScores(item.scores)}</span></li>`;
     }
     if (item.type === "game") {
-      const playerName = item.playerName || state.names[item.player] || "Speler";
-      return `<li><span><strong>${escapeHtml(playerName)}</strong> wint potje</span><span> Match ${formatScores(item.gameWins)}</span></li>`;
+      const playerName = item.playerName || state.names[item.player] || "Player";
+      return `<li><span><strong>${escapeHtml(playerName)}</strong> wins game</span><span> Match ${formatScores(item.gameWins)}</span></li>`;
     }
-    return "<li><span>Nieuw spel gestart</span><span> Stand 0 - 0</span></li>";
+    return "<li><span>New game started</span><span> Score 0 - 0</span></li>";
   }).join("");
 }
 

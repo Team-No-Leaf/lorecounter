@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#101820">
     <title>Sorgen's Inkwell</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=28">
+    <link rel="manifest" href="./manifest.webmanifest?v=29">
     <link rel="icon" href="./assets/icons/illuminary-favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="./assets/icons/illuminary-180.png">
-    <link rel="stylesheet" href="./styles.css?v=28">
+    <link rel="stylesheet" href="./styles.css?v=29">
   </head>
   <body>
-    <section class="landing-shell" id="landing-screen" aria-label="Welkom">
+    <section class="landing-shell" id="landing-screen" aria-label="Welcome">
       <div class="landing-bg" id="landing-bg" aria-hidden="true"></div>
       <div class="landing-shade" aria-hidden="true"></div>
       <main class="landing-content">
@@ -31,7 +31,7 @@
       <p class="landing-credit">Made by Sorgen</p>
     </section>
 
-    <section class="setup-shell" id="setup-screen" aria-label="Naam selectie">
+    <section class="setup-shell" id="setup-screen" aria-label="Name selection">
       <form class="setup-card panel" id="setup-form">
         <div class="setup-heading">
           <p class="label">Lorcana</p>
@@ -39,7 +39,7 @@
         </div>
 
         <fieldset class="player-count">
-          <legend>Spelers</legend>
+          <legend>Players</legend>
           <label><input type="radio" name="player-count" value="2" checked><span>2</span></label>
           <label><input type="radio" name="player-count" value="3"><span>3</span></label>
           <label><input type="radio" name="player-count" value="4"><span>4</span></label>
@@ -47,12 +47,12 @@
 
         <div class="setup-players">
           <fieldset class="setup-player" data-setup-player="0">
-            <legend>Speler 1</legend>
+            <legend>Player 1</legend>
             <label class="setup-name">
-              <span>Naam</span>
+              <span>Name</span>
               <input id="setup-name-0" type="text" value="" autocomplete="off" maxlength="18">
             </label>
-            <div class="ink-grid" aria-label="Inktkleur speler 1">
+            <div class="ink-grid" aria-label="Player 1 ink color">
               <label class="ink-option amber"><input type="radio" name="ink-0" value="amber" checked><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
               <label class="ink-option amethyst"><input type="radio" name="ink-0" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
               <label class="ink-option emerald"><input type="radio" name="ink-0" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
@@ -63,12 +63,12 @@
           </fieldset>
 
           <fieldset class="setup-player" data-setup-player="1">
-            <legend>Speler 2</legend>
+            <legend>Player 2</legend>
             <label class="setup-name">
-              <span>Naam</span>
+              <span>Name</span>
               <input id="setup-name-1" type="text" value="" autocomplete="off" maxlength="18">
             </label>
-            <div class="ink-grid" aria-label="Inktkleur speler 2">
+            <div class="ink-grid" aria-label="Player 2 ink color">
               <label class="ink-option amber"><input type="radio" name="ink-1" value="amber"><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
               <label class="ink-option amethyst"><input type="radio" name="ink-1" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
               <label class="ink-option emerald"><input type="radio" name="ink-1" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
@@ -79,12 +79,12 @@
           </fieldset>
 
           <fieldset class="setup-player" data-setup-player="2">
-            <legend>Speler 3</legend>
+            <legend>Player 3</legend>
             <label class="setup-name">
-              <span>Naam</span>
+              <span>Name</span>
               <input id="setup-name-2" type="text" value="" autocomplete="off" maxlength="18">
             </label>
-            <div class="ink-grid" aria-label="Inktkleur speler 3">
+            <div class="ink-grid" aria-label="Player 3 ink color">
               <label class="ink-option amber"><input type="radio" name="ink-2" value="amber"><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
               <label class="ink-option amethyst"><input type="radio" name="ink-2" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
               <label class="ink-option emerald"><input type="radio" name="ink-2" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
@@ -95,12 +95,12 @@
           </fieldset>
 
           <fieldset class="setup-player" data-setup-player="3">
-            <legend>Speler 4</legend>
+            <legend>Player 4</legend>
             <label class="setup-name">
-              <span>Naam</span>
+              <span>Name</span>
               <input id="setup-name-3" type="text" value="" autocomplete="off" maxlength="18">
             </label>
-            <div class="ink-grid" aria-label="Inktkleur speler 4">
+            <div class="ink-grid" aria-label="Player 4 ink color">
               <label class="ink-option amber"><input type="radio" name="ink-3" value="amber"><span><img src="./assets/ink/dlc_ink_amber.png" alt=""></span><b>Amber</b></label>
               <label class="ink-option amethyst"><input type="radio" name="ink-3" value="amethyst"><span><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span><b>Amethyst</b></label>
               <label class="ink-option emerald"><input type="radio" name="ink-3" value="emerald"><span><img src="./assets/ink/dlc_ink_emerald.png" alt=""></span><b>Emerald</b></label>
@@ -123,7 +123,7 @@
     </section>
 
     <main class="table-shell hidden player-count-2" id="score-screen" aria-label="Lorcana scorekeeper">
-      <section class="players-table" aria-label="Spelers">
+      <section class="players-table" aria-label="Players">
         <article class="player player-seat-0 panel" data-player="0">
           <div class="player-inner">
             <div class="player-heading">
@@ -135,7 +135,7 @@
               <output class="score" id="score-0" aria-live="polite">0</output>
               <button class="score-button primary" data-action="change" data-player="0" data-delta="1" aria-label="Plus 1 voor speler 1">+</button>
             </div>
-            <div class="quick-row" aria-label="Snelle score speler 1">
+            <div class="quick-row" aria-label="Player 1 quick score">
               <button data-action="change" data-player="0" data-delta="2">+2</button>
               <button data-action="change" data-player="0" data-delta="3">+3</button>
               <button data-action="change" data-player="0" data-delta="5">+5</button>
@@ -154,7 +154,7 @@
               <output class="score" id="score-1" aria-live="polite">0</output>
               <button class="score-button primary" data-action="change" data-player="1" data-delta="1" aria-label="Plus 1 voor speler 2">+</button>
             </div>
-            <div class="quick-row" aria-label="Snelle score speler 2">
+            <div class="quick-row" aria-label="Player 2 quick score">
               <button data-action="change" data-player="1" data-delta="2">+2</button>
               <button data-action="change" data-player="1" data-delta="3">+3</button>
               <button data-action="change" data-player="1" data-delta="5">+5</button>
@@ -173,7 +173,7 @@
               <output class="score" id="score-2" aria-live="polite">0</output>
               <button class="score-button primary" data-action="change" data-player="2" data-delta="1" aria-label="Plus 1 voor speler 3">+</button>
             </div>
-            <div class="quick-row" aria-label="Snelle score speler 3">
+            <div class="quick-row" aria-label="Player 3 quick score">
               <button data-action="change" data-player="2" data-delta="2">+2</button>
               <button data-action="change" data-player="2" data-delta="3">+3</button>
               <button data-action="change" data-player="2" data-delta="5">+5</button>
@@ -192,7 +192,7 @@
               <output class="score" id="score-3" aria-live="polite">0</output>
               <button class="score-button primary" data-action="change" data-player="3" data-delta="1" aria-label="Plus 1 voor speler 4">+</button>
             </div>
-            <div class="quick-row" aria-label="Snelle score speler 4">
+            <div class="quick-row" aria-label="Player 4 quick score">
               <button data-action="change" data-player="3" data-delta="2">+2</button>
               <button data-action="change" data-player="3" data-delta="3">+3</button>
               <button data-action="change" data-player="3" data-delta="5">+5</button>
@@ -204,7 +204,7 @@
           <section class="status panel" aria-live="polite">
             <div class="status-readout status-readout-away">
               <p class="label">Status</p>
-              <p id="status-text-away">Klaar voor de eerste quest.</p>
+              <p id="status-text-away">Ready for the first quest.</p>
             </div>
             <div class="race-strip" aria-label="Lore race naar 20">
               <div class="race-lane" data-player="0">
@@ -236,7 +236,7 @@
                 </div>
               </div>
             </div>
-            <div class="match-score hidden" id="match-score" aria-label="Gewonnen potjes">
+            <div class="match-score hidden" id="match-score" aria-label="Games won">
               <div data-player="0"><span id="match-name-0">Amethyst</span><b id="game-wins-0">0</b></div>
               <div data-player="1"><span id="match-name-1">Steel</span><b id="game-wins-1">0</b></div>
               <div data-player="2"><span id="match-name-2">Ruby</span><b id="game-wins-2">0</b></div>
@@ -244,7 +244,7 @@
             </div>
             <div class="status-readout status-readout-home">
               <p class="label">Status</p>
-              <p id="status-text-home">Klaar voor de eerste quest.</p>
+              <p id="status-text-home">Ready for the first quest.</p>
             </div>
           </section>
         </section>
@@ -252,8 +252,8 @@
 
       <details class="history panel">
         <summary>
-          <span>Laatste acties</span>
-          <button data-action="clearHistory" aria-label="Historie wissen">Wissen</button>
+          <span>Recent actions</span>
+          <button data-action="clearHistory" aria-label="Clear history">Clear</button>
         </summary>
         <ol id="history-list" class="history-list"></ol>
       </details>
@@ -261,19 +261,19 @@
 
     <dialog class="match-dialog" id="match-winner-dialog">
       <form method="dialog">
-        <p class="label">Match gewonnen</p>
+        <p class="label">Match won</p>
         <h2 id="match-winner-title">Match klaar</h2>
         <div class="dialog-actions">
-          <button value="new-match">Nieuwe match</button>
-          <button value="setup">Terug naar naam selectie</button>
+          <button value="new-match">New match</button>
+          <button value="setup">Back to name selection</button>
         </div>
       </form>
     </dialog>
 
     <dialog class="match-dialog" id="match-type-dialog">
       <form method="dialog">
-        <p class="label">Nieuwe match</p>
-        <h2>Kies matchvorm</h2>
+        <p class="label">New match</p>
+        <h2>Choose match type</h2>
         <div class="dialog-actions compact">
           <button value="1">BO1</button>
           <button value="3">BO3</button>
@@ -282,6 +282,6 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=28"></script>
+    <script src="./app.js?v=29"></script>
   </body>
 </html>
