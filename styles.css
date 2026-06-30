@@ -478,10 +478,27 @@ button:active {
 }
 
 .status {
+  position: relative;
   min-width: 0;
   padding: 10px;
   display: grid;
   gap: 10px;
+}
+
+.setup-return {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 8px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(245, 200, 75, 0.52);
+  border-radius: 999px;
+  color: var(--gold);
+  background: rgba(16, 24, 32, 0.78);
+  font-size: 0.7rem;
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
 }
 
 .status-readout {

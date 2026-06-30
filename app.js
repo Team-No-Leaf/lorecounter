@@ -160,6 +160,7 @@ document.addEventListener("click", (event) => {
     changeScore(Number(button.dataset.player), Number(button.dataset.delta));
   }
   if (action === "clearHistory") clearHistory();
+  if (action === "showSetup") showSetup();
 });
 
 matchWinnerDialog.addEventListener("close", () => {
