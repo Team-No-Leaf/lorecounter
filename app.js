@@ -73,6 +73,7 @@ let wakeLock = null;
 const landingScreen = document.querySelector("#landing-screen");
 const landingBg = document.querySelector("#landing-bg");
 const landingStart = document.querySelector("#landing-start");
+const landingContinue = document.querySelector("#landing-continue");
 const setupScreen = document.querySelector("#setup-screen");
 const scoreScreen = document.querySelector("#score-screen");
 const setupForm = document.querySelector("#setup-form");
@@ -112,6 +113,12 @@ landingStart.addEventListener("click", () => {
   landingComplete = true;
   requestImmersiveMode();
   showSetupFromLanding();
+});
+
+landingContinue.addEventListener("click", () => {
+  landingComplete = true;
+  requestImmersiveMode();
+  render();
 });
 
 setupForm.addEventListener("submit", (event) => {
@@ -280,6 +287,7 @@ function clearHistory() {
 
 function render() {
   landingScreen.classList.toggle("hidden", landingComplete);
+  landingContinue.classList.toggle("hidden", !state.setupComplete);
   setupScreen.classList.toggle("hidden", !landingComplete || state.setupComplete);
   scoreScreen.classList.toggle("hidden", !landingComplete || !state.setupComplete);
   document.body.dataset.playerCount = String(state.playerCount);
