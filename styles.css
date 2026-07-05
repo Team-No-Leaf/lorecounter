@@ -645,35 +645,100 @@ button:active {
 }
 
 .starting-player {
-  display: flex;
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
   align-items: center;
-  gap: 8px;
-  padding: 7px 8px;
+  gap: 10px;
+  padding: 8px 10px;
   border: 1px solid color-mix(in srgb, var(--ink-color), transparent 38%);
   border-radius: 8px;
   background: color-mix(in srgb, var(--ink-color), transparent 84%);
 }
 
-.starting-player img {
-  width: 24px;
-  height: 24px;
-  flex: 0 0 auto;
+.starter-wheel {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at center, rgba(245, 200, 75, 0.22) 0 9px, transparent 10px),
+    rgba(255, 255, 255, 0.05);
 }
 
-.starting-player span {
+.starter-pointer {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 2;
+  width: 8px;
+  height: 30px;
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%) rotate(var(--spin-angle, 1440deg));
+  animation: bottle-spin 2.4s cubic-bezier(0.16, 0.9, 0.2, 1) both;
+}
+
+.starter-pointer i {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px 8px 3px 3px;
+  background: linear-gradient(180deg, var(--gold), #fff5b0 55%, var(--gold));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
+}
+
+.starter-pointer i::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 14px;
+  height: 10px;
+  border-radius: 999px 999px 2px 2px;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+.starter-chip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: rgba(16, 24, 32, 0.84);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--chip-angle))
+    translateY(-31px)
+    rotate(calc(-1 * var(--chip-angle)));
+}
+
+.starter-chip.selected {
+  border-color: var(--chip-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--chip-color), transparent 72%);
+}
+
+.starter-chip img {
+  width: 20px;
+  height: 20px;
+}
+
+.starter-result {
   min-width: 0;
   display: grid;
   gap: 1px;
 }
 
-.starting-player small {
+.starter-result small {
   color: var(--muted);
   font-size: 0.62rem;
   font-weight: 850;
   text-transform: uppercase;
 }
 
-.starting-player strong {
+.starter-result strong {
   min-width: 0;
   overflow: hidden;
   color: var(--text);
@@ -681,6 +746,15 @@ button:active {
   font-weight: 950;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@keyframes bottle-spin {
+  0% {
+    transform: translate(-50%, -100%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -100%) rotate(var(--spin-angle, 1440deg));
+  }
 }
 
 .round-timer {

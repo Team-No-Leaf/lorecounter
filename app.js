@@ -510,8 +510,28 @@ function renderStartingPlayer() {
   startingPlayerEl.classList.toggle("hidden", !visible);
   if (!visible) return;
   const ink = getInk(player);
+  const players = activePlayers();
+  const selectedPosition = Math.max(0, players.indexOf(player));
+  const playerAngle = players.length ? selectedPosition * (360 / players.length) : 0;
+  const spinAngle = 1440 + playerAngle;
   startingPlayerEl.style.setProperty("--ink-color", ink.color);
-  startingPlayerEl.innerHTML = `${inkImage(ink, `${ink.name} ink`)} <span><small>Starts</small><strong>${escapeHtml(state.names[player])}</strong></span>`;
+  startingPlayerEl.style.setProperty("--spin-angle", `${spinAngle}deg`);
+  startingPlayerEl.innerHTML = `
+    <div class="starter-wheel" data-count="${players.length}">
+      <span class="starter-pointer" aria-hidden="true"><i></i></span>
+      ${players.map((playerIndex, position) => {
+        const playerInk = getInk(playerIndex);
+        const angle = position * (360 / players.length);
+        const selected = playerIndex === player ? " selected" : "";
+        return `<span class="starter-chip${selected}" style="--chip-angle: ${angle}deg; --chip-color: ${playerInk.color};">
+          ${inkImage(playerInk, `${playerInk.name} ink`)}
+        </span>`;
+      }).join("")}
+    </div>
+    <span class="starter-result">
+      <small>Starts</small>
+      <strong>${escapeHtml(state.names[player])}</strong>
+    </span>`;
 }
 
 function ensureTimerInterval() {
