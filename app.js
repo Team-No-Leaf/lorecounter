@@ -62,6 +62,8 @@ const defaultState = {
   scores: [0, 0, 0, 0],
   gameWins: [0, 0, 0, 0],
   gameResults: [],
+  startingPlayer: null,
+  showStartingPlayer: false,
   timer: {
     remaining: ROUND_TIME_SECONDS,
     running: false,
@@ -99,6 +101,8 @@ const statusTextEls = [document.querySelector("#status-text-away"), document.que
 const matchScore = document.querySelector("#match-score");
 const matchNameEls = [0, 1, 2, 3].map((index) => document.querySelector(`#match-name-${index}`));
 const gameWinEls = [0, 1, 2, 3].map((index) => document.querySelector(`#game-wins-${index}`));
+const startingPlayerEl = document.querySelector("#starting-player");
+const roundTimer = document.querySelector("#round-timer");
 const timerLabel = document.querySelector("#timer-label");
 const timerDisplay = document.querySelector("#timer-display");
 const timerToggle = document.querySelector("#timer-toggle");
@@ -107,6 +111,7 @@ const matchWinnerDialog = document.querySelector("#match-winner-dialog");
 const matchWinnerTitle = document.querySelector("#match-winner-title");
 const matchOverview = document.querySelector("#match-overview");
 const matchTypeDialog = document.querySelector("#match-type-dialog");
+const setupConfirmDialog = document.querySelector("#setup-confirm-dialog");
 let timerInterval = null;
 
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
@@ -173,7 +178,7 @@ document.addEventListener("click", (event) => {
     changeScore(Number(button.dataset.player), Number(button.dataset.delta));
   }
   if (action === "clearHistory") clearHistory();
-  if (action === "showSetup") showSetup();
+  if (action === "requestSetup") openDialog(setupConfirmDialog);
   if (action === "toggleTimer") toggleTimer();
 });
 
@@ -192,6 +197,12 @@ matchWinnerDialog.addEventListener("close", () => {
 matchTypeDialog.addEventListener("close", () => {
   if (["1", "3", "5"].includes(matchTypeDialog.returnValue)) {
     startNewMatch(Number(matchTypeDialog.returnValue));
+  }
+});
+
+setupConfirmDialog.addEventListener("close", () => {
+  if (setupConfirmDialog.returnValue === "setup") {
+    showSetup();
   }
 });
 
@@ -228,6 +239,8 @@ function resetMatchState() {
   state.scores = [0, 0, 0, 0];
   state.gameWins = [0, 0, 0, 0];
   state.gameResults = [];
+  state.startingPlayer = chooseStartingPlayer();
+  state.showStartingPlayer = true;
   resetTimer();
   state.history = [];
   state.notice = "";
@@ -248,6 +261,7 @@ function changeScore(player, delta) {
   if (state.matchLocked || !isActivePlayer(player)) return;
 
   state.notice = "";
+  state.showStartingPlayer = false;
   const previous = [...state.scores];
   const nextScore = clamp(state.scores[player] + delta, 0, 99);
   if (nextScore === state.scores[player]) return;
@@ -374,6 +388,7 @@ function render() {
   });
 
   matchScore.classList.toggle("hidden", state.matchType === 1);
+  renderStartingPlayer();
   renderTimer();
   renderStatus();
   renderHistory();
@@ -463,6 +478,8 @@ function getTimerRemaining() {
 
 function renderTimer() {
   const remaining = getTimerRemaining();
+  const progress = ROUND_TIME_SECONDS ? remaining / ROUND_TIME_SECONDS * 100 : 0;
+  roundTimer.style.setProperty("--timer-progress", `${progress}%`);
   timerLabel.textContent = `${matchLabel().toUpperCase()} round`;
   timerDisplay.textContent = formatTime(remaining);
   timerToggle.textContent = state.timer.running ? "Pause" : remaining <= 0 ? "Restart" : "Start";
@@ -485,6 +502,16 @@ function renderTimer() {
 
   if (state.timer.running) ensureTimerInterval();
   else stopTimerInterval();
+}
+
+function renderStartingPlayer() {
+  const player = state.startingPlayer;
+  const visible = state.showStartingPlayer && isActivePlayer(player);
+  startingPlayerEl.classList.toggle("hidden", !visible);
+  if (!visible) return;
+  const ink = getInk(player);
+  startingPlayerEl.style.setProperty("--ink-color", ink.color);
+  startingPlayerEl.innerHTML = `${inkImage(ink, `${ink.name} ink`)} <span><small>Starts</small><strong>${escapeHtml(state.names[player])}</strong></span>`;
 }
 
 function ensureTimerInterval() {
@@ -579,6 +606,11 @@ function activePlayers() {
   return Array.from({ length: state.playerCount }, (_, index) => index);
 }
 
+function chooseStartingPlayer() {
+  const players = activePlayers();
+  return players[Math.floor(Math.random() * players.length)] ?? 0;
+}
+
 function formatScores(scores) {
   return activePlayers().map((index) => scores?.[index] ?? 0).join(" - ");
 }
@@ -671,6 +703,8 @@ function loadState() {
       scores: [0, 1, 2, 3].map((index) => Number(saved.scores?.[index]) || 0),
       gameWins: [0, 1, 2, 3].map((index) => Number(saved.gameWins?.[index]) || 0),
       gameResults: Array.isArray(saved.gameResults) ? saved.gameResults.filter((player) => Number.isInteger(player)) : [],
+      startingPlayer: Number.isInteger(saved.startingPlayer) ? saved.startingPlayer : null,
+      showStartingPlayer: Boolean(saved.showStartingPlayer),
       timer: normalizeTimer(saved.timer),
       matchType: [1, 3, 5].includes(Number(saved.matchType)) ? Number(saved.matchType) : 1,
       history: Array.isArray(saved.history) ? saved.history : []
