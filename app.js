@@ -64,6 +64,7 @@ const defaultState = {
   gameResults: [],
   startingPlayer: null,
   showStartingPlayer: false,
+  awaitingStartConfirm: false,
   timer: {
     remaining: ROUND_TIME_SECONDS,
     running: false,
@@ -112,7 +113,10 @@ const matchWinnerTitle = document.querySelector("#match-winner-title");
 const matchOverview = document.querySelector("#match-overview");
 const matchTypeDialog = document.querySelector("#match-type-dialog");
 const setupConfirmDialog = document.querySelector("#setup-confirm-dialog");
+const startingPlayerDialog = document.querySelector("#starting-player-dialog");
+const startingPlayerTitle = document.querySelector("#starting-player-title");
 let timerInterval = null;
+let startingDialogTimer = null;
 
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
@@ -206,6 +210,12 @@ setupConfirmDialog.addEventListener("close", () => {
   }
 });
 
+startingPlayerDialog.addEventListener("close", () => {
+  if (startingPlayerDialog.returnValue === "start-game") {
+    confirmStartingPlayer();
+  }
+});
+
 render();
 
 function startMatchFromSetup() {
@@ -231,6 +241,8 @@ function showSetupFromLanding() {
   state.matchLocked = false;
   state.matchWinner = null;
   state.notice = "";
+  state.awaitingStartConfirm = false;
+  state.showStartingPlayer = false;
   pauseTimer();
   saveAndRender();
 }
@@ -241,6 +253,7 @@ function resetMatchState() {
   state.gameResults = [];
   state.startingPlayer = chooseStartingPlayer();
   state.showStartingPlayer = true;
+  state.awaitingStartConfirm = true;
   resetTimer();
   state.history = [];
   state.notice = "";
@@ -253,12 +266,18 @@ function showSetup() {
   state.matchLocked = false;
   state.matchWinner = null;
   state.notice = "";
+  state.awaitingStartConfirm = false;
+  state.showStartingPlayer = false;
   pauseTimer();
   saveAndRender();
 }
 
 function changeScore(player, delta) {
   if (state.matchLocked || !isActivePlayer(player)) return;
+  if (state.awaitingStartConfirm) {
+    showStartingPlayerDialog();
+    return;
+  }
 
   state.notice = "";
   state.showStartingPlayer = false;
@@ -433,6 +452,10 @@ function setStatusText(text) {
 }
 
 function toggleTimer() {
+  if (state.awaitingStartConfirm) {
+    showStartingPlayerDialog();
+    return;
+  }
   if (state.timer.running) pauseTimer();
   else startTimer();
   saveAndRender();
@@ -508,7 +531,10 @@ function renderStartingPlayer() {
   const player = state.startingPlayer;
   const visible = state.showStartingPlayer && isActivePlayer(player);
   startingPlayerEl.classList.toggle("hidden", !visible);
-  if (!visible) return;
+  if (!visible) {
+    clearStartingDialogTimer();
+    return;
+  }
   const ink = getInk(player);
   const players = activePlayers();
   const selectedPosition = Math.max(0, players.indexOf(player));
@@ -532,6 +558,35 @@ function renderStartingPlayer() {
       <small>Starts</small>
       <strong>${escapeHtml(state.names[player])}</strong>
     </span>`;
+  if (state.awaitingStartConfirm) {
+    showStartingPlayerDialog(2500);
+  }
+}
+
+function showStartingPlayerDialog(delay = 0) {
+  if (!state.awaitingStartConfirm || !isActivePlayer(state.startingPlayer) || startingPlayerDialog.open) return;
+  clearStartingDialogTimer();
+  startingDialogTimer = window.setTimeout(() => {
+    startingDialogTimer = null;
+    if (!state.awaitingStartConfirm || startingPlayerDialog.open) return;
+    startingPlayerTitle.textContent = `${state.names[state.startingPlayer]} is the starting player`;
+    openDialog(startingPlayerDialog);
+  }, delay);
+}
+
+function clearStartingDialogTimer() {
+  if (!startingDialogTimer) return;
+  window.clearTimeout(startingDialogTimer);
+  startingDialogTimer = null;
+}
+
+function confirmStartingPlayer() {
+  if (!state.awaitingStartConfirm) return;
+  state.awaitingStartConfirm = false;
+  state.showStartingPlayer = false;
+  state.notice = "";
+  startTimer();
+  saveAndRender();
 }
 
 function ensureTimerInterval() {
@@ -725,6 +780,7 @@ function loadState() {
       gameResults: Array.isArray(saved.gameResults) ? saved.gameResults.filter((player) => Number.isInteger(player)) : [],
       startingPlayer: Number.isInteger(saved.startingPlayer) ? saved.startingPlayer : null,
       showStartingPlayer: Boolean(saved.showStartingPlayer),
+      awaitingStartConfirm: Boolean(saved.awaitingStartConfirm),
       timer: normalizeTimer(saved.timer),
       matchType: [1, 3, 5].includes(Number(saved.matchType)) ? Number(saved.matchType) : 1,
       history: Array.isArray(saved.history) ? saved.history : []
