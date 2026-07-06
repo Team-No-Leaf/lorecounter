@@ -670,31 +670,38 @@ button:active {
   position: absolute;
   inset: 50% auto auto 50%;
   z-index: 2;
-  width: 8px;
-  height: 30px;
-  transform-origin: 50% 100%;
-  transform: translate(-50%, -100%) rotate(var(--spin-angle, 1440deg));
-  animation: bottle-spin 2.4s cubic-bezier(0.16, 0.9, 0.2, 1) both;
+  width: 34px;
+  height: 34px;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) rotate(var(--spin-angle, 1440deg));
+  animation: compass-spin 2.4s cubic-bezier(0.16, 0.9, 0.2, 1) both;
 }
 
 .starter-pointer i {
   position: absolute;
-  inset: 0;
-  border-radius: 8px 8px 3px 3px;
-  background: linear-gradient(180deg, var(--gold), #fff5b0 55%, var(--gold));
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
+  top: 1px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-right: 8px solid transparent;
+  border-bottom: 22px solid var(--gold);
+  border-left: 8px solid transparent;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+  transform: translateX(-50%);
 }
 
-.starter-pointer i::before {
+.starter-pointer::after {
   content: "";
   position: absolute;
-  top: -7px;
+  top: 50%;
   left: 50%;
-  width: 14px;
-  height: 10px;
-  border-radius: 999px 999px 2px 2px;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff5b0;
+  border-radius: 999px;
   background: var(--gold);
-  transform: translateX(-50%);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.28);
+  transform: translate(-50%, -50%);
 }
 
 .starter-chip {
@@ -748,12 +755,12 @@ button:active {
   white-space: nowrap;
 }
 
-@keyframes bottle-spin {
+@keyframes compass-spin {
   0% {
-    transform: translate(-50%, -100%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   100% {
-    transform: translate(-50%, -100%) rotate(var(--spin-angle, 1440deg));
+    transform: translate(-50%, -50%) rotate(var(--spin-angle, 1440deg));
   }
 }
 
