@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#101820">
     <title>Sorgen's Inkwell</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=42">
+    <link rel="manifest" href="./manifest.webmanifest?v=43">
     <link rel="icon" href="./assets/icons/illuminary-favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="./assets/icons/illuminary-180.png">
-    <link rel="stylesheet" href="./styles.css?v=42">
+    <link rel="stylesheet" href="./styles.css?v=43">
   </head>
   <body>
     <section class="landing-shell" id="landing-screen" aria-label="Welcome">
@@ -239,7 +239,6 @@
                 </div>
               </div>
             </div>
-            <div class="starting-player hidden" id="starting-player" aria-label="Starting player"></div>
             <div class="round-timer" id="round-timer" aria-label="Tournament round timer">
               <span class="timer-progress" id="timer-progress"></span>
               <span>
@@ -312,14 +311,15 @@
     <dialog class="match-dialog" id="starting-player-dialog">
       <form method="dialog">
         <p class="label">Starting player</p>
-        <h2 id="starting-player-title">Player starts</h2>
+        <div class="starting-player hidden" id="starting-player" aria-label="Starting player"></div>
+        <h2 id="starting-player-title">Choosing starting player</h2>
         <p class="dialog-copy">Press start when both players are ready. The round timer will begin.</p>
         <div class="dialog-actions">
-          <button value="start-game">Start game</button>
+          <button id="starting-player-start" value="start-game">Start game</button>
         </div>
       </form>
     </dialog>
 
-    <script src="./app.js?v=42"></script>
+    <script src="./app.js?v=43"></script>
   </body>
 </html>

@@ -115,6 +115,7 @@ const matchTypeDialog = document.querySelector("#match-type-dialog");
 const setupConfirmDialog = document.querySelector("#setup-confirm-dialog");
 const startingPlayerDialog = document.querySelector("#starting-player-dialog");
 const startingPlayerTitle = document.querySelector("#starting-player-title");
+const startingPlayerStart = document.querySelector("#starting-player-start");
 let timerInterval = null;
 let startingDialogTimer = null;
 
@@ -559,19 +560,25 @@ function renderStartingPlayer() {
       <strong>${escapeHtml(state.names[player])}</strong>
     </span>`;
   if (state.awaitingStartConfirm) {
-    showStartingPlayerDialog(2500);
+    showStartingPlayerDialog();
   }
 }
 
-function showStartingPlayerDialog(delay = 0) {
-  if (!state.awaitingStartConfirm || !isActivePlayer(state.startingPlayer) || startingPlayerDialog.open) return;
+function showStartingPlayerDialog() {
+  if (!state.awaitingStartConfirm || !isActivePlayer(state.startingPlayer)) return;
+  if (startingPlayerDialog.open) return;
   clearStartingDialogTimer();
+  startingPlayerTitle.textContent = "Choosing starting player";
+  startingPlayerStart.disabled = true;
+  startingPlayerDialog.classList.add("is-resolving");
+  openDialog(startingPlayerDialog);
   startingDialogTimer = window.setTimeout(() => {
     startingDialogTimer = null;
-    if (!state.awaitingStartConfirm || startingPlayerDialog.open) return;
+    if (!state.awaitingStartConfirm) return;
     startingPlayerTitle.textContent = `${state.names[state.startingPlayer]} is the starting player`;
-    openDialog(startingPlayerDialog);
-  }, delay);
+    startingPlayerStart.disabled = false;
+    startingPlayerDialog.classList.remove("is-resolving");
+  }, 2500);
 }
 
 function clearStartingDialogTimer() {

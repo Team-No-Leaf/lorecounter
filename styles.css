@@ -655,6 +655,19 @@ button:active {
   background: color-mix(in srgb, var(--ink-color), transparent 84%);
 }
 
+.match-dialog .starting-player {
+  margin: 10px 0 14px;
+  text-align: left;
+}
+
+.match-dialog.is-resolving #starting-player-title {
+  color: var(--muted);
+}
+
+.match-dialog.is-resolving #starting-player-start {
+  opacity: 0.58;
+}
+
 .starter-wheel {
   position: relative;
   width: 72px;
