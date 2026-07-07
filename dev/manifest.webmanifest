@@ -8,13 +8,13 @@
   "description": "Mobiele scorekeeper voor Lorcana games.",
   "icons": [
     {
-      "src": "../proxies/brand/favicon-light-transparent.png",
+      "src": "../proxies/brand/favicon-light.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "../proxies/brand/favicon-light-transparent.png",
+      "src": "../proxies/brand/favicon-light.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
