@@ -140,6 +140,12 @@ button:active {
   width: min(100%, 360px);
   display: grid;
   place-items: center;
+  padding: 12px 14px;
+  border: 1px solid rgba(245, 200, 75, 0.18);
+  border-radius: 8px;
+  background: rgba(8, 14, 20, 0.52);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(8px);
 }
 
 .landing-brand img {

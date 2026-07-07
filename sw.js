@@ -1,10 +1,10 @@
-const CACHE_NAME = "lorcana-scorekeeper-v82";
+const CACHE_NAME = "lorcana-scorekeeper-v83";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=82",
-  "./app.js?v=82",
-  "./manifest.webmanifest?v=82",
+  "./styles.css?v=83",
+  "./app.js?v=83",
+  "./manifest.webmanifest?v=83",
   "./proxies/",
   "./proxies/index.html",
   "./icon.svg",
@@ -12,10 +12,6 @@ const ASSETS = [
   "./proxies/brand/favicon-dark.png",
   "./proxies/brand/logo-light.png",
   "./proxies/brand/logo-dark.png",
-  "./proxies/brand/favicon-light-transparent.png",
-  "./proxies/brand/favicon-dark-transparent.png",
-  "./proxies/brand/logo-light-transparent.png",
-  "./proxies/brand/logo-dark-transparent.png",
   "./assets/icons/illuminary-favicon.png",
   "./assets/icons/illuminary-180.png",
   "./assets/icons/illuminary-192.png",
