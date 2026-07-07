@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#101820">
     <title>Sorgen's Inkwell</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=62">
+    <link rel="manifest" href="./manifest.webmanifest?v=63">
     <link rel="icon" href="./assets/icons/illuminary-favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="./assets/icons/illuminary-180.png">
-    <link rel="stylesheet" href="./styles.css?v=62">
+    <link rel="stylesheet" href="./styles.css?v=63">
   </head>
   <body>
     <section class="landing-shell" id="landing-screen" aria-label="Welcome">
@@ -29,6 +29,7 @@
             <button class="landing-start hidden" id="landing-continue" type="button">Continue match</button>
             <button class="landing-start" id="landing-start" type="button">New match</button>
             <a class="landing-tool-link" href="./proxies/">Proxy printer</a>
+            <a class="landing-tool-link landing-tool-link-support" href="https://ko-fi.com/K6M822P7AL" target="_blank" rel="noreferrer">Support on Ko-fi</a>
           </div>
         </div>
       </main>
@@ -241,12 +242,13 @@
               </div>
             </div>
             <div class="round-timer" id="round-timer" aria-label="Tournament round timer">
+              <span class="timer-progress" id="timer-progress"></span>
               <span>
                 <small id="timer-label">BO1 round</small>
                 <b id="timer-display">50:00</b>
               </span>
               <button id="timer-toggle" type="button" data-action="toggleTimer">Start</button>
-              <button class="setup-return" data-action="showSetup" type="button" aria-label="Back to player setup">Setup</button>
+              <button class="setup-return" data-action="requestSetup" type="button" aria-label="Back to player setup">Setup</button>
             </div>
             <div class="match-score hidden" id="match-score" aria-label="Games won">
               <div data-player="0"><span id="match-name-0">Amethyst</span><b id="game-wins-0">0</b></div>
@@ -296,6 +298,30 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=62"></script>
+    <dialog class="match-dialog" id="setup-confirm-dialog">
+      <form method="dialog">
+        <p class="label">Go to setup</p>
+        <h2>Leave this match?</h2>
+        <p class="dialog-copy">Current scores and match progress will be reset when you start again.</p>
+        <div class="dialog-actions">
+          <button value="cancel">Stay here</button>
+          <button value="setup">Go to setup</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="match-dialog" id="starting-player-dialog">
+      <form method="dialog">
+        <p class="label">Starting player</p>
+        <div class="starting-player hidden" id="starting-player" aria-label="Starting player"></div>
+        <h2 id="starting-player-title">Choosing starting player</h2>
+        <p class="dialog-copy">Press start when both players are ready. The round timer will begin.</p>
+        <div class="dialog-actions">
+          <button id="starting-player-start" value="start-game">Start game</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js?v=63"></script>
   </body>
 </html>
