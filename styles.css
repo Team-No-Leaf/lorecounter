@@ -165,6 +165,12 @@ button:active {
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.36);
 }
 
+.landing-tool-link-support {
+  color: var(--text);
+  border-color: rgba(244, 247, 243, 0.32);
+  background: rgba(16, 24, 32, 0.68);
+}
+
 .landing-tool-link:active {
   transform: translateY(1px);
 }
