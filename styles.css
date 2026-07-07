@@ -824,6 +824,20 @@ button:active {
   overflow: hidden;
 }
 
+.round-timer.timer-disabled {
+  grid-template-columns: auto;
+  justify-content: end;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+}
+
+.round-timer.timer-disabled .timer-progress,
+.round-timer.timer-disabled > span:not(.timer-progress),
+.round-timer.timer-disabled #timer-toggle {
+  display: none;
+}
+
 .timer-progress {
   position: absolute;
   inset: auto 0 0 0;

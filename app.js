@@ -514,11 +514,12 @@ function getTimerRemaining() {
 }
 
 function renderTimer() {
+  roundTimer.classList.toggle("timer-disabled", !hasTimer());
   if (!hasTimer()) {
     roundTimer.style.setProperty("--timer-progress", "0%");
-    timerLabel.textContent = "Timer";
-    timerDisplay.textContent = "No timer";
-    timerToggle.textContent = "Off";
+    timerLabel.textContent = "";
+    timerDisplay.textContent = "";
+    timerToggle.textContent = "";
     timerToggle.disabled = true;
     timerToggle.classList.remove("running", "expired");
     stopTimerInterval();
