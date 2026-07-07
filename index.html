@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#101820">
     <title>Sorgen's Inkwell</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=63">
+    <link rel="manifest" href="./manifest.webmanifest?v=64">
     <link rel="icon" href="./assets/icons/illuminary-favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="./assets/icons/illuminary-180.png">
-    <link rel="stylesheet" href="./styles.css?v=63">
+    <link rel="stylesheet" href="./styles.css?v=64">
   </head>
   <body>
     <section class="landing-shell" id="landing-screen" aria-label="Welcome">
@@ -121,6 +121,14 @@
           <label><input type="radio" name="match-type" value="1" checked><span>BO1</span></label>
           <label><input type="radio" name="match-type" value="3"><span>BO3</span></label>
           <label><input type="radio" name="match-type" value="5"><span>BO5</span></label>
+        </fieldset>
+
+        <fieldset class="timer-type">
+          <legend>Timer</legend>
+          <label><input type="radio" name="timer-duration" value="0"><span>No timer</span></label>
+          <label><input type="radio" name="timer-duration" value="3000" checked><span>50 min</span></label>
+          <label><input type="radio" name="timer-duration" value="3300"><span>55 min</span></label>
+          <label><input type="radio" name="timer-duration" value="4200"><span>70 min</span></label>
         </fieldset>
 
         <button class="start-button" type="submit">Start match</button>
@@ -315,13 +323,13 @@
         <p class="label">Starting player</p>
         <div class="starting-player hidden" id="starting-player" aria-label="Starting player"></div>
         <h2 id="starting-player-title">Choosing starting player</h2>
-        <p class="dialog-copy">Press start when both players are ready. The round timer will begin.</p>
+        <p class="dialog-copy">Press start when all players are ready.</p>
         <div class="dialog-actions">
           <button id="starting-player-start" value="start-game">Start game</button>
         </div>
       </form>
     </dialog>
 
-    <script src="./app.js?v=63"></script>
+    <script src="./app.js?v=64"></script>
   </body>
 </html>

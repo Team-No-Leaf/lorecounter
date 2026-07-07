@@ -211,7 +211,8 @@ button:active {
 }
 
 .setup-player,
-.match-type {
+.match-type,
+.timer-type {
   min-width: 0;
   margin: 0;
   padding: 12px;
@@ -220,7 +221,8 @@ button:active {
 }
 
 .setup-player legend,
-.match-type legend {
+.match-type legend,
+.timer-type legend {
   padding: 0 6px;
   color: var(--gold);
   font-size: 0.75rem;
@@ -272,7 +274,8 @@ button:active {
 }
 
 .ink-option input,
-.match-type input {
+.match-type input,
+.timer-type input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
@@ -316,31 +319,48 @@ button:active {
 .sapphire { --ink-color: #2f7ed8; }
 .steel { --ink-color: #a8b2ba; }
 
-.match-type {
+.match-type,
+.timer-type {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
-.match-type legend {
+.match-type {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.timer-type {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.match-type legend,
+.timer-type legend {
   grid-column: 1 / -1;
 }
 
-.match-type label {
+.match-type label,
+.timer-type label {
   min-height: 46px;
   display: grid;
   place-items: center;
+  padding: 0 6px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
 }
 
-.match-type span {
+.match-type span,
+.timer-type span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font-size: 0.86rem;
   font-weight: 900;
 }
 
-.match-type label:has(input:checked) {
+.match-type label:has(input:checked),
+.timer-type label:has(input:checked) {
   color: #101820;
   border-color: transparent;
   background: var(--gold);

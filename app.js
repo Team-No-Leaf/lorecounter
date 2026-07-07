@@ -1,5 +1,6 @@
 const TARGET_LORE = 20;
-const ROUND_TIME_SECONDS = 50 * 60;
+const DEFAULT_TIMER_SECONDS = 50 * 60;
+const TIMER_OPTIONS = [0, 50 * 60, 55 * 60, 70 * 60];
 const STORAGE_KEY = "lorcana-scorekeeper-v2";
 const URL_PARAMS = new URLSearchParams(location.search);
 
@@ -59,6 +60,7 @@ const defaultState = {
   names: ["", "", "", ""],
   inks: ["amethyst", "steel", "ruby", "sapphire"],
   matchType: 1,
+  timerDuration: DEFAULT_TIMER_SECONDS,
   scores: [0, 0, 0, 0],
   gameWins: [0, 0, 0, 0],
   gameResults: [],
@@ -66,7 +68,7 @@ const defaultState = {
   showStartingPlayer: false,
   awaitingStartConfirm: false,
   timer: {
-    remaining: ROUND_TIME_SECONDS,
+    remaining: DEFAULT_TIMER_SECONDS,
     running: false,
     startedAt: null,
     timeCalled: false
@@ -224,6 +226,7 @@ function startMatchFromSetup() {
   state.names = setupNameEls.map((input, index) => input.value.trim() || `Player ${index + 1}`);
   state.inks = [0, 1, 2, 3].map((index) => getCheckedValue(`ink-${index}`));
   state.matchType = Number(getCheckedValue("match-type"));
+  state.timerDuration = normalizeTimerDuration(getCheckedValue("timer-duration"));
   state.setupComplete = true;
   resetMatchState();
   saveAndRender();
@@ -382,6 +385,7 @@ function render() {
   setRadio("ink-2", state.inks[2]);
   setRadio("ink-3", state.inks[3]);
   setRadio("match-type", String(state.matchType));
+  setRadio("timer-duration", String(normalizeTimerDuration(state.timerDuration)));
 
   scoreEls.forEach((element, index) => {
     element.value = state.scores[index];
@@ -423,7 +427,7 @@ function renderStatus() {
 
   if (state.notice) {
     setStatusText(state.notice);
-  } else if (getTimerRemaining() <= 0) {
+  } else if (hasTimer() && getTimerRemaining() <= 0) {
     setStatusText("Time called. Finish the current turn, then play five additional turns.");
   } else if (highest >= TARGET_LORE) {
     setStatusText(leaderIndex === -1
@@ -453,6 +457,7 @@ function setStatusText(text) {
 }
 
 function toggleTimer() {
+  if (!hasTimer()) return;
   if (state.awaitingStartConfirm) {
     showStartingPlayerDialog();
     return;
@@ -463,9 +468,14 @@ function toggleTimer() {
 }
 
 function startTimer() {
+  if (!hasTimer()) {
+    resetTimer();
+    return;
+  }
   const remaining = getTimerRemaining();
+  const duration = timerDuration();
   state.timer = {
-    remaining: remaining > 0 ? remaining : ROUND_TIME_SECONDS,
+    remaining: remaining > 0 ? remaining : duration,
     running: true,
     startedAt: Date.now(),
     timeCalled: false
@@ -474,8 +484,9 @@ function startTimer() {
 }
 
 function pauseTimer() {
+  const duration = timerDuration();
   state.timer = {
-    ...normalizeTimer(state.timer),
+    ...normalizeTimer(state.timer, duration),
     remaining: getTimerRemaining(),
     running: false,
     startedAt: null
@@ -484,8 +495,9 @@ function pauseTimer() {
 }
 
 function resetTimer() {
+  const duration = timerDuration();
   state.timer = {
-    remaining: ROUND_TIME_SECONDS,
+    remaining: duration,
     running: false,
     startedAt: null,
     timeCalled: false
@@ -494,15 +506,28 @@ function resetTimer() {
 }
 
 function getTimerRemaining() {
-  const timer = normalizeTimer(state.timer);
+  const duration = timerDuration();
+  const timer = normalizeTimer(state.timer, duration);
   if (!timer.running || !timer.startedAt) return timer.remaining;
   const elapsed = Math.floor((Date.now() - Number(timer.startedAt)) / 1000);
-  return clamp(timer.remaining - elapsed, 0, ROUND_TIME_SECONDS);
+  return clamp(timer.remaining - elapsed, 0, duration);
 }
 
 function renderTimer() {
+  if (!hasTimer()) {
+    roundTimer.style.setProperty("--timer-progress", "0%");
+    timerLabel.textContent = "Timer";
+    timerDisplay.textContent = "No timer";
+    timerToggle.textContent = "Off";
+    timerToggle.disabled = true;
+    timerToggle.classList.remove("running", "expired");
+    stopTimerInterval();
+    return;
+  }
+  timerToggle.disabled = false;
   const remaining = getTimerRemaining();
-  const progress = ROUND_TIME_SECONDS ? remaining / ROUND_TIME_SECONDS * 100 : 0;
+  const duration = timerDuration();
+  const progress = duration ? remaining / duration * 100 : 0;
   roundTimer.style.setProperty("--timer-progress", `${progress}%`);
   timerLabel.textContent = `${matchLabel().toUpperCase()} round`;
   timerDisplay.textContent = formatTime(remaining);
@@ -512,7 +537,7 @@ function renderTimer() {
 
   if (state.timer.running && remaining <= 0) {
     state.timer = {
-      ...normalizeTimer(state.timer),
+      ...normalizeTimer(state.timer, duration),
       remaining: 0,
       running: false,
       startedAt: null,
@@ -592,7 +617,8 @@ function confirmStartingPlayer() {
   state.awaitingStartConfirm = false;
   state.showStartingPlayer = false;
   state.notice = "";
-  startTimer();
+  if (hasTimer()) startTimer();
+  else resetTimer();
   saveAndRender();
 }
 
@@ -616,14 +642,28 @@ function formatTime(seconds) {
   return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
-function normalizeTimer(timer) {
+function normalizeTimer(timer, duration = DEFAULT_TIMER_SECONDS) {
+  const normalizedDuration = normalizeTimerDuration(duration);
   return {
     ...defaultState.timer,
     ...(timer || {}),
     remaining: Number.isFinite(Number(timer?.remaining))
-      ? clamp(Number(timer.remaining), 0, ROUND_TIME_SECONDS)
-      : ROUND_TIME_SECONDS
+      ? clamp(Number(timer.remaining), 0, normalizedDuration)
+      : normalizedDuration
   };
+}
+
+function timerDuration() {
+  return normalizeTimerDuration(state.timerDuration);
+}
+
+function hasTimer() {
+  return timerDuration() > 0;
+}
+
+function normalizeTimerDuration(value) {
+  const duration = Number(value);
+  return TIMER_OPTIONS.includes(duration) ? duration : DEFAULT_TIMER_SECONDS;
 }
 
 function renderMatchWinnerDialog() {
@@ -780,6 +820,7 @@ function loadState() {
       ...structuredClone(defaultState),
       ...saved,
       playerCount: [2, 3, 4].includes(Number(saved.playerCount)) ? Number(saved.playerCount) : 2,
+      timerDuration: normalizeTimerDuration(saved.timerDuration),
       names: [0, 1, 2, 3].map((index) => saved.names?.[index] || defaultState.names[index]),
       inks: [0, 1, 2, 3].map((index) => saved.inks?.[index] || defaultState.inks[index]),
       scores: [0, 1, 2, 3].map((index) => Number(saved.scores?.[index]) || 0),
@@ -788,7 +829,7 @@ function loadState() {
       startingPlayer: Number.isInteger(saved.startingPlayer) ? saved.startingPlayer : null,
       showStartingPlayer: Boolean(saved.showStartingPlayer),
       awaitingStartConfirm: Boolean(saved.awaitingStartConfirm),
-      timer: normalizeTimer(saved.timer),
+      timer: normalizeTimer(saved.timer, normalizeTimerDuration(saved.timerDuration)),
       matchType: [1, 3, 5].includes(Number(saved.matchType)) ? Number(saved.matchType) : 1,
       history: Array.isArray(saved.history) ? saved.history : []
     };
