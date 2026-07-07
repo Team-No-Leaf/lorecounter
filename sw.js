@@ -1,9 +1,9 @@
-const CACHE_NAME = "lorcana-scorekeeper-v71";
+const CACHE_NAME = "lorcana-scorekeeper-v72";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css?v=67",
-  "./app.js?v=71",
+  "./app.js?v=72",
   "./manifest.webmanifest?v=67",
   "./proxies/",
   "./proxies/index.html",
