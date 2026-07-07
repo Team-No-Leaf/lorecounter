@@ -8,13 +8,13 @@
   "description": "Mobile scorekeeper for Lorcana games.",
   "icons": [
     {
-      "src": "./assets/icons/illuminary-192.png",
+      "src": "./proxies/brand/favicon-light-transparent.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./assets/icons/illuminary-512.png",
+      "src": "./proxies/brand/favicon-light-transparent.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

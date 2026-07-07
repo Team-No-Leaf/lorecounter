@@ -55,6 +55,17 @@ button:active {
   display: none !important;
 }
 
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 .landing-shell {
   position: relative;
   min-height: var(--app-height, 100svh);
@@ -104,6 +115,19 @@ button:active {
   font-size: clamp(3rem, 17vw, 5.8rem);
   line-height: 0.9;
   text-shadow: 0 5px 24px rgba(0, 0, 0, 0.72);
+}
+
+.landing-brand {
+  align-self: start;
+  width: min(92vw, 390px);
+  display: block;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.48));
+}
+
+.landing-brand img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .landing-actions {
