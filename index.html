@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#101820">
     <title>Sorgen's Inkwell</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=61">
+    <link rel="manifest" href="./manifest.webmanifest?v=62">
     <link rel="icon" href="./assets/icons/illuminary-favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="./assets/icons/illuminary-180.png">
-    <link rel="stylesheet" href="./styles.css?v=61">
+    <link rel="stylesheet" href="./styles.css?v=62">
   </head>
   <body>
     <section class="landing-shell" id="landing-screen" aria-label="Welcome">
@@ -135,9 +135,9 @@
               <strong id="name-0">Amethyst</strong>
             </div>
             <div class="score-row">
-              <button class="score-button" data-action="change" data-player="0" data-delta="-1" aria-label="Min 1 voor speler 1">−</button>
+              <button class="score-button" data-action="change" data-player="0" data-delta="-1" aria-label="Subtract 1 from player 1">−</button>
               <output class="score" id="score-0" aria-live="polite">0</output>
-              <button class="score-button primary" data-action="change" data-player="0" data-delta="1" aria-label="Plus 1 voor speler 1">+</button>
+              <button class="score-button primary" data-action="change" data-player="0" data-delta="1" aria-label="Add 1 to player 1">+</button>
             </div>
             <div class="quick-row" aria-label="Player 1 quick score">
               <button data-action="change" data-player="0" data-delta="2">+2</button>
@@ -154,9 +154,9 @@
               <strong id="name-1">Steel</strong>
             </div>
             <div class="score-row">
-              <button class="score-button" data-action="change" data-player="1" data-delta="-1" aria-label="Min 1 voor speler 2">−</button>
+              <button class="score-button" data-action="change" data-player="1" data-delta="-1" aria-label="Subtract 1 from player 2">−</button>
               <output class="score" id="score-1" aria-live="polite">0</output>
-              <button class="score-button primary" data-action="change" data-player="1" data-delta="1" aria-label="Plus 1 voor speler 2">+</button>
+              <button class="score-button primary" data-action="change" data-player="1" data-delta="1" aria-label="Add 1 to player 2">+</button>
             </div>
             <div class="quick-row" aria-label="Player 2 quick score">
               <button data-action="change" data-player="1" data-delta="2">+2</button>
@@ -173,9 +173,9 @@
               <strong id="name-2">Ruby</strong>
             </div>
             <div class="score-row">
-              <button class="score-button" data-action="change" data-player="2" data-delta="-1" aria-label="Min 1 voor speler 3">−</button>
+              <button class="score-button" data-action="change" data-player="2" data-delta="-1" aria-label="Subtract 1 from player 3">−</button>
               <output class="score" id="score-2" aria-live="polite">0</output>
-              <button class="score-button primary" data-action="change" data-player="2" data-delta="1" aria-label="Plus 1 voor speler 3">+</button>
+              <button class="score-button primary" data-action="change" data-player="2" data-delta="1" aria-label="Add 1 to player 3">+</button>
             </div>
             <div class="quick-row" aria-label="Player 3 quick score">
               <button data-action="change" data-player="2" data-delta="2">+2</button>
@@ -192,9 +192,9 @@
               <strong id="name-3">Sapphire</strong>
             </div>
             <div class="score-row">
-              <button class="score-button" data-action="change" data-player="3" data-delta="-1" aria-label="Min 1 voor speler 4">−</button>
+              <button class="score-button" data-action="change" data-player="3" data-delta="-1" aria-label="Subtract 1 from player 4">−</button>
               <output class="score" id="score-3" aria-live="polite">0</output>
-              <button class="score-button primary" data-action="change" data-player="3" data-delta="1" aria-label="Plus 1 voor speler 4">+</button>
+              <button class="score-button primary" data-action="change" data-player="3" data-delta="1" aria-label="Add 1 to player 4">+</button>
             </div>
             <div class="quick-row" aria-label="Player 4 quick score">
               <button data-action="change" data-player="3" data-delta="2">+2</button>
@@ -204,13 +204,13 @@
           </div>
         </article>
 
-        <section class="table-center" aria-label="Spelstatus">
+        <section class="table-center" aria-label="Game status">
           <section class="status panel" aria-live="polite">
             <div class="status-readout status-readout-away">
               <p class="label">Status</p>
               <p id="status-text-away">Ready for the first quest.</p>
             </div>
-            <div class="race-strip" aria-label="Lore race naar 20">
+            <div class="race-strip" aria-label="Lore race to 20">
               <div class="race-lane" data-player="0">
                 <span class="race-name" id="race-name-0"><img src="./assets/ink/dlc_ink_amethyst.png" alt=""> Amethyst</span>
                 <div class="race-track">
@@ -274,7 +274,7 @@
     <dialog class="match-dialog" id="match-winner-dialog">
       <form method="dialog">
         <p class="label">Match won</p>
-        <h2 id="match-winner-title">Match klaar</h2>
+        <h2 id="match-winner-title">Match complete</h2>
         <ol class="match-overview hidden" id="match-overview" aria-label="Game winners"></ol>
         <div class="dialog-actions">
           <button value="back">Back to game</button>
@@ -296,6 +296,6 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=61"></script>
+    <script src="./app.js?v=62"></script>
   </body>
 </html>

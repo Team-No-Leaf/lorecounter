@@ -363,12 +363,12 @@ function render() {
     const ink = getInk(index);
     playerEls[index].style.setProperty("--seat-color", ink.color);
     nameEls[index].textContent = name;
-    playerInkEls[index].innerHTML = inkImage(ink, `${ink.name} inkt`);
+    playerInkEls[index].innerHTML = inkImage(ink, `${ink.name} ink`);
     playerInkEls[index].style.setProperty("--ink-color", ink.color);
-    raceNameEls[index].innerHTML = `${inkImage(ink, `${ink.name} inkt`)} ${escapeHtml(name)}`;
+    raceNameEls[index].innerHTML = `${inkImage(ink, `${ink.name} ink`)} ${escapeHtml(name)}`;
     raceLaneEls[index].style.setProperty("--ink-color", ink.color);
     raceLaneEls[index].dataset.active = String(isActivePlayer(index));
-    matchNameEls[index].innerHTML = `${inkImage(ink, `${ink.name} inkt`)} ${escapeHtml(name)}`;
+    matchNameEls[index].innerHTML = `${inkImage(ink, `${ink.name} ink`)} ${escapeHtml(name)}`;
     matchNameEls[index].closest("[data-player]").dataset.active = String(isActivePlayer(index));
     gameWinEls[index].textContent = state.gameWins[index];
   });
