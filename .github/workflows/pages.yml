@@ -34,6 +34,7 @@ jobs:
           mkdir _site
           cp -R assets css dev js proxies _site/
           cp *.html *.js *.css *.png *.svg *.webmanifest _site/
+          cp CNAME _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
