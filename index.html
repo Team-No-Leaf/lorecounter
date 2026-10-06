@@ -3,13 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#101820">
-    <title>Sorgen's Inkwell - Lore Counter</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=85">
-    <link rel="icon" href="./proxies/brand/favicon-light.png" media="(prefers-color-scheme: light)" type="image/png">
-    <link rel="icon" href="./proxies/brand/favicon-dark.png" media="(prefers-color-scheme: dark)" type="image/png">
-    <link rel="apple-touch-icon" href="./proxies/brand/favicon-light.png">
-    <link rel="stylesheet" href="./styles.css?v=85">
+    <meta name="theme-color" content="#071015">
+    <title>Lorcana Tools - Lore Counter</title>
+    <link rel="manifest" href="./manifest.webmanifest?v=92">
+    <link rel="icon" href="../brand/favicon-v2.png" type="image/png">
+    <link rel="apple-touch-icon" href="../brand/favicon-v2.png">
+    <link rel="stylesheet" href="./styles-v3.css?v=96">
   </head>
   <body>
     <section class="landing-shell" id="landing-screen" aria-label="Welcome">
@@ -17,9 +16,10 @@
       <div class="landing-shade" aria-hidden="true"></div>
       <main class="landing-content">
         <picture class="landing-brand" aria-hidden="true">
-          <img src="./proxies/brand/logo-dark.png" alt="">
+          <img class="landing-brand-light" src="../brand/banner-logo-light-v2.png" alt="">
+          <img class="landing-brand-dark" src="../brand/banner-logo-v2.png" alt="">
         </picture>
-        <h1 class="sr-only">Sorgen's Inkwell</h1>
+        <h1 class="sr-only">Lorcana Tools</h1>
         <div class="landing-actions">
           <div class="landing-inks" aria-hidden="true">
             <img src="./assets/ink/dlc_ink_amber.png" alt="">
@@ -32,12 +32,12 @@
           <div class="landing-buttons">
             <button class="landing-start hidden" id="landing-continue" type="button">Continue match</button>
             <button class="landing-start" id="landing-start" type="button">New match</button>
-            <a class="landing-tool-link" href="./proxies/">Proxy printer</a>
+            <a class="landing-tool-link" href="/proxy-printer/">Proxy Printer</a>
             <a class="landing-tool-link landing-tool-link-support" href="https://ko-fi.com/K6M822P7AL" target="_blank" rel="noreferrer">Support on Ko-fi</a>
           </div>
         </div>
       </main>
-      <p class="landing-credit">Made by Sorgen</p>
+      <p class="landing-credit">Lorcana Tools</p>
     </section>
 
     <section class="setup-shell" id="setup-screen" aria-label="Name selection">
@@ -52,6 +52,12 @@
           <label><input type="radio" name="player-count" value="2" checked><span>2</span></label>
           <label><input type="radio" name="player-count" value="3"><span>3</span></label>
           <label><input type="radio" name="player-count" value="4"><span>4</span></label>
+        </fieldset>
+
+        <fieldset class="format-type">
+          <legend>Format</legend>
+          <label><input type="radio" name="format" value="core" checked><span>Core</span></label>
+          <label><input type="radio" name="format" value="coconut"><span>Coconut</span></label>
         </fieldset>
 
         <div class="setup-players">
@@ -69,6 +75,11 @@
               <label class="ink-option sapphire"><input type="radio" name="ink-0" value="sapphire"><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
               <label class="ink-option steel"><input type="radio" name="ink-0" value="steel"><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
             </div>
+            <div class="commander-select">
+              <span>Commander</span>
+              <button class="commander-picker" id="setup-commander-button-0" data-action="openCommanderPicker" data-player="0" type="button"></button>
+              <select class="commander-native" id="setup-commander-0" aria-hidden="true" tabindex="-1"></select>
+            </div>
           </fieldset>
 
           <fieldset class="setup-player" data-setup-player="1">
@@ -84,6 +95,11 @@
               <label class="ink-option ruby"><input type="radio" name="ink-1" value="ruby"><span><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span><b>Ruby</b></label>
               <label class="ink-option sapphire"><input type="radio" name="ink-1" value="sapphire"><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
               <label class="ink-option steel"><input type="radio" name="ink-1" value="steel" checked><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
+            </div>
+            <div class="commander-select">
+              <span>Commander</span>
+              <button class="commander-picker" id="setup-commander-button-1" data-action="openCommanderPicker" data-player="1" type="button"></button>
+              <select class="commander-native" id="setup-commander-1" aria-hidden="true" tabindex="-1"></select>
             </div>
           </fieldset>
 
@@ -101,6 +117,11 @@
               <label class="ink-option sapphire"><input type="radio" name="ink-2" value="sapphire"><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
               <label class="ink-option steel"><input type="radio" name="ink-2" value="steel"><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
             </div>
+            <div class="commander-select">
+              <span>Commander</span>
+              <button class="commander-picker" id="setup-commander-button-2" data-action="openCommanderPicker" data-player="2" type="button"></button>
+              <select class="commander-native" id="setup-commander-2" aria-hidden="true" tabindex="-1"></select>
+            </div>
           </fieldset>
 
           <fieldset class="setup-player" data-setup-player="3">
@@ -116,6 +137,11 @@
               <label class="ink-option ruby"><input type="radio" name="ink-3" value="ruby"><span><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span><b>Ruby</b></label>
               <label class="ink-option sapphire"><input type="radio" name="ink-3" value="sapphire" checked><span><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span><b>Sapphire</b></label>
               <label class="ink-option steel"><input type="radio" name="ink-3" value="steel"><span><img src="./assets/ink/dlc_ink_steel.png" alt=""></span><b>Steel</b></label>
+            </div>
+            <div class="commander-select">
+              <span>Commander</span>
+              <button class="commander-picker" id="setup-commander-button-3" data-action="openCommanderPicker" data-player="3" type="button"></button>
+              <select class="commander-native" id="setup-commander-3" aria-hidden="true" tabindex="-1"></select>
             </div>
           </fieldset>
         </div>
@@ -145,7 +171,14 @@
           <div class="player-inner">
             <div class="player-heading">
               <span class="player-ink" id="player-ink-0"><img src="./assets/ink/dlc_ink_amethyst.png" alt=""></span>
-              <strong id="name-0">Amethyst</strong>
+              <div class="player-title">
+                <strong id="name-0">Amethyst</strong>
+                <small id="commander-name-0"></small>
+              </div>
+              <div class="commander-actions">
+                <button class="commander-once hidden" id="commander-once-0" data-action="toggleOnce" data-player="0" type="button">Ability Available</button>
+                <button class="commander-ability-button" data-action="showAbility" data-player="0" type="button">Ability Info</button>
+              </div>
             </div>
             <div class="score-row">
               <button class="score-button" data-action="change" data-player="0" data-delta="-1" aria-label="Subtract 1 from player 1">−</button>
@@ -164,7 +197,14 @@
           <div class="player-inner">
             <div class="player-heading">
               <span class="player-ink" id="player-ink-1"><img src="./assets/ink/dlc_ink_steel.png" alt=""></span>
-              <strong id="name-1">Steel</strong>
+              <div class="player-title">
+                <strong id="name-1">Steel</strong>
+                <small id="commander-name-1"></small>
+              </div>
+              <div class="commander-actions">
+                <button class="commander-once hidden" id="commander-once-1" data-action="toggleOnce" data-player="1" type="button">Ability Available</button>
+                <button class="commander-ability-button" data-action="showAbility" data-player="1" type="button">Ability Info</button>
+              </div>
             </div>
             <div class="score-row">
               <button class="score-button" data-action="change" data-player="1" data-delta="-1" aria-label="Subtract 1 from player 2">−</button>
@@ -183,7 +223,14 @@
           <div class="player-inner">
             <div class="player-heading">
               <span class="player-ink" id="player-ink-2"><img src="./assets/ink/dlc_ink_ruby.png" alt=""></span>
-              <strong id="name-2">Ruby</strong>
+              <div class="player-title">
+                <strong id="name-2">Ruby</strong>
+                <small id="commander-name-2"></small>
+              </div>
+              <div class="commander-actions">
+                <button class="commander-once hidden" id="commander-once-2" data-action="toggleOnce" data-player="2" type="button">Ability Available</button>
+                <button class="commander-ability-button" data-action="showAbility" data-player="2" type="button">Ability Info</button>
+              </div>
             </div>
             <div class="score-row">
               <button class="score-button" data-action="change" data-player="2" data-delta="-1" aria-label="Subtract 1 from player 3">−</button>
@@ -202,7 +249,14 @@
           <div class="player-inner">
             <div class="player-heading">
               <span class="player-ink" id="player-ink-3"><img src="./assets/ink/dlc_ink_sapphire.png" alt=""></span>
-              <strong id="name-3">Sapphire</strong>
+              <div class="player-title">
+                <strong id="name-3">Sapphire</strong>
+                <small id="commander-name-3"></small>
+              </div>
+              <div class="commander-actions">
+                <button class="commander-once hidden" id="commander-once-3" data-action="toggleOnce" data-player="3" type="button">Ability Available</button>
+                <button class="commander-ability-button" data-action="showAbility" data-player="3" type="button">Ability Info</button>
+              </div>
             </div>
             <div class="score-row">
               <button class="score-button" data-action="change" data-player="3" data-delta="-1" aria-label="Subtract 1 from player 4">−</button>
@@ -253,6 +307,18 @@
                 </div>
               </div>
             </div>
+            <div class="overtime-strip hidden" id="overtime-strip" aria-label="Overtime turn countdown">
+              <div>
+                <p class="label">Time called</p>
+                <strong id="overtime-title">5 turns remaining</strong>
+                <span id="overtime-copy">Finish the current turn, then count down five additional turns.</span>
+              </div>
+              <div class="overtime-pips" id="overtime-pips" aria-hidden="true"></div>
+              <div class="overtime-actions">
+                <button type="button" data-action="overtimeUndo">Undo turn</button>
+                <button class="primary" type="button" data-action="overtimeTurn">Turn complete</button>
+              </div>
+            </div>
             <div class="round-timer" id="round-timer" aria-label="Tournament round timer">
               <span class="timer-progress" id="timer-progress"></span>
               <span>
@@ -274,6 +340,10 @@
             </div>
           </section>
         </section>
+        <div class="coconut-table-controls" aria-label="Coconut match controls">
+          <button type="button" data-action="resetCoconutGame">Reset game</button>
+          <button type="button" data-action="requestSetup">Setup</button>
+        </div>
       </section>
 
       <details class="history panel">
@@ -322,6 +392,31 @@
       </form>
     </dialog>
 
+    <dialog class="match-dialog commander-picker-dialog" id="commander-picker-dialog">
+      <form method="dialog">
+        <p class="label" id="commander-picker-label">Commander</p>
+        <h2>Choose commander</h2>
+        <div class="commander-grid" id="commander-grid" aria-label="Commander choices"></div>
+        <div class="dialog-actions">
+          <button value="cancel">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="match-dialog commander-ability-dialog" id="commander-ability-dialog">
+      <form method="dialog">
+        <p class="label" id="commander-ability-player">Commander ability</p>
+        <div class="commander-ability-heading">
+          <span class="commander-ability-art" id="commander-ability-art"></span>
+          <h2 id="commander-ability-title">Commander ability</h2>
+        </div>
+        <p class="dialog-copy commander-ability-copy" id="commander-ability-text"></p>
+        <div class="dialog-actions">
+          <button value="close">Close</button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog class="match-dialog" id="starting-player-dialog">
       <form method="dialog">
         <p class="label">Starting player</p>
@@ -334,6 +429,17 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=85"></script>
+    <dialog class="match-dialog time-called-dialog" id="time-called-dialog">
+      <form method="dialog">
+        <p class="label">Time called</p>
+        <h2>Round time is over</h2>
+        <p class="dialog-copy">Finish the current turn, then play five additional turns. Use the countdown on the table while keeping the lore counters available.</p>
+        <div class="dialog-actions">
+          <button value="start-overtime">Start five-turn countdown</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js?v=96"></script>
   </body>
 </html>
