@@ -1,27 +1,44 @@
-const CACHE_NAME = "lorcana-scorekeeper-v85";
+const CACHE_NAME = "lorcana-scorekeeper-v96";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=85",
-  "./app.js?v=85",
-  "./manifest.webmanifest?v=85",
-  "./proxies/",
-  "./proxies/index.html",
-  "./icon.svg",
-  "./proxies/brand/favicon-light.png",
-  "./proxies/brand/favicon-dark.png",
-  "./proxies/brand/logo-light.png",
-  "./proxies/brand/logo-dark.png",
-  "./assets/icons/illuminary-favicon.png",
-  "./assets/icons/illuminary-180.png",
-  "./assets/icons/illuminary-192.png",
-  "./assets/icons/illuminary-512.png",
+  "./styles-v3.css?v=96",
+  "./app.js?v=96",
+  "./manifest.webmanifest?v=92",
+  "../brand/favicon-v2.png",
+  "../brand/banner-logo-light-v2.png",
+  "../brand/banner-logo-v2.png",
   "./assets/ink/dlc_ink_amber.png",
   "./assets/ink/dlc_ink_amethyst.png",
   "./assets/ink/dlc_ink_emerald.png",
   "./assets/ink/dlc_ink_ruby.png",
   "./assets/ink/dlc_ink_sapphire.png",
-  "./assets/ink/dlc_ink_steel.png"
+  "./assets/ink/dlc_ink_steel.png",
+  "./assets/commanders/aladdin-and-genie-mischievous-pals.jpg",
+  "./assets/commanders/ariel-spectacular-singer.jpg",
+  "./assets/commanders/belle-and-beast-certain-as-the-sun.jpg",
+  "./assets/commanders/darkwing-duck-and-launchpad-st-canard-s-finest.jpg",
+  "./assets/commanders/donald-duck-fred-honeywell.jpg",
+  "./assets/commanders/dumbo-ninth-wonder-of-the-universe.jpg",
+  "./assets/commanders/john-silver-greedy-treasure-seeker.jpg",
+  "./assets/commanders/mickey-mouse-brave-little-tailor.jpg",
+  "./assets/commanders/moana-curious-explorer.jpg",
+  "./assets/commanders/mr-incredible-super-strong.jpg",
+  "./assets/commanders/mufasa-ruler-of-pride-rock.jpg",
+  "./assets/commanders/nick-wilde-wily-fox.jpg",
+  "./assets/commanders/peter-pan-and-tinker-bell-fast-friends.jpg",
+  "./assets/commanders/pocahontas-peacekeeper.jpg",
+  "./assets/commanders/robin-hood-sneaky-sleuth.jpg",
+  "./assets/commanders/scar-finally-king.jpg",
+  "./assets/commanders/sisu-emboldened-warrior.jpg",
+  "./assets/commanders/snow-white-merry-as-the-morning.jpg",
+  "./assets/commanders/stitch-rock-star.jpg",
+  "./assets/commanders/the-madrigal-family-every-generation.jpg",
+  "./assets/commanders/the-vine-towering-stalk.jpg",
+  "./assets/commanders/tinker-bell-giant-fairy.jpg",
+  "./assets/commanders/ursula-deceiver-of-all.jpg",
+  "./assets/commanders/winnie-the-pooh-hunny-wizard.jpg",
+  "./assets/commanders/woody-and-buzz-lightyear-best-buddies.jpg"
 ];
 
 self.addEventListener("install", (event) => {
@@ -39,20 +56,6 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-  const requestUrl = new URL(event.request.url);
-  const scopeUrl = new URL(self.registration.scope);
-  const relativePath = requestUrl.pathname.slice(scopeUrl.pathname.length);
-
-  if (relativePath.startsWith("proxies/")) {
-    event.respondWith(
-      fetch(event.request).then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-        return response;
-      }).catch(() => caches.match(event.request))
-    );
-    return;
-  }
 
   event.respondWith(
     caches.match(event.request).then((cached) =>
