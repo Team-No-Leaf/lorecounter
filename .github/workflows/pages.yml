@@ -25,6 +25,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Set up deployment test runtime
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
       - name: Configure Pages
         uses: actions/configure-pages@v6
 
@@ -34,6 +39,29 @@ jobs:
           mkdir _site
           cp -R assets css dev js proxies _site/
           cp *.html *.js *.css *.png *.svg *.webmanifest _site/
+
+      - name: Test asset validation and reject broken proxy builds
+        run: |
+          python3 -m unittest discover -s .github/proxy-checks -p 'test_*.py' -v
+          python3 .github/proxy-checks/check_assets.py _site/proxies
+
+      - name: Install browser checks
+        working-directory: .github/proxy-checks
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Verify proxy UI and PDF before deployment
+        working-directory: .github/proxy-checks
+        run: npm test -- --site=../../_site
+
+      - name: Save browser check screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: proxy-browser-checks
+          path: .github/proxy-checks/results/
+          if-no-files-found: ignore
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

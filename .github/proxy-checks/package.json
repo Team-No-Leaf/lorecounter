@@ -1,0 +1,11 @@
+{
+  "name": "proxy-deployment-checks",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node smoke.cjs --self-test"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
