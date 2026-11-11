@@ -16,9 +16,14 @@ The app never mounted, leaving a white page.
 Type checking and bundling succeeded because the JavaScript itself was valid.
 The old workflow only copied and uploaded files. Checking HTTP 200 and the bundle
 name in the entry page also did not prove the browser could start the application.
+The repository additionally had legacy branch publishing enabled alongside the
+custom workflow, allowing a second deployment route to bypass workflow checks.
 
 ## Safeguards
 
+- Pages now uses `build_type: workflow`; legacy direct branch publishing is disabled.
+  `check-publishing.mjs` verifies that setting on every deployment and refuses to
+  publish if the bypass is re-enabled. It also tests rejection of legacy settings.
 - The source Vite configuration now fixes `base: "./"` and rejects build overrides
   that change it. This source lives in the separate proxy-tool workspace.
 - `check_assets.py` parses the actual release HTML and requires relative module
