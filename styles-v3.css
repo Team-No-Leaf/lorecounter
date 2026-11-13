@@ -2140,39 +2140,41 @@ body[data-format="coconut"] .player-count-3 .players-table {
 }
 
 body[data-format="coconut"] .player-count-3 .player-seat-1 {
-  grid-column: 1 / -1;
+  grid-column: 1;
   grid-row: 1;
 }
 
-body[data-format="coconut"] .player-count-3 .player-seat-1 .player-inner {
+body[data-format="coconut"] .player-count-3 .player-seat-1 .player-inner,
+body[data-format="coconut"] .player-count-3 .player-seat-2 .player-inner {
   transform: rotate(180deg);
 }
 
-body[data-format="coconut"] .player-count-3 .player-seat-1::after {
+body[data-format="coconut"] .player-count-3 .player-seat-1::after,
+body[data-format="coconut"] .player-count-3 .player-seat-2::after {
   transform: rotate(180deg) scale(1.06);
 }
 
 body[data-format="coconut"] .player-count-3 .player-seat-0 {
-  grid-column: 2;
+  grid-column: 1 / -1;
   grid-row: 3;
 }
 
 body[data-format="coconut"] .player-count-3 .player-seat-2 {
-  grid-column: 1;
-  grid-row: 3;
-}
-
-body[data-format="coconut"] .player-count-4 .player-seat-1 {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 1;
 }
 
-body[data-format="coconut"] .player-count-4 .player-seat-1 .player-inner,
+body[data-format="coconut"] .player-count-4 .player-seat-1 {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+body[data-format="coconut"] .player-count-4 .player-seat-2 .player-inner,
 body[data-format="coconut"] .player-count-4 .player-seat-3 .player-inner {
   transform: rotate(180deg);
 }
 
-body[data-format="coconut"] .player-count-4 .player-seat-1::after,
+body[data-format="coconut"] .player-count-4 .player-seat-2::after,
 body[data-format="coconut"] .player-count-4 .player-seat-3::after {
   transform: rotate(180deg) scale(1.06);
 }
@@ -2184,11 +2186,11 @@ body[data-format="coconut"] .player-count-4 .player-seat-3 {
 
 body[data-format="coconut"] .player-count-4 .player-seat-2 {
   grid-column: 1;
-  grid-row: 3;
+  grid-row: 1;
 }
 
 body[data-format="coconut"] .player-count-4 .player-seat-0 {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 3;
 }
 
